@@ -1723,7 +1723,6 @@
             const zipInput = document.getElementById('zipInput');
             const submitBtn = document.getElementById('submitBtn');
             const prayerContent = document.getElementById('prayerContent');
-            const safetyMessage = document.getElementById('safetyMessage');
 
             // ============================================
             // NAVIGATION
@@ -2014,10 +2013,6 @@
                     }
                     html += '</div>';
 
-                    // Safety message - show if Depression OR trigger words detected
-                    const shouldShowSafety = showCrisisResources || prayer.showSafety;
-                    safetyMessage.classList.toggle('show', shouldShowSafety);
-
                     // Reset buttons
                     document.getElementById('prayedBtn').textContent = '✓ I Prayed This';
                     document.getElementById('prayedBtn').style.background = '';
@@ -2025,8 +2020,6 @@
 
                 } else {
                     // Step 4: Physical redirect
-                    safetyMessage.classList.remove('show');
-
                     html += '<div class="redirect-box">';
                     html += `<h3 class="redirect-title">${physicalRedirect.title}</h3>`;
                     html += `<p class="redirect-text">${physicalRedirect.text}</p>`;
