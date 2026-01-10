@@ -280,8 +280,26 @@
             font-weight: 700;
             padding: 4px 10px;
             border-radius: 12px;
-            margin-left: auto;
             letter-spacing: 1px;
+        }
+
+        .location-anonymous {
+            background: rgba(20, 184, 166, 0.3);
+            color: #5eead4;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            letter-spacing: 1px;
+            margin-left: auto;
+        }
+
+        .anonymous-statement {
+            display: block;
+            color: #5eead4;
+            font-size: 13px;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
         }
 
         .location-text {
@@ -654,37 +672,24 @@
         }
 
         .safety-title {
-            font-size: 15px;
+            font-size: 18px;
             font-weight: 700;
             color: #60a5fa;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .safety-text {
-            font-size: 14px;
+            font-size: 15px;
             color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 14px;
+            line-height: 1.7;
+            margin-bottom: 12px;
         }
 
-        .safety-resources {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .safety-link {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            color: var(--text-primary);
-        }
-
-        .safety-link a {
-            color: #60a5fa;
-            text-decoration: none;
-            font-weight: 600;
+        .safety-note {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 16px;
         }
 
         /* Action Buttons */
@@ -909,6 +914,38 @@
             font-size: 14px;
         }
 
+        .footer-disclaimer {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 16px;
+            line-height: 1.5;
+            max-width: 280px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-links {
+            margin-top: 12px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            font-size: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-secondary);
+        }
+
+        .footer-links span {
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+
         /* Loading & Popup */
         .loading {
             display: none;
@@ -943,6 +980,95 @@
             color: var(--text-secondary);
             font-size: 14px;
         }
+
+        /* Install Prompt */
+        .install-prompt {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            padding: 16px;
+            animation: slideUp 0.4s ease;
+        }
+
+        .install-prompt.show {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .install-content {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px;
+            max-width: 480px;
+            margin: 0 auto;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .install-icon {
+            font-size: 40px;
+        }
+
+        .install-text {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .install-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            letter-spacing: 2px;
+            color: var(--flare-orange);
+        }
+
+        .install-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .install-actions {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .install-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .install-btn.dismiss {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-secondary);
+        }
+
+        .install-btn.primary {
+            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
+            border: none;
+            color: white;
+        }
+
+        .install-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--flare-glow);
+        }
     </style>
 </head>
 <body>
@@ -974,6 +1100,12 @@
 
                     <footer class="footer">
                         <a href="watchman.html" class="footer-link">Prayer Warriors Enter Here</a>
+                        <p class="footer-disclaimer">Prayer Flare is a prayer support community, not a substitute for professional mental health care.</p>
+                        <div class="footer-links">
+                            <a href="about.html">About</a>
+                            <span>•</span>
+                            <a href="privacy.html">Privacy</a>
+                        </div>
                     </footer>
                 </div>
             </div>
@@ -990,9 +1122,11 @@
                     <div class="location-header">
                         <span class="location-icon">📍</span>
                         <span class="location-title">Your Location</span>
+                        <span class="location-anonymous">ANONYMOUS</span>
                         <span class="location-required">REQUIRED</span>
                     </div>
                     <p class="location-text">
+                        <strong class="anonymous-statement">YOUR COMMUNICATIONS HERE ARE ANONYMOUS.</strong>
                         If we have <span class="location-highlight">local prayer warriors</span> in your area, 
                         we'll notify them. If not, our <span class="location-highlight">global Watchmen</span> 
                         have you covered 24/7.
@@ -1001,7 +1135,7 @@
                     <p class="zip-error" id="zipError">Please enter your 5-digit zip code</p>
                 </div>
 
-                <p class="section-label">WHAT'S HAPPENING?</p>
+                <p class="section-label">WHAT'S HAPPENING RIGHT NOW THAT WE CAN PRAY FOR?</p>
                 <div class="options-grid" id="optionsGrid">
                     <button class="option-btn" data-value="Anxiety / Panic">
                         <span class="option-icon">😰</span>
@@ -1091,11 +1225,9 @@
 
                 <div class="safety-message" id="safetyMessage">
                     <div class="safety-title">💙 You Matter</div>
-                    <p class="safety-text">We see you're going through something heavy. Reaching out takes courage. While we're praying, please know that talking to someone trained in crisis support isn't weakness — it's wisdom.</p>
-                    <div class="safety-resources">
-                        <div class="safety-link">📞 <a href="tel:988">988 Suicide & Crisis Lifeline</a></div>
-                        <div class="safety-link">💬 <a href="sms:741741&body=HOME">Text HOME to 741741</a></div>
-                    </div>
+                    <p class="safety-text">We see you. We're praying for you right now. This is a dark moment, but you reached out — and that matters. God hasn't given up on you, and neither have we.</p>
+                    <p class="safety-text">Let us pray with you. That's what we're here for.</p>
+                    <p class="safety-note">If you feel you may hurt yourself or others, there are emergency hotlines available below.</p>
                 </div>
 
                 <div id="prayerContent"></div>
@@ -1138,6 +1270,21 @@
     <div id="loading" class="loading">
         <div class="spinner"></div>
         <p class="loading-text">Sending your flare...</p>
+    </div>
+
+    <!-- Install Prompt -->
+    <div id="installPrompt" class="install-prompt">
+        <div class="install-content">
+            <div class="install-icon">🔥</div>
+            <div class="install-text">
+                <h3 class="install-title">Add Prayer Flare</h3>
+                <p class="install-subtitle">Get instant access when you need it most</p>
+            </div>
+            <div class="install-actions">
+                <button class="install-btn dismiss" id="installDismiss">Not Now</button>
+                <button class="install-btn primary" id="installAccept">Add to Home</button>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1887,6 +2034,64 @@
             }
 
             console.log('✅ Prayer Flare V8 loaded');
+
+            // ============================================
+            // PWA INSTALL PROMPT
+            // ============================================
+            let deferredPrompt = null;
+            const installPrompt = document.getElementById('installPrompt');
+            const installDismiss = document.getElementById('installDismiss');
+            const installAccept = document.getElementById('installAccept');
+
+            // Check if already installed or dismissed
+            const isInstalled = window.matchMedia('(display-mode: standalone)').matches;
+            const wasDismissed = localStorage.getItem('installDismissed');
+
+            // Capture the install prompt event
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                
+                // Show prompt after 3 seconds if not dismissed before
+                if (!isInstalled && !wasDismissed) {
+                    setTimeout(() => {
+                        installPrompt.classList.add('show');
+                    }, 3000);
+                }
+            });
+
+            // Dismiss button
+            installDismiss.addEventListener('click', () => {
+                installPrompt.classList.remove('show');
+                localStorage.setItem('installDismissed', 'true');
+            });
+
+            // Accept/Install button
+            installAccept.addEventListener('click', async () => {
+                if (!deferredPrompt) {
+                    // Fallback for iOS/Safari
+                    alert('To install: tap the Share button, then "Add to Home Screen"');
+                    installPrompt.classList.remove('show');
+                    return;
+                }
+                
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                
+                if (outcome === 'accepted') {
+                    console.log('✅ App installed');
+                }
+                
+                deferredPrompt = null;
+                installPrompt.classList.remove('show');
+            });
+
+            // Hide prompt if app gets installed
+            window.addEventListener('appinstalled', () => {
+                installPrompt.classList.remove('show');
+                deferredPrompt = null;
+                console.log('✅ App installed');
+            });
         });
     </script>
 </body>
