@@ -1,0 +1,1829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0a0a0f">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Prayer Flare - You Don't Have To Fight This Alone</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #141419;
+            --bg-elevated: #1a1a22;
+            --text-primary: #ffffff;
+            --text-secondary: #e8d5c4;
+            --text-muted: #c4a882;
+            --flare-orange: #ff6b35;
+            --flare-red: #ff4444;
+            --flare-glow: rgba(255, 107, 53, 0.4);
+            --accent-teal: #14b8a6;
+            --success-green: #34d399;
+            --warning-yellow: #fbbf24;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --gold: #ffd700;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            min-height: 100vh;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Background */
+        .bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background-image: 
+                linear-gradient(to bottom, rgba(10, 10, 15, 0.6) 0%, rgba(10, 10, 15, 0.85) 50%, rgba(10, 10, 15, 0.95) 100%),
+                url('https://images.unsplash.com/photo-1507692049790-de58290a4334?w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .bg-glow {
+            position: fixed;
+            top: -30%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120vw;
+            height: 80vh;
+            background: radial-gradient(ellipse at center, var(--flare-glow) 0%, transparent 60%);
+            pointer-events: none;
+            opacity: 0.4;
+            z-index: 1;
+        }
+
+        /* Layout */
+        .app-container {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .content-wrapper {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        @media (min-width: 768px) {
+            .content-wrapper {
+                background: rgba(20, 20, 25, 0.8);
+                backdrop-filter: blur(20px);
+                border-radius: 24px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 40px;
+                margin-top: 20px;
+                box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        /* Screens */
+        .screen {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================
+           HOME SCREEN
+           ============================================ */
+        .home-content {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .flare-icon {
+            font-size: 72px;
+            margin-bottom: 28px;
+            animation: pulse 2.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 40px var(--flare-glow));
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .headline {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(36px, 10vw, 48px);
+            letter-spacing: 3px;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .subhead {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 300px;
+            margin: 0 auto 40px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
+            color: white;
+            border: none;
+            padding: 20px 44px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 22px;
+            letter-spacing: 3px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 8px 40px var(--flare-glow);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 50px var(--flare-glow);
+        }
+
+        .btn-sub {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        .tagline {
+            margin-top: 36px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tagline-badge {
+            background: rgba(255, 107, 53, 0.15);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            color: #ff8c5a;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .tagline-badge.teal {
+            background: rgba(20, 184, 166, 0.15);
+            border-color: rgba(20, 184, 166, 0.3);
+            color: #5eead4;
+        }
+
+        /* ============================================
+           FORM SCREEN
+           ============================================ */
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 0;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .form-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px;
+            letter-spacing: 3px;
+            margin-bottom: 28px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .location-card {
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.12) 0%, rgba(20, 184, 166, 0.04) 100%);
+            border: 1px solid rgba(20, 184, 166, 0.25);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 28px;
+        }
+
+        .location-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .location-icon {
+            font-size: 22px;
+        }
+
+        .location-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            letter-spacing: 2px;
+            color: #5eead4;
+            text-transform: uppercase;
+        }
+
+        .location-required {
+            background: var(--flare-orange);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-left: auto;
+            letter-spacing: 1px;
+        }
+
+        .location-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .location-highlight {
+            color: #5eead4;
+            font-weight: 600;
+        }
+
+        .zip-input {
+            width: 100%;
+            background: rgba(10, 10, 15, 0.6);
+            border: 2px solid rgba(20, 184, 166, 0.3);
+            border-radius: 14px;
+            padding: 18px;
+            font-size: 28px;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 12px;
+            color: var(--text-primary);
+            text-align: center;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .zip-input:focus {
+            border-color: #5eead4;
+            box-shadow: 0 0 25px rgba(20, 184, 166, 0.3);
+        }
+
+        .zip-input::placeholder {
+            color: var(--text-muted);
+            letter-spacing: 8px;
+        }
+
+        .zip-error {
+            color: var(--flare-red);
+            font-size: 12px;
+            margin-top: 8px;
+            text-align: center;
+            display: none;
+        }
+
+        .zip-error.show {
+            display: block;
+        }
+
+        .section-label {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 14px;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 18px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .option-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .option-btn.selected {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.25) 0%, rgba(255, 107, 53, 0.1) 100%);
+            border-color: rgba(255, 107, 53, 0.5);
+            color: #ff8c5a;
+            box-shadow: 0 6px 25px rgba(255, 107, 53, 0.2);
+        }
+
+        .option-icon {
+            font-size: 28px;
+        }
+
+        .option-label {
+            line-height: 1.3;
+        }
+
+        .other-btn {
+            grid-column: span 3;
+            flex-direction: row;
+            justify-content: center;
+            padding: 14px 20px;
+            gap: 12px;
+        }
+
+        .other-btn .option-icon {
+            font-size: 22px;
+        }
+
+        .rate-limit-msg {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 14px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .rate-limit-msg.show {
+            display: block;
+        }
+
+        .rate-limit-text {
+            font-size: 13px;
+            color: var(--flare-red);
+            text-align: center;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
+            color: white;
+            border: none;
+            padding: 20px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 22px;
+            letter-spacing: 3px;
+            border-radius: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 8px 35px var(--flare-glow);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            margin-top: 24px;
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-submit:not(:disabled):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 45px var(--flare-glow);
+        }
+
+        /* ============================================
+           PRAYER SCREEN
+           ============================================ */
+        .prayer-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .prayer-header-icon {
+            font-size: 52px;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 0 20px var(--flare-glow));
+        }
+
+        .prayer-header-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 30px;
+            letter-spacing: 3px;
+            color: var(--flare-orange);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .prayer-header-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .prayer-id-badge {
+            display: inline-block;
+            background: rgba(255, 107, 53, 0.15);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 15px;
+            letter-spacing: 3px;
+            color: var(--flare-orange);
+            margin-top: 14px;
+        }
+
+        /* Step Dots */
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .step-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .step-dot.active {
+            background: var(--flare-orange);
+            box-shadow: 0 0 12px var(--flare-glow);
+        }
+
+        .step-dot.completed {
+            background: var(--flare-orange);
+        }
+
+        /* Prayer Intro */
+        .prayer-intro-box {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .prayer-intro-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        /* Prayer Box */
+        .prayer-box {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.08) 0%, rgba(255, 68, 68, 0.04) 100%);
+            border: 1px solid rgba(255, 107, 53, 0.15);
+            border-radius: 20px;
+            padding: 28px 24px;
+            margin-bottom: 24px;
+        }
+
+        .prayer-instruction {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .prayer-line {
+            font-size: 18px;
+            color: var(--text-primary);
+            text-align: center;
+            margin-bottom: 14px;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        .prayer-line.quote {
+            font-style: italic;
+            color: var(--gold);
+            font-size: 20px;
+        }
+
+        .prayer-pause {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin: 16px 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .prayer-context {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin: 10px 0;
+            font-style: italic;
+        }
+
+        /* Scripture */
+        .scripture-box {
+            background: rgba(20, 20, 25, 0.6);
+            border-left: 4px solid var(--gold);
+            padding: 20px 24px;
+            border-radius: 0 14px 14px 0;
+            margin-bottom: 24px;
+        }
+
+        .scripture-text {
+            font-style: italic;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .scripture-ref {
+            font-size: 14px;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .scripture-extra {
+            margin-top: 14px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* Safety Message */
+        .safety-message {
+            background: linear-gradient(135deg, rgba(74, 158, 255, 0.12) 0%, rgba(74, 158, 255, 0.04) 100%);
+            border: 1px solid rgba(74, 158, 255, 0.25);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            display: none;
+        }
+
+        .safety-message.show {
+            display: block;
+        }
+
+        .safety-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #60a5fa;
+            margin-bottom: 10px;
+        }
+
+        .safety-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .safety-resources {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .safety-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .safety-link a {
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Action Buttons */
+        .prayer-actions {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 16px 18px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s;
+            text-align: center;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
+            color: white;
+            border: none;
+            box-shadow: 0 6px 25px rgba(255, 107, 53, 0.3);
+        }
+
+        .action-btn.primary:hover {
+            transform: translateY(-2px);
+        }
+
+        .action-btn.secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .action-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--flare-orange);
+        }
+
+        /* Warriors Status */
+        .warriors-status {
+            background: rgba(20, 20, 25, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 16px 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .warriors-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .warriors-text strong {
+            color: var(--flare-orange);
+        }
+
+        /* Prayer Wall Link */
+        .wall-link-box {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 107, 53, 0.05) 100%);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .wall-link-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+        }
+
+        .wall-link-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
+            color: white;
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 16px;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+        }
+
+        .wall-link-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--flare-glow);
+        }
+
+        /* Physical Redirect */
+        .redirect-box {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 107, 53, 0.04) 100%);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .redirect-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            letter-spacing: 2px;
+            color: var(--flare-orange);
+            margin-bottom: 14px;
+        }
+
+        .redirect-text {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        .redirect-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .redirect-item {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 14px 18px;
+            font-size: 14px;
+            color: var(--text-primary);
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .redirect-icon {
+            font-size: 22px;
+        }
+
+        /* Home Link */
+        .home-link {
+            text-align: center;
+        }
+
+        .home-link button {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 14px;
+            cursor: pointer;
+            padding: 12px;
+        }
+
+        .home-link button:hover {
+            color: var(--text-primary);
+        }
+
+        /* ============================================
+           EMERGENCY HOTLINES
+           ============================================ */
+        .emergency-section {
+            background: rgba(20, 20, 25, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 32px;
+        }
+
+        .emergency-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 14px;
+            letter-spacing: 2px;
+            color: var(--warning-yellow);
+            text-align: center;
+            margin-bottom: 14px;
+        }
+
+        .emergency-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .emergency-item:last-child {
+            border-bottom: none;
+        }
+
+        .emergency-name {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .emergency-link {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .emergency-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .footer-link {
+            color: var(--flare-orange);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        /* Loading & Popup */
+        .loading {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 10, 15, 0.95);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .loading.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: var(--flare-orange);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-image"></div>
+    <div class="bg-glow"></div>
+
+    <div class="app-container">
+        <div class="content-wrapper">
+
+            <!-- ============================================
+                 HOME SCREEN
+                 ============================================ -->
+            <div id="homeScreen" class="screen active">
+                <div class="home-content">
+                    <div class="flare-icon">🔥</div>
+                    <h1 class="headline">You don't have to<br>fight this alone</h1>
+                    <p class="subhead">Send up a flare. Local prayer warriors are standing by.</p>
+                    
+                    <button class="btn-primary" id="startBtn">
+                        <span>NEED PRAYER?</span>
+                        <span class="btn-sub">🔥 SEND A FLARE!</span>
+                    </button>
+
+                    <div class="tagline">
+                        <span class="tagline-badge">🔒 Anonymous</span>
+                        <span class="tagline-badge teal">⚡ Immediate</span>
+                        <span class="tagline-badge teal">📍 Local</span>
+                    </div>
+
+                    <div class="emergency-section">
+                        <h3 class="emergency-title">⚡ EMERGENCY HOTLINES</h3>
+                        <div class="emergency-item">
+                            <span class="emergency-name">Suicide & Crisis Lifeline</span>
+                            <a href="tel:988" class="emergency-link">📞 988</a>
+                        </div>
+                        <div class="emergency-item">
+                            <span class="emergency-name">Crisis Text Line</span>
+                            <a href="sms:741741&body=HELLO" class="emergency-link">💬 741741</a>
+                        </div>
+                        <div class="emergency-item">
+                            <span class="emergency-name">Domestic Violence</span>
+                            <a href="tel:18007997233" class="emergency-link">📞 1-800-799-7233</a>
+                        </div>
+                        <div class="emergency-item">
+                            <span class="emergency-name">SAMHSA Helpline</span>
+                            <a href="tel:18006624357" class="emergency-link">📞 1-800-662-4357</a>
+                        </div>
+                    </div>
+
+                    <footer class="footer">
+                        <a href="watchman.html" class="footer-link">Prayer Warriors Enter Here</a>
+                    </footer>
+                </div>
+            </div>
+
+            <!-- ============================================
+                 FORM SCREEN
+                 ============================================ -->
+            <div id="formScreen" class="screen">
+                <button class="back-btn" id="backBtn">← Back</button>
+                
+                <h2 class="form-title">Send Your Flare</h2>
+
+                <div class="location-card">
+                    <div class="location-header">
+                        <span class="location-icon">📍</span>
+                        <span class="location-title">Your Location</span>
+                        <span class="location-required">REQUIRED</span>
+                    </div>
+                    <p class="location-text">
+                        If we have <span class="location-highlight">local prayer warriors</span> in your area, 
+                        we'll notify them. If not, our <span class="location-highlight">global Watchmen</span> 
+                        have you covered 24/7.
+                    </p>
+                    <input type="text" class="zip-input" id="zipInput" placeholder="00000" maxlength="5" inputmode="numeric">
+                    <p class="zip-error" id="zipError">Please enter your 5-digit zip code</p>
+                </div>
+
+                <p class="section-label">WHAT'S HAPPENING?</p>
+                <div class="options-grid" id="optionsGrid">
+                    <button class="option-btn" data-value="Anxiety / Panic">
+                        <span class="option-icon">😰</span>
+                        <span class="option-label">Anxiety / Panic</span>
+                    </button>
+                    <button class="option-btn" data-value="Temptation">
+                        <span class="option-icon">🎯</span>
+                        <span class="option-label">Temptation</span>
+                    </button>
+                    <button class="option-btn" data-value="Addiction craving">
+                        <span class="option-icon">⛓️</span>
+                        <span class="option-label">Addiction Craving</span>
+                    </button>
+                    <button class="option-btn" data-value="Depression / Giving up">
+                        <span class="option-icon">🌑</span>
+                        <span class="option-label">Depression / Giving Up</span>
+                    </button>
+                    <button class="option-btn" data-value="Anger / Rage">
+                        <span class="option-icon">🔥</span>
+                        <span class="option-label">Anger / Rage</span>
+                    </button>
+                    <button class="option-btn" data-value="Grief / Loss">
+                        <span class="option-icon">💔</span>
+                        <span class="option-label">Grief / Loss</span>
+                    </button>
+                    <button class="option-btn" data-value="Fear">
+                        <span class="option-icon">😨</span>
+                        <span class="option-label">Fear</span>
+                    </button>
+                    <button class="option-btn" data-value="Just need prayer">
+                        <span class="option-icon">🙏</span>
+                        <span class="option-label">Just Need Prayer</span>
+                    </button>
+                    <button class="option-btn" data-value="Spiritual Attack">
+                        <span class="option-icon">⚔️</span>
+                        <span class="option-label">Spiritual Attack</span>
+                    </button>
+                    <button class="option-btn other-btn" data-value="Other">
+                        <span class="option-icon">✏️</span>
+                        <span class="option-label">Other — Tell us what's going on</span>
+                    </button>
+                </div>
+
+                <div class="rate-limit-msg" id="rateLimitMsg">
+                    <p class="rate-limit-text">⚠️ Please wait before sending another flare. We want every prayer request to get attention.</p>
+                </div>
+
+                <button class="btn-submit" id="submitBtn" disabled>
+                    <span>🔥</span>
+                    <span>SEND FLARE</span>
+                </button>
+
+                <div class="emergency-section">
+                    <h3 class="emergency-title">⚡ EMERGENCY HOTLINES</h3>
+                    <div class="emergency-item">
+                        <span class="emergency-name">Suicide & Crisis Lifeline</span>
+                        <a href="tel:988" class="emergency-link">📞 988</a>
+                    </div>
+                    <div class="emergency-item">
+                        <span class="emergency-name">Crisis Text Line</span>
+                        <a href="sms:741741&body=HELLO" class="emergency-link">💬 741741</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================
+                 PRAYER SCREEN
+                 ============================================ -->
+            <div id="prayerScreen" class="screen">
+                <div class="prayer-header">
+                    <div class="prayer-header-icon">🔥</div>
+                    <h2 class="prayer-header-title">Right Now Prayer</h2>
+                    <p class="prayer-header-subtitle">Warriors notified. But God didn't wait for them.</p>
+                    <div class="prayer-id-badge" id="prayerIdBadge">PF-0000</div>
+                </div>
+
+                <div class="step-indicator">
+                    <div class="step-dot active" id="dot1"></div>
+                    <div class="step-dot" id="dot2"></div>
+                    <div class="step-dot" id="dot3"></div>
+                    <div class="step-dot" id="dot4"></div>
+                </div>
+
+                <div class="safety-message" id="safetyMessage">
+                    <div class="safety-title">💙 You Matter</div>
+                    <p class="safety-text">We see you're going through something heavy. Reaching out takes courage. While we're praying, please know that talking to someone trained in crisis support isn't weakness — it's wisdom.</p>
+                    <div class="safety-resources">
+                        <div class="safety-link">📞 <a href="tel:988">988 Suicide & Crisis Lifeline</a></div>
+                        <div class="safety-link">💬 <a href="sms:741741&body=HOME">Text HOME to 741741</a></div>
+                    </div>
+                </div>
+
+                <div id="prayerContent"></div>
+
+                <div class="prayer-actions">
+                    <button class="action-btn primary" id="prayedBtn">✓ I Prayed This</button>
+                    <button class="action-btn secondary" id="moreBtn">I Need More</button>
+                </div>
+
+                <div class="warriors-status">
+                    <p class="warriors-text"><strong>Warriors notified.</strong> Prayers incoming.</p>
+                </div>
+
+                <div class="wall-link-box" id="wallLinkBox">
+                    <p class="wall-link-text">⭐ Your personal prayer wall is ready. Warriors will post prayers there for you.</p>
+                    <a href="#" class="wall-link-btn" id="wallLinkBtn">VIEW YOUR PRAYER WALL →</a>
+                </div>
+
+                <div class="home-link">
+                    <button id="homeBtn">← Back to Home</button>
+                </div>
+
+                <div class="emergency-section">
+                    <h3 class="emergency-title">⚡ EMERGENCY HOTLINES</h3>
+                    <div class="emergency-item">
+                        <span class="emergency-name">Suicide & Crisis Lifeline</span>
+                        <a href="tel:988" class="emergency-link">📞 988</a>
+                    </div>
+                    <div class="emergency-item">
+                        <span class="emergency-name">Crisis Text Line</span>
+                        <a href="sms:741741&body=HELLO" class="emergency-link">💬 741741</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Loading -->
+    <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p class="loading-text">Sending your flare...</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // ============================================
+            // SUPABASE CONFIG
+            // ============================================
+            const SUPABASE_URL = 'https://shesaxxugzfdozlmigrk.supabase.co';
+            const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNoZXNheHh1Z3pmZG96bG1pZ3JrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ4MzIxMTAsImV4cCI6MjA4MDQwODExMH0.CXQqq8EAQ50w7NxnVvKwOVf5LuRr-x8tnuDajQK_qds';
+            
+            const RATE_LIMIT_MAX = 5;
+            const RATE_LIMIT_WINDOW = 3600000; // 1 hour
+
+            let db = null;
+            try {
+                db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+                console.log('✅ Supabase connected');
+            } catch (e) {
+                console.error('Supabase error:', e);
+            }
+
+            // ============================================
+            // PRAYER CONTENT - 3 PRAYERS PER CATEGORY
+            // ============================================
+            const prayerSets = {
+                "Anxiety / Panic": [
+                    {
+                        intro: "Your mind is racing. Your chest is tight. But God is not panicking. He's right here. Let's breathe with Him.",
+                        lines: [
+                            { text: "Breathe in slowly...", pause: true },
+                            { text: '"God, You are here."', quote: true },
+                            { text: "Breathe out slowly...", pause: true },
+                            { text: '"I give You this moment."', quote: true },
+                            { text: "Repeat as many times as you need.", context: true }
+                        ],
+                        scripture: "Cast all your anxiety on him because he cares for you.",
+                        reference: "1 Peter 5:7"
+                    },
+                    {
+                        intro: "You're still here. That takes strength. Let's go deeper.",
+                        lines: [
+                            { text: '"God, my thoughts won\'t stop."', quote: true },
+                            { text: "(He's not overwhelmed by them)", context: true },
+                            { text: '"Take every thought captive."', quote: true },
+                            { text: "(Picture Him catching each one)", context: true },
+                            { text: '"Replace them with Your peace."', quote: true }
+                        ],
+                        scripture: "You will keep in perfect peace those whose minds are steadfast, because they trust in you.",
+                        reference: "Isaiah 26:3"
+                    },
+                    {
+                        intro: "Three prayers in. You're fighting. God sees every breath you're taking.",
+                        lines: [
+                            { text: '"Father, I can\'t control this."', quote: true },
+                            { text: '"But You are in control."', quote: true },
+                            { text: '"I choose to rest in that."', quote: true },
+                            { text: "(Even if your body doesn't feel it yet)", context: true },
+                            { text: '"Your peace is bigger than my panic."', quote: true }
+                        ],
+                        scripture: "Peace I leave with you; my peace I give you. Do not let your hearts be troubled and do not be afraid.",
+                        reference: "John 14:27"
+                    }
+                ],
+                "Temptation": [
+                    {
+                        intro: "The pull is strong. But you sent up a flare instead of giving in. That took guts. God sees that.",
+                        lines: [
+                            { text: '"Jesus, I want to give in."', quote: true },
+                            { text: "(be honest — He already knows)", context: true },
+                            { text: '"But I\'m calling on You instead."', quote: true },
+                            { text: '"Give me the next 5 minutes."', quote: true }
+                        ],
+                        scripture: "No temptation has overtaken you except what is common to mankind.",
+                        reference: "1 Corinthians 10:13"
+                    },
+                    {
+                        intro: "Five minutes down. Let's get five more.",
+                        lines: [
+                            { text: '"God, I don\'t want to want this."', quote: true },
+                            { text: "(that's a prayer in itself)", context: true },
+                            { text: '"Change my desires."', quote: true },
+                            { text: '"Fill that empty space."', quote: true }
+                        ],
+                        scripture: "Delight yourself in the LORD, and he will give you the desires of your heart.",
+                        reference: "Psalm 37:4"
+                    },
+                    {
+                        intro: "You're still here. The temptation may not be gone, but you haven't given in. That's victory.",
+                        lines: [
+                            { text: '"I choose obedience over comfort."', quote: true },
+                            { text: '"I choose freedom over chains."', quote: true },
+                            { text: '"I choose the way out You promised."', quote: true },
+                            { text: "(He always provides one)", context: true }
+                        ],
+                        scripture: "But when you are tempted, he will also provide a way out so that you can endure it.",
+                        reference: "1 Corinthians 10:13b"
+                    }
+                ],
+                "Addiction craving": [
+                    {
+                        intro: "The craving is screaming. But you reached out instead of reaching for it. That's not nothing — that's everything.",
+                        lines: [
+                            { text: '"Jesus, I can\'t do this."', quote: true },
+                            { text: "(pause)", pause: true },
+                            { text: '"But You can."', quote: true },
+                            { text: "(pause)", pause: true },
+                            { text: '"I need You RIGHT NOW."', quote: true }
+                        ],
+                        scripture: "The LORD is close to the brokenhearted and saves those who are crushed in spirit.",
+                        reference: "Psalm 34:18"
+                    },
+                    {
+                        intro: "Still fighting. That's what warriors do. Let's keep going.",
+                        lines: [
+                            { text: '"God, this craving feels bigger than me."', quote: true },
+                            { text: "(It's not bigger than Him)", context: true },
+                            { text: '"I\'m choosing You over this."', quote: true },
+                            { text: '"Give me strength for just this moment."', quote: true }
+                        ],
+                        scripture: "No temptation has overtaken you except what is common to mankind. And God is faithful.",
+                        reference: "1 Corinthians 10:13"
+                    },
+                    {
+                        intro: "You've made it through two prayers. The craving may still be there, but so is God. And so are you.",
+                        lines: [
+                            { text: '"I am not defined by this craving."', quote: true },
+                            { text: '"I am a child of God."', quote: true },
+                            { text: '"This does not own me."', quote: true },
+                            { text: '"I walk in freedom NOW."', quote: true }
+                        ],
+                        scripture: "So if the Son sets you free, you will be free indeed.",
+                        reference: "John 8:36"
+                    }
+                ],
+                "Depression / Giving up": [
+                    {
+                        intro: "You're exhausted. Maybe you've been fighting for a long time. God doesn't need you to fight right now. He just needs you to be honest.",
+                        lines: [
+                            { text: '"God, I have nothing left."', quote: true },
+                            { text: "(that's okay — keep going)", context: true },
+                            { text: '"I don\'t feel You."', quote: true },
+                            { text: "(He can handle that)", context: true },
+                            { text: '"Don\'t let go of me."', quote: true }
+                        ],
+                        scripture: "He will not crush the weakest reed or put out a flickering candle.",
+                        reference: "Isaiah 42:3",
+                        extra: "You're the flickering candle. He's protecting your flame.",
+                        showSafety: true
+                    },
+                    {
+                        intro: "You're still here. That matters more than you know.",
+                        lines: [
+                            { text: '"God, I don\'t know why I should keep going."', quote: true },
+                            { text: "(but something made you send this flare)", context: true },
+                            { text: '"Give me one reason for today."', quote: true },
+                            { text: '"Just today. Not forever."', quote: true }
+                        ],
+                        scripture: "The LORD your God is with you, the Mighty Warrior who saves. He will take great delight in you.",
+                        reference: "Zephaniah 3:17",
+                        showSafety: true
+                    },
+                    {
+                        intro: "Three prayers. You've done the hardest thing — you've stayed. Let that sink in.",
+                        lines: [
+                            { text: '"God, I\'m choosing to believe You\'re here."', quote: true },
+                            { text: '"Even though I feel nothing."', quote: true },
+                            { text: '"That\'s faith, right?"', quote: true },
+                            { text: "(Yes. That's exactly what faith is.)", context: true },
+                            { text: '"Help my unbelief."', quote: true }
+                        ],
+                        scripture: "I do believe; help me overcome my unbelief!",
+                        reference: "Mark 9:24",
+                        showSafety: true
+                    }
+                ],
+                "Anger / Rage": [
+                    {
+                        intro: "You're angry. Maybe you have every right to be. But you stopped long enough to send this flare. That's not weakness — that's wisdom.",
+                        lines: [
+                            { text: '"God, I\'m so angry I can\'t think straight."', quote: true },
+                            { text: "(He's not scared of your anger)", context: true },
+                            { text: '"Take this from me before I explode."', quote: true }
+                        ],
+                        scripture: "In your anger do not sin.",
+                        reference: "Ephesians 4:26"
+                    },
+                    {
+                        intro: "The anger might still be hot. But you're here, not acting on it. That's strength.",
+                        lines: [
+                            { text: '"God, I don\'t want to hurt anyone."', quote: true },
+                            { text: '"Including myself."', quote: true },
+                            { text: '"Show me what\'s underneath this rage."', quote: true },
+                            { text: "(There's usually pain under anger)", context: true }
+                        ],
+                        scripture: "A gentle answer turns away wrath.",
+                        reference: "Proverbs 15:1"
+                    },
+                    {
+                        intro: "You've prayed three times instead of reacting. Do you realize how significant that is?",
+                        lines: [
+                            { text: '"God, I release this to You."', quote: true },
+                            { text: '"Vengeance is Yours, not mine."', quote: true },
+                            { text: '"Give me Your peace in exchange for my rage."', quote: true }
+                        ],
+                        scripture: "Do not take revenge, my dear friends, but leave room for God's wrath.",
+                        reference: "Romans 12:19"
+                    }
+                ],
+                "Grief / Loss": [
+                    {
+                        intro: "The weight is heavy. The absence is loud. God isn't asking you to be okay right now. He's just asking you to let Him sit with you.",
+                        lines: [
+                            { text: '"God, this hurts more than I can say."', quote: true },
+                            { text: "(let the tears come if they need to)", context: true },
+                            { text: '"Don\'t leave me alone in this."', quote: true }
+                        ],
+                        scripture: "Blessed are those who mourn, for they will be comforted.",
+                        reference: "Matthew 5:4"
+                    },
+                    {
+                        intro: "Grief has no timeline. You don't have to be 'over it.' You just have to get through this moment.",
+                        lines: [
+                            { text: '"God, I miss them."', quote: true },
+                            { text: '"I don\'t understand why."', quote: true },
+                            { text: '"But I need You to carry what I can\'t."', quote: true }
+                        ],
+                        scripture: "The LORD is close to the brokenhearted.",
+                        reference: "Psalm 34:18"
+                    },
+                    {
+                        intro: "You've let yourself feel it. That's not weakness — that's honoring what was lost.",
+                        lines: [
+                            { text: '"God, hold my grief."', quote: true },
+                            { text: '"Hold my memories."', quote: true },
+                            { text: '"Hold me."', quote: true },
+                            { text: "(He is. Right now.)", context: true }
+                        ],
+                        scripture: "He heals the brokenhearted and binds up their wounds.",
+                        reference: "Psalm 147:3",
+                        extra: "Grief is not a lack of faith. It's the proof that you loved."
+                    }
+                ],
+                "Fear": [
+                    {
+                        intro: "Fear is loud right now. But God's voice is steady. Let's tune into Him.",
+                        lines: [
+                            { text: '"God, I\'m afraid."', quote: true },
+                            { text: "(name it — that takes power from it)", context: true },
+                            { text: '"Be bigger than this fear."', quote: true }
+                        ],
+                        scripture: "For God has not given us a spirit of fear, but of power and of love and of a sound mind.",
+                        reference: "2 Timothy 1:7"
+                    },
+                    {
+                        intro: "The fear may still be there. But so is the One who created the universe.",
+                        lines: [
+                            { text: '"God, I don\'t know what\'s going to happen."', quote: true },
+                            { text: '"But You do."', quote: true },
+                            { text: '"I choose to trust You with what I can\'t control."', quote: true }
+                        ],
+                        scripture: "When I am afraid, I put my trust in you.",
+                        reference: "Psalm 56:3"
+                    },
+                    {
+                        intro: "Three prayers against the fear. You're building something here — it's called faith.",
+                        lines: [
+                            { text: '"I will not be ruled by fear."', quote: true },
+                            { text: '"I am held by a God who never fails."', quote: true },
+                            { text: '"Fear has no authority here."', quote: true }
+                        ],
+                        scripture: "So do not fear, for I am with you; do not be dismayed, for I am your God.",
+                        reference: "Isaiah 41:10"
+                    }
+                ],
+                "Spiritual Attack": [
+                    {
+                        intro: "You're under attack. You know it. The enemy wants you isolated and hopeless. But you called for backup. Smart move.",
+                        lines: [
+                            { text: "Say this OUT LOUD:", context: true },
+                            { text: '"In the name of Jesus, I resist you."', quote: true },
+                            { text: '"You have no authority here."', quote: true }
+                        ],
+                        scripture: "Submit yourselves therefore to God. Resist the devil, and he will flee from you.",
+                        reference: "James 4:7"
+                    },
+                    {
+                        intro: "Still under fire? Good thing you serve a God who's already won the war.",
+                        lines: [
+                            { text: '"I am covered by the blood of Jesus."', quote: true },
+                            { text: '"Every lie you speak is powerless."', quote: true },
+                            { text: '"The truth is: I am God\'s child."', quote: true },
+                            { text: '"And you cannot have me."', quote: true }
+                        ],
+                        scripture: "The one who is in you is greater than the one who is in the world.",
+                        reference: "1 John 4:4"
+                    },
+                    {
+                        intro: "Three times you've declared truth. That's spiritual warfare. Keep going if you need to.",
+                        lines: [
+                            { text: '"I put on the full armor of God."', quote: true },
+                            { text: '"Truth. Righteousness. Peace. Faith. Salvation. The Word."', quote: true },
+                            { text: '"I stand firm."', quote: true },
+                            { text: '"The Lord rebuke you. NOW GO."', quote: true }
+                        ],
+                        scripture: "Put on the full armor of God, so that you can take your stand against the devil's schemes.",
+                        reference: "Ephesians 6:11",
+                        extra: "He HAS to flee. It's not optional. Keep resisting."
+                    }
+                ],
+                "Just need prayer": [
+                    {
+                        intro: "You don't have to explain it. God knows what you need before you ask.",
+                        lines: [
+                            { text: '"God, I\'m here."', quote: true },
+                            { text: "(that's enough)", context: true },
+                            { text: '"Just meet me where I am."', quote: true }
+                        ],
+                        scripture: "The Spirit helps us in our weakness. We do not know what we ought to pray for, but the Spirit himself intercedes for us.",
+                        reference: "Romans 8:26"
+                    },
+                    {
+                        intro: "Sometimes presence is better than words. God is present. So are you.",
+                        lines: [
+                            { text: '"God, I don\'t have words."', quote: true },
+                            { text: '"Let Your Spirit pray for me."', quote: true },
+                            { text: '"You know my heart."', quote: true }
+                        ],
+                        scripture: "Before a word is on my tongue you, LORD, know it completely.",
+                        reference: "Psalm 139:4"
+                    },
+                    {
+                        intro: "Three prayers of simply being present. That IS prayer. You're doing it right.",
+                        lines: [
+                            { text: '"Thank You for being here."', quote: true },
+                            { text: '"Thank You for never leaving."', quote: true },
+                            { text: '"I rest in Your presence."', quote: true }
+                        ],
+                        scripture: "Be still, and know that I am God.",
+                        reference: "Psalm 46:10"
+                    }
+                ],
+                "Other": [
+                    {
+                        intro: "Whatever you're facing right now, God sees it. He's not confused. He's not overwhelmed. And He's right here.",
+                        lines: [
+                            { text: '"God, You know what I\'m dealing with."', quote: true },
+                            { text: "(even if you can't name it)", context: true },
+                            { text: '"I\'m bringing it to You."', quote: true }
+                        ],
+                        scripture: "Trust in the LORD with all your heart and lean not on your own understanding.",
+                        reference: "Proverbs 3:5-6"
+                    },
+                    {
+                        intro: "You reached out. That's not weakness — that's wisdom.",
+                        lines: [
+                            { text: '"God, I need Your help."', quote: true },
+                            { text: '"I can\'t figure this out on my own."', quote: true },
+                            { text: '"Show me what to do next."', quote: true }
+                        ],
+                        scripture: "If any of you lacks wisdom, you should ask God, who gives generously to all.",
+                        reference: "James 1:5"
+                    },
+                    {
+                        intro: "Three prayers in. Whatever this is, you're not facing it alone anymore.",
+                        lines: [
+                            { text: '"God, I surrender this to You."', quote: true },
+                            { text: '"All of it — even the parts I\'m holding back."', quote: true },
+                            { text: '"Have Your way."', quote: true }
+                        ],
+                        scripture: "Come to me, all you who are weary and burdened, and I will give you rest.",
+                        reference: "Matthew 11:28"
+                    }
+                ]
+            };
+
+            // Physical redirect (step 4)
+            const physicalRedirect = {
+                title: "Time to Move",
+                text: "You've done the spiritual work. Now let's get your body involved. Even small physical changes can interrupt the cycle.",
+                items: [
+                    { icon: "🚿", text: "Splash cold water on your face" },
+                    { icon: "🚶", text: "Step outside for 2 minutes" },
+                    { icon: "💧", text: "Get a glass of water and drink it slowly" },
+                    { icon: "📝", text: "Write down 3 things you're grateful for" },
+                    { icon: "📱", text: "Text someone you trust — just say hi" },
+                    { icon: "🎵", text: "Put on worship music and just sit" }
+                ],
+                closing: "You've done good work here. Come back anytime. Warriors are still praying."
+            };
+
+            // ============================================
+            // STATE
+            // ============================================
+            let selectedCategory = null;
+            let currentPrayerId = null;
+            let currentAccessToken = null;
+            let currentStep = 1;
+
+            // ============================================
+            // DOM ELEMENTS
+            // ============================================
+            const homeScreen = document.getElementById('homeScreen');
+            const formScreen = document.getElementById('formScreen');
+            const prayerScreen = document.getElementById('prayerScreen');
+            const loading = document.getElementById('loading');
+            const zipInput = document.getElementById('zipInput');
+            const submitBtn = document.getElementById('submitBtn');
+            const prayerContent = document.getElementById('prayerContent');
+            const safetyMessage = document.getElementById('safetyMessage');
+
+            // ============================================
+            // NAVIGATION
+            // ============================================
+            function showScreen(screen) {
+                homeScreen.classList.remove('active');
+                formScreen.classList.remove('active');
+                prayerScreen.classList.remove('active');
+                screen.classList.add('active');
+                window.scrollTo(0, 0);
+            }
+
+            document.getElementById('startBtn').addEventListener('click', () => showScreen(formScreen));
+            document.getElementById('backBtn').addEventListener('click', () => {
+                resetForm();
+                showScreen(homeScreen);
+            });
+            document.getElementById('homeBtn').addEventListener('click', () => {
+                resetForm();
+                showScreen(homeScreen);
+            });
+
+            // ============================================
+            // CATEGORY SELECTION
+            // ============================================
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedCategory = this.dataset.value;
+                    validateForm();
+                });
+            });
+
+            // ============================================
+            // ZIP INPUT
+            // ============================================
+            zipInput.addEventListener('input', function() {
+                this.value = this.value.replace(/\D/g, '').slice(0, 5);
+                validateForm();
+            });
+
+            // ============================================
+            // FORM VALIDATION
+            // ============================================
+            function validateForm() {
+                const zipValid = zipInput.value.length === 5;
+                const categoryValid = selectedCategory !== null;
+                const rateLimitOk = checkRateLimit();
+                
+                document.getElementById('zipError').classList.toggle('show', zipInput.value.length > 0 && !zipValid);
+                submitBtn.disabled = !(zipValid && categoryValid && rateLimitOk);
+            }
+
+            function resetForm() {
+                zipInput.value = '';
+                selectedCategory = null;
+                currentStep = 1;
+                document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+                submitBtn.disabled = true;
+                document.getElementById('zipError').classList.remove('show');
+            }
+
+            // ============================================
+            // RATE LIMITING
+            // ============================================
+            function checkRateLimit() {
+                const history = JSON.parse(localStorage.getItem('flareHistory') || '[]');
+                const now = Date.now();
+                const recent = history.filter(t => now - t < RATE_LIMIT_WINDOW);
+                localStorage.setItem('flareHistory', JSON.stringify(recent));
+                
+                const limited = recent.length >= RATE_LIMIT_MAX;
+                document.getElementById('rateLimitMsg').classList.toggle('show', limited);
+                return !limited;
+            }
+
+            function recordFlare() {
+                const history = JSON.parse(localStorage.getItem('flareHistory') || '[]');
+                history.push(Date.now());
+                localStorage.setItem('flareHistory', JSON.stringify(history));
+            }
+
+            // ============================================
+            // SEND FLARE
+            // ============================================
+            submitBtn.addEventListener('click', sendFlare);
+
+            async function sendFlare() {
+                if (!selectedCategory || zipInput.value.length !== 5) return;
+                if (!checkRateLimit()) return;
+
+                loading.classList.add('active');
+                submitBtn.disabled = true;
+
+                currentPrayerId = 'PF-' + Math.floor(1000 + Math.random() * 9000);
+                currentAccessToken = generateToken();
+
+                try {
+                    // Save flare
+                    if (db) {
+                        await db.from('Prayer Flares').insert([{
+                            prayer_id: currentPrayerId,
+                            zip_code: zipInput.value,
+                            category: selectedCategory,
+                            status: 'active',
+                            prayer_count: 0
+                        }]);
+                        console.log('✅ Flare saved');
+
+                        // Create wall
+                        const { data: wallData } = await db.from('Prayer Walls').insert([{
+                            prayer_id: currentPrayerId,
+                            access_token: currentAccessToken
+                        }]).select();
+
+                        if (wallData?.[0]) {
+                            await postInitialPrayer(wallData[0].id);
+                        }
+                    }
+
+                    recordFlare();
+                    
+                    // Show prayer screen
+                    document.getElementById('prayerIdBadge').textContent = currentPrayerId;
+                    document.getElementById('wallLinkBtn').href = `wall.html?id=${currentPrayerId}&token=${currentAccessToken}`;
+                    currentStep = 1;
+                    renderPrayer();
+                    updateStepDots();
+                    showScreen(prayerScreen);
+
+                } catch (err) {
+                    console.error('Error:', err);
+                    alert('Something went wrong. Please try again.');
+                }
+
+                loading.classList.remove('active');
+            }
+
+            // ============================================
+            // INITIAL AI PRAYER
+            // ============================================
+            async function postInitialPrayer(wallId) {
+                const prayers = {
+                    'Anxiety / Panic': { text: "Heavenly Father, we lift up this soul battling anxiety. Calm their heart, quiet their thoughts. You are their refuge. In Jesus' name, Amen.", scripture: "Isaiah 41:10" },
+                    'Temptation': { text: "Lord Jesus, provide a way of escape. Strengthen their resolve. They are Yours. In Your mighty name, Amen.", scripture: "1 Corinthians 10:13" },
+                    'Addiction craving': { text: "Father God, break the power of this craving in Jesus' name. You are stronger than any chain. Give them strength. Amen.", scripture: "Psalm 34:17-18" },
+                    'Depression / Giving up': { text: "Loving Father, we speak LIFE over them. Their story is not over. You are close to the brokenhearted. Hold them. Amen.", scripture: "Psalm 34:18" },
+                    'Anger / Rage': { text: "Lord, cool the fire within. Replace rage with Your peace. Bring calm to the storm. In Jesus' name, Amen.", scripture: "James 1:19-20" },
+                    'Grief / Loss': { text: "Compassionate Father, hold this grieving heart. Comfort them in ways only You can. In Jesus' name, Amen.", scripture: "Matthew 5:4" },
+                    'Fear': { text: "Mighty God, we rebuke fear! You have not given them a spirit of fear. Replace it with faith. Amen.", scripture: "2 Timothy 1:7" },
+                    'Spiritual Attack': { text: "Lord Jesus, we plead Your blood over them. Satan has NO authority here. Victory belongs to Jesus! Amen.", scripture: "Ephesians 6:12" },
+                    'Just need prayer': { text: "Father, You know what they face. Meet them where they are. Surround them with Your love. Amen.", scripture: "Romans 8:26" },
+                    'Other': { text: "Lord, whatever they face, You see. Meet them in their need. They are not alone. Amen.", scripture: "Psalm 46:1" }
+                };
+
+                const p = prayers[selectedCategory] || prayers['Other'];
+
+                try {
+                    await db.from('Prayers').insert([{
+                        wall_id: wallId,
+                        prayer_id: currentPrayerId,
+                        watchman_name: 'The Watchman Team',
+                        prayer_text: p.text,
+                        scripture_reference: p.scripture,
+                        is_ai_generated: true
+                    }]);
+                    console.log('✅ Initial prayer posted');
+                } catch (err) {
+                    console.error('Prayer error:', err);
+                }
+            }
+
+            // ============================================
+            // RENDER PRAYER
+            // ============================================
+            function renderPrayer() {
+                let html = '';
+                
+                const catKey = selectedCategory?.startsWith('Other:') ? 'Other' : selectedCategory;
+                const prayers = prayerSets[catKey] || prayerSets['Just need prayer'];
+
+                if (currentStep <= 3) {
+                    const prayer = prayers[currentStep - 1] || prayers[0];
+
+                    // Intro
+                    html += `<div class="prayer-intro-box"><p class="prayer-intro-text">${prayer.intro}</p></div>`;
+
+                    // Prayer box
+                    html += '<div class="prayer-box">';
+                    html += '<p class="prayer-instruction">Say these out loud or in your heart:</p>';
+                    
+                    prayer.lines.forEach(line => {
+                        if (line.pause) {
+                            html += `<p class="prayer-pause">${line.text}</p>`;
+                        } else if (line.quote) {
+                            html += `<p class="prayer-line quote">${line.text}</p>`;
+                        } else if (line.context) {
+                            html += `<p class="prayer-context">${line.text}</p>`;
+                        }
+                    });
+                    html += '</div>';
+
+                    // Scripture
+                    html += '<div class="scripture-box">';
+                    html += `<p class="scripture-text">"${prayer.scripture}"</p>`;
+                    html += `<p class="scripture-ref">— ${prayer.reference}</p>`;
+                    if (prayer.extra) {
+                        html += `<p class="scripture-extra">${prayer.extra}</p>`;
+                    }
+                    html += '</div>';
+
+                    // Safety message
+                    safetyMessage.classList.toggle('show', prayer.showSafety || false);
+
+                    // Reset buttons
+                    document.getElementById('prayedBtn').textContent = '✓ I Prayed This';
+                    document.getElementById('prayedBtn').style.background = '';
+                    document.getElementById('moreBtn').style.display = 'block';
+
+                } else {
+                    // Step 4: Physical redirect
+                    safetyMessage.classList.remove('show');
+
+                    html += '<div class="redirect-box">';
+                    html += `<h3 class="redirect-title">${physicalRedirect.title}</h3>`;
+                    html += `<p class="redirect-text">${physicalRedirect.text}</p>`;
+                    html += '<div class="redirect-items">';
+                    physicalRedirect.items.forEach(item => {
+                        html += `<div class="redirect-item"><span class="redirect-icon">${item.icon}</span><span>${item.text}</span></div>`;
+                    });
+                    html += '</div></div>';
+
+                    html += `<div class="prayer-intro-box"><p class="prayer-intro-text">${physicalRedirect.closing}</p></div>`;
+
+                    document.getElementById('prayedBtn').textContent = '✓ I Did Something';
+                    document.getElementById('moreBtn').style.display = 'none';
+                }
+
+                prayerContent.innerHTML = html;
+            }
+
+            // ============================================
+            // STEP DOTS
+            // ============================================
+            function updateStepDots() {
+                for (let i = 1; i <= 4; i++) {
+                    const dot = document.getElementById('dot' + i);
+                    dot.classList.remove('active', 'completed');
+                    if (i < currentStep) {
+                        dot.classList.add('completed');
+                    } else if (i === currentStep) {
+                        dot.classList.add('active');
+                    }
+                }
+            }
+
+            // ============================================
+            // ACTION BUTTONS
+            // ============================================
+            document.getElementById('prayedBtn').addEventListener('click', function() {
+                this.textContent = '✓ Amen';
+                this.style.background = 'rgba(255, 107, 53, 0.2)';
+            });
+
+            document.getElementById('moreBtn').addEventListener('click', function() {
+                currentStep++;
+                if (currentStep > 4) currentStep = 4;
+                renderPrayer();
+                updateStepDots();
+                window.scrollTo(0, 0);
+            });
+
+            // ============================================
+            // HELPERS
+            // ============================================
+            function generateToken() {
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                let token = '';
+                for (let i = 0; i < 32; i++) {
+                    token += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                return token;
+            }
+
+            console.log('✅ Prayer Flare V8 loaded');
+        });
+    </script>
+</body>
+</html>

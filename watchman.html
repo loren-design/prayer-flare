@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>Watchman Portal - Prayer Flare</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #141419;
+            --bg-elevated: #1c1c24;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0c0;
+            --text-muted: #707080;
+            --flare-orange: #ff6b35;
+            --flare-red: #ff4444;
+            --flare-glow: rgba(255, 107, 53, 0.4);
+            --success-green: #34d399;
+            --gold: #ffd700;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            letter-spacing: 3px;
+            color: var(--flare-orange);
+        }
+
+        .header-badge {
+            background: rgba(52, 211, 153, 0.15);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--success-green);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px;
+            color: var(--flare-orange);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .flare-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .flare-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .flare-id {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            letter-spacing: 2px;
+            color: var(--flare-orange);
+        }
+
+        .flare-time {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .flare-category {
+            display: inline-block;
+            background: rgba(255, 107, 53, 0.15);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #ff8c5a;
+            margin-bottom: 12px;
+        }
+
+        .flare-location {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .pray-btn {
+            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .pray-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--flare-glow);
+        }
+
+        .pray-btn.prayed {
+            background: rgba(52, 211, 153, 0.2);
+            color: var(--success-green);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .prayer-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .prayer-modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .modal-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            letter-spacing: 2px;
+            color: var(--flare-orange);
+            margin-bottom: 8px;
+        }
+
+        .modal-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .prayer-textarea {
+            width: 100%;
+            background: var(--bg-dark);
+            border: 2px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 15px;
+            color: var(--text-primary);
+            resize: none;
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 12px;
+        }
+
+        .prayer-textarea:focus {
+            outline: none;
+            border-color: var(--flare-orange);
+        }
+
+        .scripture-input {
+            width: 100%;
+            background: var(--bg-dark);
+            border: 2px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 14px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 20px;
+        }
+
+        .scripture-input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .modal-btn.primary {
+            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
+            color: white;
+            border: none;
+        }
+
+        .modal-btn.secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .home-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .home-link a {
+            color: var(--flare-orange);
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 class="header-title">⚔️ WATCHMAN PORTAL</h1>
+        <span class="header-badge">● Online</span>
+    </div>
+
+    <div class="container">
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-value" id="activeCount">-</div>
+                <div class="stat-label">Active Flares</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="todayCount">-</div>
+                <div class="stat-label">Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="prayerCount">-</div>
+                <div class="stat-label">Prayers Sent</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">🔥 ACTIVE FLARES</h2>
+        <div id="flaresList"></div>
+
+        <div class="home-link">
+            <a href="index.html">← Back to Home</a>
+        </div>
+    </div>
+
+    <!-- Prayer Modal -->
+    <div class="prayer-modal" id="prayerModal">
+        <div class="modal-content">
+            <h3 class="modal-title">SEND A PRAYER</h3>
+            <p class="modal-subtitle" id="modalSubtitle">For PF-0000</p>
+            <textarea class="prayer-textarea" id="prayerText" rows="5" placeholder="Write your prayer here..."></textarea>
+            <input type="text" class="scripture-input" id="scriptureRef" placeholder="Scripture reference (optional, e.g. Psalm 23:1)">
+            <div class="modal-actions">
+                <button class="modal-btn secondary" onclick="closeModal()">Cancel</button>
+                <button class="modal-btn primary" onclick="submitPrayer()">Send Prayer 🙏</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://shesaxxugzfdozlmigrk.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNoZXNheHh1Z3pmZG96bG1pZ3JrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ4MzIxMTAsImV4cCI6MjA4MDQwODExMH0.CXQqq8EAQ50w7NxnVvKwOVf5LuRr-x8tnuDajQK_qds';
+
+        const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        let currentFlareId = null;
+        let prayedFlares = JSON.parse(localStorage.getItem('prayedFlares') || '[]');
+
+        async function loadFlares() {
+            try {
+                // Get active flares
+                const { data: flares, error } = await db
+                    .from('Prayer Flares')
+                    .select('*')
+                    .eq('status', 'active')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                // Update stats
+                document.getElementById('activeCount').textContent = flares?.length || 0;
+
+                // Get today's count
+                const today = new Date().toISOString().split('T')[0];
+                const todayFlares = flares?.filter(f => f.created_at?.startsWith(today)) || [];
+                document.getElementById('todayCount').textContent = todayFlares.length;
+
+                // Get prayer count
+                const { count } = await db.from('Prayers').select('*', { count: 'exact', head: true });
+                document.getElementById('prayerCount').textContent = count || 0;
+
+                // Render flares
+                if (!flares || flares.length === 0) {
+                    document.getElementById('flaresList').innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">🕊️</div>
+                            <p>No active flares right now. Check back soon.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let html = '';
+                flares.forEach(flare => {
+                    const time = new Date(flare.created_at).toLocaleString();
+                    const hasPrayed = prayedFlares.includes(flare.prayer_id);
+                    
+                    html += `
+                        <div class="flare-card">
+                            <div class="flare-header">
+                                <span class="flare-id">${flare.prayer_id}</span>
+                                <span class="flare-time">${time}</span>
+                            </div>
+                            <div class="flare-category">${flare.category || 'General'}</div>
+                            <div class="flare-location">📍 ${flare.zip_code || 'Unknown'}</div>
+                            <button class="pray-btn ${hasPrayed ? 'prayed' : ''}" onclick="openPrayerModal('${flare.prayer_id}')">
+                                ${hasPrayed ? '✓ Prayed' : '🙏 Pray for This Person'}
+                            </button>
+                        </div>
+                    `;
+                });
+
+                document.getElementById('flaresList').innerHTML = html;
+
+            } catch (err) {
+                console.error('Error loading flares:', err);
+                document.getElementById('flaresList').innerHTML = '<div class="empty-state">Error loading flares. Please refresh.</div>';
+            }
+        }
+
+        function openPrayerModal(prayerId) {
+            currentFlareId = prayerId;
+            document.getElementById('modalSubtitle').textContent = `For ${prayerId}`;
+            document.getElementById('prayerText').value = '';
+            document.getElementById('scriptureRef').value = '';
+            document.getElementById('prayerModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('prayerModal').classList.remove('show');
+            currentFlareId = null;
+        }
+
+        async function submitPrayer() {
+            const prayerText = document.getElementById('prayerText').value.trim();
+            const scriptureRef = document.getElementById('scriptureRef').value.trim();
+
+            if (!prayerText) {
+                alert('Please write a prayer first.');
+                return;
+            }
+
+            try {
+                // Get wall ID
+                const { data: wall } = await db
+                    .from('Prayer Walls')
+                    .select('id')
+                    .eq('prayer_id', currentFlareId)
+                    .single();
+
+                if (wall) {
+                    await db.from('Prayers').insert([{
+                        wall_id: wall.id,
+                        prayer_id: currentFlareId,
+                        watchman_name: 'A Prayer Warrior',
+                        prayer_text: prayerText,
+                        scripture_reference: scriptureRef || null,
+                        is_ai_generated: false
+                    }]);
+                }
+
+                // Update flare prayer count
+                await db.rpc('increment_prayer_count', { flare_id: currentFlareId }).catch(() => {});
+
+                // Mark as prayed locally
+                prayedFlares.push(currentFlareId);
+                localStorage.setItem('prayedFlares', JSON.stringify(prayedFlares));
+
+                closeModal();
+                loadFlares();
+                alert('Prayer sent! 🙏');
+
+            } catch (err) {
+                console.error('Error:', err);
+                alert('Error sending prayer. Please try again.');
+            }
+        }
+
+        // Load on start and refresh every 30 seconds
+        loadFlares();
+        setInterval(loadFlares, 30000);
+    </script>
+</body>
+</html>
