@@ -399,6 +399,34 @@
             font-size: 22px;
         }
 
+        .other-input-container {
+            margin-top: -8px;
+            margin-bottom: 12px;
+        }
+
+        .other-input {
+            width: 100%;
+            background: rgba(10, 10, 15, 0.6);
+            border: 2px solid rgba(255, 107, 53, 0.3);
+            border-radius: 14px;
+            padding: 16px;
+            font-size: 15px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            resize: none;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .other-input:focus {
+            border-color: var(--flare-orange);
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.2);
+        }
+
+        .other-input::placeholder {
+            color: var(--text-muted);
+        }
+
         .rate-limit-msg {
             background: rgba(255, 68, 68, 0.1);
             border: 1px solid rgba(255, 68, 68, 0.3);
@@ -944,26 +972,6 @@
                         <span class="tagline-badge teal">📍 Local</span>
                     </div>
 
-                    <div class="emergency-section">
-                        <h3 class="emergency-title">⚡ EMERGENCY HOTLINES</h3>
-                        <div class="emergency-item">
-                            <span class="emergency-name">Suicide & Crisis Lifeline</span>
-                            <a href="tel:988" class="emergency-link">📞 988</a>
-                        </div>
-                        <div class="emergency-item">
-                            <span class="emergency-name">Crisis Text Line</span>
-                            <a href="sms:741741&body=HELLO" class="emergency-link">💬 741741</a>
-                        </div>
-                        <div class="emergency-item">
-                            <span class="emergency-name">Domestic Violence</span>
-                            <a href="tel:18007997233" class="emergency-link">📞 1-800-799-7233</a>
-                        </div>
-                        <div class="emergency-item">
-                            <span class="emergency-name">SAMHSA Helpline</span>
-                            <a href="tel:18006624357" class="emergency-link">📞 1-800-662-4357</a>
-                        </div>
-                    </div>
-
                     <footer class="footer">
                         <a href="watchman.html" class="footer-link">Prayer Warriors Enter Here</a>
                     </footer>
@@ -1035,6 +1043,10 @@
                         <span class="option-icon">✏️</span>
                         <span class="option-label">Other — Tell us what's going on</span>
                     </button>
+                </div>
+
+                <div class="other-input-container" id="otherInputContainer" style="display: none;">
+                    <textarea class="other-input" id="otherInput" placeholder="Tell us what's going on..." rows="3"></textarea>
                 </div>
 
                 <div class="rate-limit-msg" id="rateLimitMsg">
@@ -1525,6 +1537,21 @@
             let currentPrayerId = null;
             let currentAccessToken = null;
             let currentStep = 1;
+            let showCrisisResources = false;
+
+            // Crisis trigger words
+            const triggerWords = [
+                'suicide', 'suicidal', 'kill myself', 'kill me', 'end it', 'end my life',
+                'don\'t want to live', 'dont want to live', 'want to die', 'wanna die',
+                'self-harm', 'self harm', 'hurt myself', 'cutting', 'hopeless',
+                'no reason to live', 'better off dead', 'can\'t go on', 'cant go on',
+                'give up', 'giving up', 'end it all', 'not worth living'
+            ];
+
+            function checkForTriggerWords(text) {
+                const lowerText = text.toLowerCase();
+                return triggerWords.some(word => lowerText.includes(word));
+            }
 
             // ============================================
             // DOM ELEMENTS
@@ -1562,13 +1589,36 @@
             // ============================================
             // CATEGORY SELECTION
             // ============================================
+            const otherInputContainer = document.getElementById('otherInputContainer');
+            const otherInput = document.getElementById('otherInput');
+
             document.querySelectorAll('.option-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
                     this.classList.add('selected');
                     selectedCategory = this.dataset.value;
+                    
+                    // Show/hide Other text input
+                    if (selectedCategory === 'Other') {
+                        otherInputContainer.style.display = 'block';
+                        otherInput.focus();
+                    } else {
+                        otherInputContainer.style.display = 'none';
+                    }
+                    
+                    // Check if Depression selected - will show crisis resources
+                    showCrisisResources = (selectedCategory === 'Depression / Giving up');
+                    
                     validateForm();
                 });
+            });
+
+            // Check Other input for trigger words
+            otherInput.addEventListener('input', function() {
+                if (checkForTriggerWords(this.value)) {
+                    showCrisisResources = true;
+                }
+                validateForm();
             });
 
             // ============================================
@@ -1595,9 +1645,12 @@
                 zipInput.value = '';
                 selectedCategory = null;
                 currentStep = 1;
+                showCrisisResources = false;
                 document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
                 submitBtn.disabled = true;
                 document.getElementById('zipError').classList.remove('show');
+                otherInputContainer.style.display = 'none';
+                otherInput.value = '';
             }
 
             // ============================================
@@ -1635,13 +1688,23 @@
                 currentPrayerId = 'PF-' + Math.floor(1000 + Math.random() * 9000);
                 currentAccessToken = generateToken();
 
+                // Get Other text if applicable
+                let categoryToSave = selectedCategory;
+                if (selectedCategory === 'Other' && otherInput.value.trim()) {
+                    categoryToSave = 'Other: ' + otherInput.value.trim();
+                    // Check for trigger words in Other text
+                    if (checkForTriggerWords(otherInput.value)) {
+                        showCrisisResources = true;
+                    }
+                }
+
                 try {
                     // Save flare
                     if (db) {
                         await db.from('Prayer Flares').insert([{
                             prayer_id: currentPrayerId,
                             zip_code: zipInput.value,
-                            category: selectedCategory,
+                            category: categoryToSave,
                             status: 'active',
                             prayer_count: 0
                         }]);
@@ -1749,8 +1812,9 @@
                     }
                     html += '</div>';
 
-                    // Safety message
-                    safetyMessage.classList.toggle('show', prayer.showSafety || false);
+                    // Safety message - show if Depression OR trigger words detected
+                    const shouldShowSafety = showCrisisResources || prayer.showSafety;
+                    safetyMessage.classList.toggle('show', shouldShowSafety);
 
                     // Reset buttons
                     document.getElementById('prayedBtn').textContent = '✓ I Prayed This';
