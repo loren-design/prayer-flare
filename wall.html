@@ -26,11 +26,7 @@
             --border-subtle: rgba(255, 255, 255, 0.08);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', -apple-system, sans-serif;
@@ -46,9 +42,7 @@
             min-height: 100vh;
         }
 
-        /* ============================
-           ENTRY SCREEN
-           ============================ */
+        /* Entry Screen */
         .entry-screen {
             display: flex;
             flex-direction: column;
@@ -59,15 +53,9 @@
             padding: 20px;
         }
 
-        .entry-screen.hidden {
-            display: none;
-        }
+        .entry-screen.hidden { display: none; }
 
-        .entry-icon {
-            font-size: 72px;
-            margin-bottom: 24px;
-            filter: drop-shadow(0 0 30px var(--flare-glow));
-        }
+        .entry-icon { font-size: 72px; margin-bottom: 24px; }
 
         .entry-title {
             font-family: 'Bebas Neue', sans-serif;
@@ -84,69 +72,52 @@
             line-height: 1.6;
         }
 
-        .pf-input-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 20px;
+        .email-input-box {
+            width: 100%;
+            max-width: 320px;
+            margin-bottom: 16px;
         }
 
-        .pf-prefix {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 28px;
-            letter-spacing: 2px;
-            color: var(--flare-orange);
-        }
-
-        .pf-input {
-            width: 120px;
+        .email-input {
+            width: 100%;
             background: var(--bg-card);
-            border: 2px solid rgba(255, 107, 53, 0.3);
-            border-radius: 12px;
-            padding: 14px 16px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 28px;
-            letter-spacing: 4px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 14px;
+            padding: 16px 18px;
+            font-size: 16px;
             color: var(--text-primary);
             text-align: center;
-        }
-
-        .pf-input:focus {
             outline: none;
-            border-color: var(--flare-orange);
-            box-shadow: 0 0 20px var(--flare-glow);
+            transition: all 0.3s;
         }
 
-        .pf-input::placeholder {
-            color: var(--text-muted);
-            opacity: 0.5;
+        .email-input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
         }
+
+        .email-input::placeholder { color: var(--text-muted); }
 
         .enter-btn {
-            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--gold) 0%, #f59e0b 100%);
+            color: #000;
             border: none;
-            padding: 16px 40px;
+            padding: 16px 48px;
             border-radius: 30px;
             font-family: 'Bebas Neue', sans-serif;
             font-size: 20px;
             letter-spacing: 3px;
             cursor: pointer;
-            box-shadow: 0 6px 25px var(--flare-glow);
+            font-weight: 700;
             transition: all 0.3s;
         }
 
-        .enter-btn:hover {
+        .enter-btn:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 10px 35px var(--flare-glow);
+            box-shadow: 0 10px 35px rgba(255, 215, 0, 0.3);
         }
 
-        .enter-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
+        .enter-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
         .entry-error {
             color: var(--flare-red);
@@ -155,35 +126,31 @@
             display: none;
         }
 
-        .entry-error.show {
-            display: block;
+        .entry-error.show { display: block; }
+
+        .entry-note {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 20px;
+            max-width: 280px;
+            line-height: 1.5;
         }
 
-        .entry-home-link {
-            margin-top: 40px;
-        }
-
+        .entry-home-link { margin-top: 40px; }
         .entry-home-link a {
             color: var(--text-muted);
             text-decoration: none;
             font-size: 14px;
         }
+        .entry-home-link a:hover { color: var(--flare-orange); }
 
-        .entry-home-link a:hover {
-            color: var(--flare-orange);
-        }
-
-        /* ============================
-           WALL SCREEN
-           ============================ */
+        /* Wall Screen */
         .wall-screen {
             display: none;
             padding-bottom: 100px;
         }
 
-        .wall-screen.active {
-            display: block;
-        }
+        .wall-screen.active { display: block; }
 
         .wall-header {
             text-align: center;
@@ -192,10 +159,7 @@
             margin-bottom: 24px;
         }
 
-        .wall-icon {
-            font-size: 48px;
-            margin-bottom: 12px;
-        }
+        .wall-icon { font-size: 48px; margin-bottom: 12px; }
 
         .wall-title {
             font-family: 'Bebas Neue', sans-serif;
@@ -205,23 +169,7 @@
             margin-bottom: 8px;
         }
 
-        .wall-pf {
-            display: inline-block;
-            background: rgba(255, 107, 53, 0.15);
-            border: 1px solid rgba(255, 107, 53, 0.3);
-            padding: 8px 18px;
-            border-radius: 20px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 16px;
-            letter-spacing: 3px;
-            color: var(--flare-orange);
-        }
-
-        .wall-status {
-            margin-top: 12px;
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
+        .wall-status { font-size: 14px; color: var(--text-secondary); }
 
         .wall-status-dot {
             display: inline-block;
@@ -238,9 +186,30 @@
             50% { opacity: 0.4; }
         }
 
-        /* Prayers List */
-        .prayers-section {
-            margin-top: 20px;
+        .new-prayer-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
+            color: white;
+            border: none;
+            padding: 18px 24px;
+            border-radius: 16px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-bottom: 28px;
+            box-shadow: 0 6px 25px var(--flare-glow);
+            transition: all 0.3s;
+        }
+
+        .new-prayer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 35px var(--flare-glow);
         }
 
         .section-label {
@@ -251,70 +220,113 @@
             margin-bottom: 16px;
         }
 
-        .prayer-card {
+        .prayer-request-card {
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
             border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 16px;
-            transition: all 0.3s;
+            margin-bottom: 20px;
+            overflow: hidden;
         }
 
-        .prayer-card:hover {
-            border-color: rgba(255, 107, 53, 0.2);
-        }
-
-        .prayer-card.ai-prayer {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(255, 215, 0, 0.02) 100%);
-            border-color: rgba(255, 215, 0, 0.2);
-        }
-
-        .prayer-meta {
+        .prayer-request-header {
+            background: rgba(255, 107, 53, 0.1);
+            padding: 14px 18px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            cursor: pointer;
         }
 
-        .prayer-author {
+        .prayer-request-category {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .prayer-request-icon { font-size: 20px; }
+
+        .prayer-request-label {
             font-weight: 600;
             color: var(--flare-orange);
             font-size: 14px;
         }
 
-        .prayer-card.ai-prayer .prayer-author {
-            color: var(--gold);
-        }
-
-        .prayer-time {
+        .prayer-request-time {
             font-size: 12px;
             color: var(--text-muted);
         }
 
-        .prayer-text {
-            font-size: 16px;
-            line-height: 1.8;
-            color: var(--text-secondary);
+        .prayer-request-count {
+            background: var(--flare-orange);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+
+        .prayer-request-body {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .prayer-request-body.expanded {
+            padding: 18px;
+            max-height: 2000px;
+        }
+
+        .watchman-prayer {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 16px;
             margin-bottom: 12px;
         }
 
-        .prayer-scripture {
-            font-size: 14px;
-            color: var(--gold);
-            font-style: italic;
+        .watchman-prayer:last-child { margin-bottom: 0; }
+
+        .watchman-prayer.ai-prayer {
+            background: rgba(255, 215, 0, 0.08);
+            border: 1px solid rgba(255, 215, 0, 0.15);
         }
 
-        /* Empty State */
+        .watchman-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .watchman-name {
+            font-weight: 600;
+            color: var(--flare-orange);
+            font-size: 13px;
+        }
+
+        .watchman-prayer.ai-prayer .watchman-name { color: var(--gold); }
+
+        .watchman-time { font-size: 11px; color: var(--text-muted); }
+
+        .watchman-text {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .watchman-scripture {
+            font-size: 13px;
+            color: var(--gold);
+            font-style: italic;
+            margin-top: 10px;
+        }
+
         .empty-state {
             text-align: center;
             padding: 50px 20px;
         }
 
-        .empty-icon {
-            font-size: 56px;
-            margin-bottom: 16px;
-            opacity: 0.6;
-        }
+        .empty-icon { font-size: 56px; margin-bottom: 16px; opacity: 0.6; }
 
         .empty-title {
             font-family: 'Bebas Neue', sans-serif;
@@ -330,33 +342,9 @@
             line-height: 1.6;
         }
 
-        /* Refresh Button */
-        .refresh-section {
-            text-align: center;
-            margin: 30px 0;
-        }
-
-        .refresh-btn {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: var(--text-secondary);
-            padding: 12px 28px;
-            border-radius: 25px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .refresh-btn:hover {
-            background: rgba(255, 107, 53, 0.15);
-            border-color: rgba(255, 107, 53, 0.3);
-            color: var(--flare-orange);
-        }
-
-        /* Back to Home */
         .wall-footer {
             text-align: center;
-            padding: 20px;
+            padding: 30px 20px;
             margin-top: 20px;
         }
 
@@ -366,35 +354,9 @@
             font-size: 14px;
         }
 
-        .wall-footer a:hover {
-            color: var(--flare-orange);
-        }
+        .wall-footer a:hover { color: var(--flare-orange); }
 
-        .new-flare-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
-            color: white;
-            text-decoration: none;
-            padding: 14px 28px;
-            border-radius: 25px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 16px;
-            letter-spacing: 2px;
-            margin-top: 16px;
-            box-shadow: 0 4px 20px var(--flare-glow);
-            transition: all 0.3s;
-        }
-
-        .new-flare-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        /* Loading */
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: var(--text-muted);
-        }
+        .loading { text-align: center; padding: 40px; color: var(--text-muted); }
 
         .loading-spinner {
             width: 40px;
@@ -406,9 +368,7 @@
             margin: 0 auto 16px;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -418,19 +378,20 @@
         <div class="entry-screen" id="entryScreen">
             <div class="entry-icon">🙏</div>
             <h1 class="entry-title">Your Prayer Wall</h1>
-            <p class="entry-subtitle">Enter your Prayer Flare code to access your private prayer space.</p>
+            <p class="entry-subtitle">Enter your email to access your private prayer space and see prayers from Watchman.</p>
             
-            <div class="pf-input-group">
-                <span class="pf-prefix">PF-</span>
-                <input type="text" class="pf-input" id="pfInput" placeholder="LB91" maxlength="4">
+            <div class="email-input-box">
+                <input type="email" class="email-input" id="emailInput" placeholder="your@email.com">
             </div>
             
             <button class="enter-btn" id="enterBtn" disabled>ENTER</button>
             
-            <p class="entry-error" id="entryError">Prayer wall not found. Please check your code.</p>
+            <p class="entry-error" id="entryError">No prayer wall found for this email. Send a flare first!</p>
+            
+            <p class="entry-note">Don't have a prayer wall yet? Send a flare and enter your email to create one.</p>
             
             <div class="entry-home-link">
-                <a href="index.html">← Back to Prayer Flare</a>
+                <a href="index.html">← Send a Prayer Flare</a>
             </div>
         </div>
 
@@ -438,31 +399,29 @@
         <div class="wall-screen" id="wallScreen">
             <div class="wall-header">
                 <div class="wall-icon">🕊️</div>
-                <h1 class="wall-title">Your Private Prayer Space</h1>
-                <div class="wall-pf" id="wallPfDisplay">PF-0000</div>
+                <h1 class="wall-title">Your Prayer Wall</h1>
                 <p class="wall-status">
                     <span class="wall-status-dot"></span>
                     Watchman are praying for you
                 </p>
             </div>
 
+            <a href="index.html" class="new-prayer-btn">
+                <span>🔥</span>
+                <span>Send New Prayer Request</span>
+            </a>
+
             <div class="prayers-section">
-                <p class="section-label">PRAYERS FOR YOU</p>
+                <p class="section-label">YOUR PRAYER REQUESTS</p>
                 <div id="prayersList">
                     <div class="loading">
                         <div class="loading-spinner"></div>
-                        <p>Loading prayers...</p>
+                        <p>Loading your prayers...</p>
                     </div>
                 </div>
             </div>
 
-            <div class="refresh-section">
-                <button class="refresh-btn" id="refreshBtn">🔄 Check for New Prayers</button>
-            </div>
-
             <div class="wall-footer">
-                <a href="index.html" class="new-flare-btn">🔥 Send Another Flare</a>
-                <br><br>
                 <a href="index.html">← Back to Home</a>
             </div>
         </div>
@@ -478,135 +437,150 @@
 
         const entryScreen = document.getElementById('entryScreen');
         const wallScreen = document.getElementById('wallScreen');
-        const pfInput = document.getElementById('pfInput');
+        const emailInput = document.getElementById('emailInput');
         const enterBtn = document.getElementById('enterBtn');
         const entryError = document.getElementById('entryError');
         const prayersList = document.getElementById('prayersList');
 
-        let currentPfNumber = null;
+        const categoryIcons = {
+            'Anxiety / Panic': '😰',
+            'Temptation': '🎯',
+            'Addiction craving': '⛓️',
+            'Depression / Giving up': '🌑',
+            'Anger / Rage': '🔥',
+            'Grief / Loss': '💔',
+            'Fear': '😨',
+            'Just need prayer': '🙏',
+            'Spiritual Attack': '⚔️',
+            'Other': '✏️'
+        };
 
-        // Check if PF number is in URL (direct link from prayer screen)
-        function checkUrlParams() {
-            const params = new URLSearchParams(window.location.search);
-            const pfFromUrl = params.get('pf');
-            
-            if (pfFromUrl) {
-                // Direct link - go straight to wall
-                currentPfNumber = 'PF-' + pfFromUrl;
-                showWall();
-            }
-        }
-
-        // Enable button when 4 characters entered
-        pfInput.addEventListener('input', function() {
-            // Allow letters and numbers, uppercase it
-            this.value = this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
-            enterBtn.disabled = this.value.length !== 4;
+        emailInput.addEventListener('input', function() {
+            const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value);
+            enterBtn.disabled = !isValid;
             entryError.classList.remove('show');
         });
 
-        // Enter on keyboard
-        pfInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter' && this.value.length === 4) {
-                enterBtn.click();
-            }
+        emailInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !enterBtn.disabled) enterBtn.click();
         });
 
-        // Enter button
         enterBtn.addEventListener('click', async function() {
-            const pfNumber = 'PF-' + pfInput.value;
+            const email = emailInput.value.trim().toLowerCase();
             
-            // Check if this PF exists
+            enterBtn.textContent = 'LOADING...';
+            enterBtn.disabled = true;
+
             try {
-                const { data, error } = await db
+                const { data: flares, error } = await db
                     .from('Prayer Flares')
-                    .select('prayer_id')
-                    .eq('prayer_id', pfNumber)
-                    .single();
-
-                if (error || !data) {
-                    entryError.classList.add('show');
-                    return;
-                }
-
-                currentPfNumber = pfNumber;
-                showWall();
-                
-            } catch (err) {
-                console.error('Error:', err);
-                entryError.classList.add('show');
-            }
-        });
-
-        // Show the wall
-        function showWall() {
-            entryScreen.classList.add('hidden');
-            wallScreen.classList.add('active');
-            document.getElementById('wallPfDisplay').textContent = currentPfNumber;
-            loadPrayers();
-        }
-
-        // Load prayers for this PF
-        async function loadPrayers() {
-            prayersList.innerHTML = `
-                <div class="loading">
-                    <div class="loading-spinner"></div>
-                    <p>Loading prayers...</p>
-                </div>
-            `;
-
-            try {
-                const { data: prayers, error } = await db
-                    .from('Prayers')
                     .select('*')
-                    .eq('prayer_id', currentPfNumber)
+                    .eq('email', email)
                     .order('created_at', { ascending: false });
 
                 if (error) throw error;
 
-                if (!prayers || prayers.length === 0) {
-                    prayersList.innerHTML = `
-                        <div class="empty-state">
-                            <div class="empty-icon">🙏</div>
-                            <h3 class="empty-title">Prayers Incoming</h3>
-                            <p class="empty-text">Watchman have been notified and are praying. Check back soon to see their prayers for you.</p>
-                        </div>
-                    `;
+                if (!flares || flares.length === 0) {
+                    entryError.classList.add('show');
+                    enterBtn.textContent = 'ENTER';
+                    enterBtn.disabled = false;
                     return;
                 }
 
-                let html = '';
-                prayers.forEach(prayer => {
-                    const time = formatTime(prayer.created_at);
-                    const isAi = prayer.is_ai_generated;
-                    
-                    html += `
-                        <div class="prayer-card ${isAi ? 'ai-prayer' : ''}">
-                            <div class="prayer-meta">
-                                <span class="prayer-author">${prayer.watchman_name || 'A Watchman'}</span>
-                                <span class="prayer-time">${time}</span>
-                            </div>
-                            <p class="prayer-text">${prayer.prayer_text}</p>
-                            ${prayer.scripture_reference ? `<p class="prayer-scripture">— ${prayer.scripture_reference}</p>` : ''}
-                        </div>
-                    `;
-                });
-
-                prayersList.innerHTML = html;
-
+                localStorage.setItem('prayerWallEmail', email);
+                showWall(flares);
+                
             } catch (err) {
-                console.error('Error loading prayers:', err);
-                prayersList.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-icon">⚠️</div>
-                        <h3 class="empty-title">Error Loading</h3>
-                        <p class="empty-text">Something went wrong. Please try refreshing.</p>
-                    </div>
-                `;
+                console.error('Error:', err);
+                entryError.textContent = 'Something went wrong. Please try again.';
+                entryError.classList.add('show');
+                enterBtn.textContent = 'ENTER';
+                enterBtn.disabled = false;
             }
+        });
+
+        async function showWall(flares) {
+            entryScreen.classList.add('hidden');
+            wallScreen.classList.add('active');
+            await loadPrayersForFlares(flares);
         }
 
-        // Format time
+        async function loadPrayersForFlares(flares) {
+            if (!flares || flares.length === 0) {
+                prayersList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🙏</div>
+                        <h3 class="empty-title">No Prayer Requests Yet</h3>
+                        <p class="empty-text">Send a flare to start receiving prayers from Watchman.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+
+            for (const flare of flares) {
+                const { data: prayers } = await db
+                    .from('Prayers')
+                    .select('*')
+                    .eq('prayer_id', flare.prayer_id)
+                    .order('created_at', { ascending: false });
+
+                const prayerCount = prayers ? prayers.length : 0;
+                const categoryBase = flare.category?.startsWith('Other:') ? 'Other' : flare.category;
+                const icon = categoryIcons[categoryBase] || '🙏';
+                const time = formatTime(flare.created_at);
+
+                html += `
+                    <div class="prayer-request-card">
+                        <div class="prayer-request-header" onclick="togglePrayer(this)">
+                            <div class="prayer-request-category">
+                                <span class="prayer-request-icon">${icon}</span>
+                                <span class="prayer-request-label">${flare.category}</span>
+                                <span class="prayer-request-time">${time}</span>
+                            </div>
+                            <span class="prayer-request-count">${prayerCount} prayer${prayerCount !== 1 ? 's' : ''}</span>
+                        </div>
+                        <div class="prayer-request-body">
+                `;
+
+                if (prayers && prayers.length > 0) {
+                    prayers.forEach(prayer => {
+                        const prayerTime = formatTime(prayer.created_at);
+                        const isAi = prayer.is_ai_generated;
+                        html += `
+                            <div class="watchman-prayer ${isAi ? 'ai-prayer' : ''}">
+                                <div class="watchman-meta">
+                                    <span class="watchman-name">${prayer.watchman_name || 'A Watchman'}</span>
+                                    <span class="watchman-time">${prayerTime}</span>
+                                </div>
+                                <p class="watchman-text">${prayer.prayer_text}</p>
+                                ${prayer.scripture_reference ? `<p class="watchman-scripture">— ${prayer.scripture_reference}</p>` : ''}
+                            </div>
+                        `;
+                    });
+                } else {
+                    html += `
+                        <div class="watchman-prayer">
+                            <p class="watchman-text" style="text-align: center; color: var(--text-muted);">Prayers incoming. Check back soon.</p>
+                        </div>
+                    `;
+                }
+
+                html += `</div></div>`;
+            }
+
+            prayersList.innerHTML = html;
+
+            const firstBody = prayersList.querySelector('.prayer-request-body');
+            if (firstBody) firstBody.classList.add('expanded');
+        }
+
+        function togglePrayer(header) {
+            const body = header.nextElementSibling;
+            body.classList.toggle('expanded');
+        }
+
         function formatTime(timestamp) {
             const date = new Date(timestamp);
             const now = new Date();
@@ -622,17 +596,12 @@
             return date.toLocaleDateString();
         }
 
-        // Refresh button
-        document.getElementById('refreshBtn').addEventListener('click', function() {
-            loadPrayers();
-            this.textContent = '✓ Refreshed';
-            setTimeout(() => {
-                this.textContent = '🔄 Check for New Prayers';
-            }, 2000);
-        });
-
-        // Initialize
-        checkUrlParams();
+        // Check for saved email
+        const savedEmail = localStorage.getItem('prayerWallEmail');
+        if (savedEmail) {
+            emailInput.value = savedEmail;
+            enterBtn.disabled = false;
+        }
     </script>
 </body>
 </html>
