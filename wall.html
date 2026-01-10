@@ -13,14 +13,15 @@
     <style>
         :root {
             --bg-dark: #0a0a0f;
-            --bg-card: #141419;
+            --bg-card: #12121a;
             --text-primary: #ffffff;
             --text-secondary: #e8d5c4;
-            --text-muted: #a09080;
+            --text-muted: #8a8090;
             --flare-orange: #ff6b35;
             --flare-red: #ff4444;
             --flare-glow: rgba(255, 107, 53, 0.4);
             --gold: #ffd700;
+            --gold-soft: #e8c547;
             --teal: #14b8a6;
             --border-subtle: rgba(255, 255, 255, 0.08);
         }
@@ -34,47 +35,104 @@
             min-height: 100vh;
         }
 
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-            padding-bottom: 100px;
-        }
-
-        /* Header */
-        .wall-header {
+        /* ============================
+           HERO BANNER
+           ============================ */
+        .hero-banner {
+            position: relative;
+            height: 220px;
+            background: linear-gradient(180deg, 
+                #0a0a0f 0%, 
+                #1a1020 30%,
+                #2d1f35 50%,
+                #4a2c4a 70%,
+                #ff6b35 95%,
+                #ffd700 100%
+            );
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            padding: 30px 0 20px;
-            border-bottom: 1px solid var(--border-subtle);
-            margin-bottom: 24px;
+            overflow: hidden;
         }
 
-        .wall-icon { font-size: 48px; margin-bottom: 12px; }
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(180deg, transparent 0%, var(--bg-dark) 100%);
+            z-index: 2;
+        }
 
-        .wall-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 28px;
-            letter-spacing: 3px;
+        .hero-glow {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 150px;
+            background: radial-gradient(ellipse at center bottom, rgba(255, 107, 53, 0.4) 0%, transparent 70%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+        }
+
+        .hero-cross {
+            font-size: 36px;
+            margin-bottom: 12px;
             color: var(--gold);
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+        }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 38px;
+            letter-spacing: 6px;
+            color: var(--text-primary);
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
             margin-bottom: 8px;
         }
 
-        .wall-subtitle {
+        .hero-subtitle {
             font-size: 14px;
             color: var(--text-secondary);
-            line-height: 1.5;
+            opacity: 0.9;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
         }
 
-        .wall-status {
-            display: inline-flex;
+        /* ============================
+           CONTAINER
+           ============================ */
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+            margin-top: -30px;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
-            margin-top: 12px;
-            font-size: 13px;
-            color: var(--teal);
+            padding: 12px 20px;
+            background: rgba(20, 184, 166, 0.1);
+            border: 1px solid rgba(20, 184, 166, 0.25);
+            border-radius: 30px;
+            margin-bottom: 28px;
         }
 
-        .wall-status-dot {
+        .status-dot {
             width: 8px;
             height: 8px;
             background: var(--teal);
@@ -87,103 +145,126 @@
             50% { opacity: 0.4; }
         }
 
-        /* Section */
+        .status-text {
+            font-size: 13px;
+            color: var(--teal);
+            font-weight: 500;
+        }
+
+        /* ============================
+           SECTIONS
+           ============================ */
         .section {
             margin-bottom: 28px;
         }
 
         .section-label {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 14px;
-            letter-spacing: 2px;
+            font-size: 13px;
+            letter-spacing: 3px;
             color: var(--text-muted);
             margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            padding-left: 4px;
         }
-
-        .section-icon { font-size: 16px; }
 
         /* Scripture Card */
         .scripture-card {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.10) 0%, rgba(255, 215, 0, 0.03) 100%);
-            border: 1px solid rgba(255, 215, 0, 0.20);
-            border-left: 4px solid var(--gold);
-            border-radius: 0 16px 16px 0;
-            padding: 20px;
-            margin-bottom: 14px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(255, 215, 0, 0.02) 100%);
+            border-left: 3px solid var(--gold);
+            border-radius: 0 14px 14px 0;
+            padding: 20px 20px 20px 18px;
+            margin-bottom: 12px;
         }
 
         .scripture-text {
-            font-size: 16px;
+            font-size: 15px;
             font-style: italic;
             color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 10px;
+            line-height: 1.75;
+            margin-bottom: 12px;
         }
 
         .scripture-ref {
-            font-size: 14px;
-            color: var(--gold);
+            font-size: 13px;
+            color: var(--gold-soft);
             font-weight: 600;
         }
 
-        /* Prayer Card */
-        .prayer-card {
+        /* Watchman Prayer Card */
+        .watchman-card {
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
-            border-radius: 16px;
+            border-radius: 14px;
             padding: 18px;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
+            transition: all 0.3s;
         }
 
-        .prayer-card.ai-prayer {
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.08) 0%, rgba(255, 107, 53, 0.02) 100%);
-            border-color: rgba(255, 107, 53, 0.20);
+        .watchman-card:hover {
+            border-color: rgba(255, 107, 53, 0.2);
         }
 
-        .prayer-meta {
+        .watchman-card.featured {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.10) 0%, rgba(255, 107, 53, 0.03) 100%);
+            border-color: rgba(255, 107, 53, 0.25);
+        }
+
+        .watchman-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
         }
 
-        .prayer-author {
+        .watchman-name {
             font-weight: 600;
             color: var(--flare-orange);
             font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .prayer-time {
+        .watchman-badge {
+            font-size: 10px;
+        }
+
+        .watchman-time {
             font-size: 11px;
             color: var(--text-muted);
         }
 
-        .prayer-text {
+        .watchman-text {
             font-size: 15px;
-            line-height: 1.7;
+            line-height: 1.75;
             color: var(--text-secondary);
         }
 
-        .prayer-scripture {
+        .watchman-scripture {
             font-size: 13px;
-            color: var(--gold);
+            color: var(--gold-soft);
             font-style: italic;
-            margin-top: 10px;
+            margin-top: 12px;
         }
 
         /* Pray This Card */
-        .pray-this-card {
+        .pray-card {
             background: linear-gradient(135deg, rgba(20, 184, 166, 0.10) 0%, rgba(20, 184, 166, 0.03) 100%);
-            border: 1px solid rgba(20, 184, 166, 0.25);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 14px;
+            border: 1px solid rgba(20, 184, 166, 0.2);
+            border-radius: 14px;
+            padding: 22px 20px;
+            margin-bottom: 12px;
         }
 
-        .pray-this-text {
+        .pray-card-label {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: var(--teal);
+            margin-bottom: 12px;
+        }
+
+        .pray-text {
             font-size: 16px;
             line-height: 1.8;
             color: var(--text-secondary);
@@ -193,67 +274,78 @@
         /* Declaration Card */
         .declaration-card {
             background: linear-gradient(135deg, rgba(255, 107, 53, 0.10) 0%, rgba(255, 107, 53, 0.03) 100%);
-            border: 1px solid rgba(255, 107, 53, 0.25);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 14px;
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 14px;
+            padding: 22px 20px;
+            margin-bottom: 12px;
+        }
+
+        .declaration-label {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: var(--flare-orange);
+            margin-bottom: 12px;
         }
 
         .declaration-text {
             font-size: 16px;
-            line-height: 1.7;
+            line-height: 1.75;
             color: var(--text-primary);
-            font-weight: 600;
+            font-weight: 500;
         }
 
         /* Remember Card */
         .remember-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-subtle);
-            border-radius: 16px;
-            padding: 18px;
+            border-radius: 14px;
+            padding: 20px;
             text-align: center;
         }
 
         .remember-text {
             font-size: 15px;
-            line-height: 1.6;
+            line-height: 1.7;
             color: var(--text-secondary);
         }
 
-        /* Save Wall Box */
-        .save-wall-section {
+        /* ============================
+           SAVE / RETURN SECTION
+           ============================ */
+        .save-section {
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
-            border-radius: 16px;
+            border-radius: 14px;
             padding: 20px;
-            margin: 28px 0;
-            text-align: center;
+            margin: 32px 0;
         }
 
-        .save-wall-title {
+        .save-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
+            font-size: 16px;
             letter-spacing: 2px;
             color: var(--text-secondary);
-            margin-bottom: 8px;
+            text-align: center;
+            margin-bottom: 6px;
         }
 
-        .save-wall-text {
-            font-size: 13px;
+        .save-subtitle {
+            font-size: 12px;
             color: var(--text-muted);
+            text-align: center;
             margin-bottom: 14px;
         }
 
-        .save-wall-row {
+        .save-row {
             display: flex;
             gap: 10px;
         }
 
-        .save-wall-input {
+        .save-input {
             flex: 1;
-            background: rgba(10, 10, 15, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(10, 10, 15, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 10px;
             padding: 12px 14px;
             font-size: 14px;
@@ -261,39 +353,47 @@
             outline: none;
         }
 
-        .save-wall-input:focus {
+        .save-input:focus {
             border-color: var(--flare-orange);
         }
 
-        .save-wall-btn {
+        .save-btn {
             background: var(--flare-orange);
             color: white;
             border: none;
-            padding: 12px 20px;
+            padding: 12px 22px;
             border-radius: 10px;
             font-family: 'Bebas Neue', sans-serif;
             font-size: 14px;
             letter-spacing: 1px;
             cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .save-wall-btn:disabled {
+        .save-btn:hover:not(:disabled) {
+            background: #ff7d4d;
+        }
+
+        .save-btn:disabled {
             opacity: 0.4;
             cursor: not-allowed;
         }
 
-        .save-wall-success {
-            background: rgba(20, 184, 166, 0.2);
-            color: #5eead4;
+        .save-success {
+            background: rgba(20, 184, 166, 0.15);
+            color: var(--teal);
             padding: 10px;
             border-radius: 8px;
             margin-top: 12px;
             font-size: 13px;
             font-weight: 600;
+            text-align: center;
             display: none;
         }
 
-        /* Footer */
+        /* ============================
+           FOOTER
+           ============================ */
         .wall-footer {
             text-align: center;
             padding: 20px;
@@ -302,21 +402,22 @@
         .new-flare-btn {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
             color: white;
             text-decoration: none;
-            padding: 14px 28px;
+            padding: 16px 32px;
             border-radius: 30px;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 16px;
+            font-size: 18px;
             letter-spacing: 2px;
-            box-shadow: 0 6px 25px var(--flare-glow);
+            box-shadow: 0 6px 30px var(--flare-glow);
             transition: all 0.3s;
         }
 
         .new-flare-btn:hover {
             transform: translateY(-2px);
+            box-shadow: 0 10px 40px var(--flare-glow);
         }
 
         .home-link {
@@ -326,51 +427,45 @@
         .home-link a {
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 14px;
+            font-size: 13px;
         }
 
-        /* Loading */
-        .loading {
-            text-align: center;
-            padding: 40px;
+        .home-link a:hover {
+            color: var(--text-secondary);
         }
 
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(255, 107, 53, 0.2);
-            border-top-color: var(--flare-orange);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 16px;
-        }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* Entry Screen (for returning users) */
+        /* ============================
+           ENTRY SCREEN
+           ============================ */
         .entry-screen {
             display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 85vh;
+            min-height: 100vh;
             text-align: center;
             padding: 20px;
+            background: linear-gradient(180deg, var(--bg-dark) 0%, #1a1020 100%);
         }
 
         .entry-screen.active { display: flex; }
 
-        .entry-icon { font-size: 72px; margin-bottom: 24px; }
+        .entry-cross {
+            font-size: 56px;
+            margin-bottom: 24px;
+            color: var(--gold);
+            text-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+        }
 
         .entry-title {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 36px;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             margin-bottom: 12px;
         }
 
         .entry-subtitle {
-            font-size: 16px;
+            font-size: 15px;
             color: var(--text-secondary);
             margin-bottom: 32px;
             max-width: 300px;
@@ -386,7 +481,7 @@
         .entry-input {
             width: 100%;
             background: var(--bg-card);
-            border: 2px solid rgba(255, 215, 0, 0.3);
+            border: 2px solid rgba(255, 215, 0, 0.25);
             border-radius: 14px;
             padding: 16px 18px;
             font-size: 16px;
@@ -397,11 +492,11 @@
 
         .entry-input:focus {
             border-color: var(--gold);
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.15);
         }
 
         .entry-btn {
-            background: linear-gradient(135deg, var(--gold) 0%, #f59e0b 100%);
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-soft) 100%);
             color: #000;
             border: none;
             padding: 16px 48px;
@@ -411,6 +506,12 @@
             letter-spacing: 3px;
             cursor: pointer;
             font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .entry-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 35px rgba(255, 215, 0, 0.25);
         }
 
         .entry-btn:disabled { opacity: 0.4; cursor: not-allowed; }
@@ -430,110 +531,137 @@
         /* Wall Content */
         .wall-content { display: none; }
         .wall-content.active { display: block; }
+
+        /* Loading */
+        .loading-card {
+            background: var(--bg-card);
+            border-radius: 14px;
+            padding: 30px;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .loading-spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid rgba(255, 107, 53, 0.2);
+            border-top-color: var(--flare-orange);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 14px;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-    <div class="container">
+    
+    <!-- Entry Screen (returning users) -->
+    <div class="entry-screen" id="entryScreen">
+        <div class="entry-cross">✙</div>
+        <h1 class="entry-title">Your Prayer Wall</h1>
+        <p class="entry-subtitle">Enter your email to access your prayer history and see prayers from Watchman.</p>
         
-        <!-- Entry Screen (for returning users without direct link) -->
-        <div class="entry-screen" id="entryScreen">
-            <div class="entry-icon">🙏</div>
-            <h1 class="entry-title">Your Prayer Wall</h1>
-            <p class="entry-subtitle">Enter your email to access your prayer history and see prayers from Watchman.</p>
-            
-            <div class="entry-input-box">
-                <input type="email" class="entry-input" id="emailInput" placeholder="your@email.com">
-            </div>
-            
-            <button class="entry-btn" id="enterBtn" disabled>ENTER</button>
-            
-            <p class="entry-error" id="entryError">No prayer wall found. Send a flare first!</p>
-            
-            <div class="entry-home-link">
-                <a href="index.html">← Send a Prayer Flare</a>
+        <div class="entry-input-box">
+            <input type="email" class="entry-input" id="emailInput" placeholder="your@email.com">
+        </div>
+        
+        <button class="entry-btn" id="enterBtn" disabled>ENTER</button>
+        
+        <p class="entry-error" id="entryError">No prayer wall found. Send a flare first!</p>
+        
+        <div class="entry-home-link">
+            <a href="index.html">← Send a Prayer Flare</a>
+        </div>
+    </div>
+
+    <!-- Wall Content -->
+    <div class="wall-content" id="wallContent">
+        
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+            <div class="hero-glow"></div>
+            <div class="hero-content">
+                <div class="hero-cross">✙</div>
+                <h1 class="hero-title">YOUR PRAYER WALL</h1>
+                <p class="hero-subtitle">Stand firm. Help is here.</p>
             </div>
         </div>
 
-        <!-- Wall Content -->
-        <div class="wall-content" id="wallContent">
-            <div class="wall-header">
-                <div class="wall-icon">🕊️</div>
-                <h1 class="wall-title">Your Prayer Wall</h1>
-                <p class="wall-subtitle" id="wallSubtitle">Scriptures, prayers, and encouragement for your struggle.</p>
-                <div class="wall-status">
-                    <span class="wall-status-dot"></span>
-                    <span>Watchman are praying for you</span>
-                </div>
+        <div class="container">
+            
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <span class="status-dot"></span>
+                <span class="status-text">Watchman are praying for you</span>
             </div>
 
-            <!-- Scriptures Section -->
+            <!-- Scriptures -->
             <div class="section" id="scriptureSection">
-                <p class="section-label"><span class="section-icon">📖</span> SCRIPTURE FOR THIS MOMENT</p>
+                <p class="section-label">SCRIPTURE FOR THIS MOMENT</p>
                 <div id="scriptureContent"></div>
             </div>
 
-            <!-- Watchman Prayers Section -->
+            <!-- Watchman Prayers -->
             <div class="section" id="prayersSection">
-                <p class="section-label"><span class="section-icon">🙏</span> PRAYERS FROM WATCHMAN</p>
+                <p class="section-label">PRAYERS FROM WATCHMAN</p>
                 <div id="prayersContent">
-                    <div class="loading">
+                    <div class="loading-card">
                         <div class="loading-spinner"></div>
                         <p>Loading prayers...</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Pray This Section -->
+            <!-- Pray This -->
             <div class="section" id="prayThisSection">
-                <p class="section-label"><span class="section-icon">✙</span> PRAY THIS</p>
+                <p class="section-label">PRAY THIS</p>
                 <div id="prayThisContent"></div>
             </div>
 
-            <!-- Declaration Section -->
+            <!-- Speak This -->
             <div class="section" id="declarationSection">
-                <p class="section-label"><span class="section-icon">💪</span> SPEAK THIS</p>
+                <p class="section-label">SPEAK THIS</p>
                 <div id="declarationContent"></div>
             </div>
 
-            <!-- Remember Section -->
+            <!-- Remember -->
             <div class="section" id="rememberSection">
-                <p class="section-label"><span class="section-icon">🕊️</span> REMEMBER</p>
+                <p class="section-label">REMEMBER</p>
                 <div id="rememberContent"></div>
             </div>
 
-            <!-- Save Wall -->
-            <div class="save-wall-section" id="saveWallSection">
-                <h3 class="save-wall-title">Want to Return Later?</h3>
-                <p class="save-wall-text">Enter your email to save access to your prayer wall.</p>
-                <div class="save-wall-row">
-                    <input type="email" class="save-wall-input" id="saveEmailInput" placeholder="your@email.com">
-                    <button class="save-wall-btn" id="saveEmailBtn" disabled>SAVE</button>
+            <!-- Save for Later -->
+            <div class="save-section" id="saveSection">
+                <h3 class="save-title">WANT TO RETURN LATER?</h3>
+                <p class="save-subtitle">Enter your email to save your prayer wall access.</p>
+                <div class="save-row">
+                    <input type="email" class="save-input" id="saveEmailInput" placeholder="your@email.com">
+                    <button class="save-btn" id="saveEmailBtn" disabled>SAVE</button>
                 </div>
-                <p class="save-wall-success" id="saveSuccess">✓ Saved! You can return anytime.</p>
+                <p class="save-success" id="saveSuccess">✓ Saved! You can return anytime.</p>
             </div>
 
             <!-- Footer -->
             <div class="wall-footer">
                 <a href="index.html" class="new-flare-btn">
-                    <span>🔥</span>
-                    <span>Send Another Prayer</span>
+                    🔥 <span>SEND ANOTHER PRAYER</span>
                 </a>
                 <div class="home-link">
                     <a href="index.html">← Back to Home</a>
                 </div>
             </div>
-        </div>
 
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         const SUPABASE_URL = 'https://shesaxxugzfdozlmigrk.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNoZXNheHh1Z3pmZG96bG1pZ3JrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ4MzIxMTAsImV4cCI6MjA4MDQwODExMH0.CXQqq8EAQ50w7NxnVvKwOVf5LuRr-x8tnuDajQK_qds';
-
         const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // Category-specific content
+        // Category content
         const categoryContent = {
             'Anxiety / Panic': {
                 scriptures: [
@@ -630,31 +758,27 @@
         let currentPrayerId = null;
         let currentCategory = null;
 
-        // Check URL params
         function init() {
             const params = new URLSearchParams(window.location.search);
             const id = params.get('id');
             const cat = params.get('cat');
 
             if (id && cat) {
-                // Direct access from prayer screen
                 currentPrayerId = id;
                 currentCategory = decodeURIComponent(cat);
                 showWall();
             } else {
-                // Show email entry for returning users
                 document.getElementById('entryScreen').classList.add('active');
             }
         }
 
-        // Show the wall with content
         function showWall() {
             document.getElementById('entryScreen').classList.remove('active');
             document.getElementById('wallContent').classList.add('active');
             
             const content = categoryContent[currentCategory] || categoryContent['Other'];
             
-            // Populate scriptures
+            // Scriptures
             let scriptureHtml = '';
             content.scriptures.forEach(s => {
                 scriptureHtml += `
@@ -666,32 +790,32 @@
             });
             document.getElementById('scriptureContent').innerHTML = scriptureHtml;
 
-            // Populate pray this
+            // Pray This
             document.getElementById('prayThisContent').innerHTML = `
-                <div class="pray-this-card">
-                    <p class="pray-this-text">"${content.prayThis}"</p>
+                <div class="pray-card">
+                    <p class="pray-card-label">SAY THIS OUT LOUD</p>
+                    <p class="pray-text">"${content.prayThis}"</p>
                 </div>
             `;
 
-            // Populate declaration
+            // Declaration
             document.getElementById('declarationContent').innerHTML = `
                 <div class="declaration-card">
+                    <p class="declaration-label">DECLARE OVER YOURSELF</p>
                     <p class="declaration-text">"${content.declaration}"</p>
                 </div>
             `;
 
-            // Populate remember
+            // Remember
             document.getElementById('rememberContent').innerHTML = `
                 <div class="remember-card">
                     <p class="remember-text">${content.remember}</p>
                 </div>
             `;
 
-            // Load Watchman prayers from database
             loadWatchmanPrayers();
         }
 
-        // Load prayers from Supabase
         async function loadWatchmanPrayers() {
             if (!currentPrayerId) return;
 
@@ -706,24 +830,27 @@
 
                 let html = '';
                 if (prayers && prayers.length > 0) {
-                    prayers.forEach(prayer => {
+                    prayers.forEach((prayer, i) => {
                         const time = formatTime(prayer.created_at);
-                        const isAi = prayer.is_ai_generated;
+                        const isFeatured = i === 0;
                         html += `
-                            <div class="prayer-card ${isAi ? 'ai-prayer' : ''}">
-                                <div class="prayer-meta">
-                                    <span class="prayer-author">${prayer.watchman_name || 'A Watchman'}</span>
-                                    <span class="prayer-time">${time}</span>
+                            <div class="watchman-card ${isFeatured ? 'featured' : ''}">
+                                <div class="watchman-meta">
+                                    <span class="watchman-name">
+                                        ${isFeatured ? '<span class="watchman-badge">🛡️</span>' : ''}
+                                        ${prayer.watchman_name || 'A Watchman'}
+                                    </span>
+                                    <span class="watchman-time">${time}</span>
                                 </div>
-                                <p class="prayer-text">${prayer.prayer_text}</p>
-                                ${prayer.scripture_reference ? `<p class="prayer-scripture">— ${prayer.scripture_reference}</p>` : ''}
+                                <p class="watchman-text">${prayer.prayer_text}</p>
+                                ${prayer.scripture_reference ? `<p class="watchman-scripture">— ${prayer.scripture_reference}</p>` : ''}
                             </div>
                         `;
                     });
                 } else {
                     html = `
-                        <div class="prayer-card">
-                            <p class="prayer-text" style="text-align: center; color: var(--text-muted);">Watchman are being notified. Prayers incoming soon.</p>
+                        <div class="watchman-card">
+                            <p class="watchman-text" style="text-align: center; color: var(--text-muted);">Watchman have been notified. Prayers incoming soon.</p>
                         </div>
                     `;
                 }
@@ -731,30 +858,28 @@
                 document.getElementById('prayersContent').innerHTML = html;
 
             } catch (err) {
-                console.error('Error loading prayers:', err);
+                console.error('Error:', err);
                 document.getElementById('prayersContent').innerHTML = `
-                    <div class="prayer-card">
-                        <p class="prayer-text" style="text-align: center; color: var(--text-muted);">Prayers are on the way. Check back soon.</p>
+                    <div class="watchman-card">
+                        <p class="watchman-text" style="text-align: center; color: var(--text-muted);">Prayers are on the way.</p>
                     </div>
                 `;
             }
         }
 
-        // Format time
         function formatTime(timestamp) {
             const date = new Date(timestamp);
             const now = new Date();
             const diffMs = now - date;
             const diffMins = Math.floor(diffMs / 60000);
             const diffHours = Math.floor(diffMs / 3600000);
-
             if (diffMins < 1) return 'Just now';
             if (diffMins < 60) return `${diffMins}m ago`;
             if (diffHours < 24) return `${diffHours}h ago`;
             return date.toLocaleDateString();
         }
 
-        // Email entry for returning users
+        // Entry email
         const emailInput = document.getElementById('emailInput');
         const enterBtn = document.getElementById('enterBtn');
         const entryError = document.getElementById('entryError');
@@ -830,7 +955,6 @@
             }
         });
 
-        // Initialize
         init();
     </script>
 </body>
