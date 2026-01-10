@@ -56,7 +56,7 @@
             height: 100%;
             z-index: 0;
             background-image: 
-                linear-gradient(to bottom, rgba(10, 10, 15, 0.6) 0%, rgba(10, 10, 15, 0.85) 50%, rgba(10, 10, 15, 0.95) 100%),
+                linear-gradient(to bottom, rgba(10, 10, 15, 0.75) 0%, rgba(10, 10, 15, 0.9) 50%, rgba(10, 10, 15, 0.98) 100%),
                 url('https://images.unsplash.com/photo-1507692049790-de58290a4334?w=1920&q=80');
             background-size: cover;
             background-position: center;
@@ -244,6 +244,7 @@
             margin-bottom: 28px;
             text-transform: uppercase;
             text-align: center;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8);
         }
 
         .location-card {
@@ -358,6 +359,7 @@
             color: var(--text-muted);
             margin-bottom: 16px;
             text-transform: uppercase;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
         }
 
         .options-grid {
@@ -517,12 +519,14 @@
             color: var(--flare-orange);
             text-transform: uppercase;
             margin-bottom: 8px;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8);
         }
 
         .prayer-header-subtitle {
             font-size: 14px;
             color: var(--text-secondary);
             line-height: 1.5;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
         }
 
         .prayer-id-badge {
@@ -538,31 +542,6 @@
             margin-top: 14px;
         }
 
-        /* Step Dots */
-        .step-indicator {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .step-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: all 0.3s;
-        }
-
-        .step-dot.active {
-            background: var(--flare-orange);
-            box-shadow: 0 0 12px var(--flare-glow);
-        }
-
-        .step-dot.completed {
-            background: var(--flare-orange);
-        }
-
         /* Prayer Intro */
         .prayer-intro-box {
             text-align: center;
@@ -574,7 +553,7 @@
             font-size: 16px;
             color: var(--text-secondary);
             line-height: 1.7;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 15px rgba(0,0,0,0.9);
         }
 
         /* Prayer Box */
@@ -657,39 +636,128 @@
             text-align: center;
         }
 
-        /* Safety Message */
-        .safety-message {
-            background: linear-gradient(135deg, rgba(74, 158, 255, 0.12) 0%, rgba(74, 158, 255, 0.04) 100%);
-            border: 1px solid rgba(74, 158, 255, 0.25);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 24px;
-            display: none;
+        /* Borrow Faith Box */
+        .borrow-faith-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.12) 0%, rgba(255, 215, 0, 0.04) 100%);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            padding: 28px 24px;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
-        .safety-message.show {
-            display: block;
+        .borrow-faith-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            letter-spacing: 3px;
+            color: var(--gold);
+            margin-bottom: 16px;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8);
         }
 
-        .safety-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #60a5fa;
-            margin-bottom: 12px;
-        }
-
-        .safety-text {
-            font-size: 15px;
+        .borrow-faith-text {
+            font-size: 16px;
             color: var(--text-secondary);
             line-height: 1.7;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
         }
 
-        .safety-note {
-            font-size: 13px;
+        .borrow-faith-btn {
+            display: inline-block;
+            color: var(--gold);
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 8px;
+            padding: 12px 24px;
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            border-radius: 30px;
+            transition: all 0.3s;
+        }
+
+        .borrow-faith-btn:hover {
+            background: rgba(255, 215, 0, 0.15);
+            border-color: rgba(255, 215, 0, 0.6);
+        }
+
+        /* Context Line */
+        .context-line {
+            text-align: center;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+        }
+
+        .context-line p {
+            font-size: 15px;
             color: var(--text-muted);
             font-style: italic;
-            margin-top: 16px;
+            line-height: 1.6;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Wall Link Section */
+        .wall-link-section {
+            background: rgba(20, 20, 25, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            margin: 24px 0;
+        }
+
+        .wall-link-label {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 14px;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .wall-link-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+        }
+
+        .wall-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
+            color: white;
+            text-decoration: none;
+            padding: 14px 24px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 6px 25px var(--flare-glow);
+        }
+
+        .wall-link-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 35px var(--flare-glow);
+        }
+
+        .wall-link-pf {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 13px;
+            letter-spacing: 2px;
+        }
+
+        /* Crisis Note */
+        .crisis-note {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-align: center;
+            font-style: italic;
+            margin: 16px 0;
+            padding: 0 20px;
         }
 
         /* Action Buttons */
@@ -730,59 +798,6 @@
         .action-btn.secondary:hover {
             background: rgba(255, 255, 255, 0.1);
             border-color: var(--flare-orange);
-        }
-
-        /* Warriors Status */
-        .warriors-status {
-            background: rgba(20, 20, 25, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 14px;
-            padding: 16px 20px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .warriors-text {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-
-        .warriors-text strong {
-            color: var(--flare-orange);
-        }
-
-        /* Prayer Wall Link */
-        .wall-link-box {
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 107, 53, 0.05) 100%);
-            border: 1px solid rgba(255, 107, 53, 0.2);
-            border-radius: 16px;
-            padding: 20px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .wall-link-text {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-bottom: 14px;
-        }
-
-        .wall-link-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
-            color: white;
-            text-decoration: none;
-            padding: 14px 28px;
-            border-radius: 30px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 16px;
-            letter-spacing: 2px;
-            transition: all 0.3s;
-        }
-
-        .wall-link-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px var(--flare-glow);
         }
 
         /* Physical Redirect */
@@ -1085,7 +1100,7 @@
                 <div class="home-content">
                     <div class="flare-icon">🔥</div>
                     <h1 class="headline">You don't have to<br>fight this alone</h1>
-                    <p class="subhead">Send up a flare. Local prayer warriors are standing by.</p>
+                    <p class="subhead">Send up a flare. Watchman are standing by.</p>
                     
                     <button class="btn-primary" id="startBtn">
                         <span>NEED PRAYER?</span>
@@ -1099,7 +1114,7 @@
                     </div>
 
                     <footer class="footer">
-                        <a href="watchman.html" class="footer-link">Prayer Warriors Enter Here</a>
+                        <a href="watchman.html" class="footer-link">Watchman Enter Here</a>
                         <p class="footer-disclaimer">Prayer Flare is a prayer support community, not a substitute for professional mental health care.</p>
                         <div class="footer-links">
                             <a href="about.html">About</a>
@@ -1127,8 +1142,8 @@
                     </div>
                     <p class="location-text">
                         <strong class="anonymous-statement">YOUR COMMUNICATIONS HERE ARE ANONYMOUS.</strong>
-                        If we have <span class="location-highlight">local prayer warriors</span> in your area, 
-                        we'll notify them. If not, our <span class="location-highlight">global Watchmen</span> 
+                        If we have <span class="location-highlight">local Watchman</span> in your area, 
+                        we'll notify them. If not, our <span class="location-highlight">global Watchman</span> 
                         have you covered 24/7.
                     </p>
                     <input type="text" class="zip-input" id="zipInput" placeholder="00000" maxlength="5" inputmode="numeric">
@@ -1212,22 +1227,18 @@
                 <div class="prayer-header">
                     <div class="prayer-header-icon">🔥</div>
                     <h2 class="prayer-header-title">Right Now Prayer</h2>
-                    <p class="prayer-header-subtitle">Warriors notified. But God didn't wait for them.</p>
-                    <div class="prayer-id-badge" id="prayerIdBadge">PF-0000</div>
+                    <p class="prayer-header-subtitle">Watchman are praying. But you don't have to wait.</p>
                 </div>
 
-                <div class="step-indicator">
-                    <div class="step-dot active" id="dot1"></div>
-                    <div class="step-dot" id="dot2"></div>
-                    <div class="step-dot" id="dot3"></div>
-                    <div class="step-dot" id="dot4"></div>
+                <div class="borrow-faith-box" id="borrowFaithBox">
+                    <h3 class="borrow-faith-title">Borrow Our Faith</h3>
+                    <p class="borrow-faith-text">We see you. This is a dark moment, but Jesus is extending His hand to you right now.</p>
+                    <p class="borrow-faith-text">You don't have to believe it to receive it. Just trust us — <strong>He is here.</strong> We have words for you when you have none of your own.</p>
+                    <a href="#prayerContent" class="borrow-faith-btn" id="startPrayerBtn">Let's pray this together →</a>
                 </div>
 
-                <div class="safety-message" id="safetyMessage">
-                    <div class="safety-title">💙 You Matter</div>
-                    <p class="safety-text">We see you. We're praying for you right now. This is a dark moment, but you reached out — and that matters. God hasn't given up on you, and neither have we.</p>
-                    <p class="safety-text">Let us pray with you. That's what we're here for.</p>
-                    <p class="safety-note">If you feel you may hurt yourself or others, there are emergency hotlines available below.</p>
+                <div class="context-line" id="contextLine">
+                    <p>The craving is screaming. But you reached out instead of reaching for it.</p>
                 </div>
 
                 <div id="prayerContent"></div>
@@ -1237,14 +1248,16 @@
                     <button class="action-btn secondary" id="moreBtn">I Need More</button>
                 </div>
 
-                <div class="warriors-status">
-                    <p class="warriors-text"><strong>Warriors notified.</strong> Prayers incoming.</p>
+                <div class="wall-link-section" id="wallLinkSection">
+                    <p class="wall-link-label">Your Prayer Wall</p>
+                    <p class="wall-link-text">Watchman are posting prayers for you. Check back anytime.</p>
+                    <a href="#" class="wall-link-btn" id="wallExplainerBtn">
+                        <span class="wall-link-pf" id="wallExplainerPf">PF-0000</span>
+                        <span>View Your Prayer Wall →</span>
+                    </a>
                 </div>
 
-                <div class="wall-link-box" id="wallLinkBox">
-                    <p class="wall-link-text">⭐ Your personal prayer wall is ready. Warriors will post prayers there for you.</p>
-                    <a href="#" class="wall-link-btn" id="wallLinkBtn">VIEW YOUR PRAYER WALL →</a>
-                </div>
+                <p class="crisis-note" id="crisisNote" style="display: none;">If you feel you may hurt yourself or others, there are emergency hotlines available below.</p>
 
                 <div class="home-link">
                     <button id="homeBtn">← Back to Home</button>
@@ -1399,7 +1412,7 @@
                         reference: "Psalm 34:18"
                     },
                     {
-                        intro: "Still fighting. That's what warriors do. Let's keep going.",
+                        intro: "Still fighting. That's what Watchman do. Let's keep going.",
                         lines: [
                             { text: '"God, this craving feels bigger than me."', quote: true },
                             { text: "(It's not bigger than Him)", context: true },
@@ -1674,7 +1687,7 @@
                     { icon: "📱", text: "Text someone you trust — just say hi" },
                     { icon: "🎵", text: "Put on worship music and just sit" }
                 ],
-                closing: "You've done good work here. Come back anytime. Warriors are still praying."
+                closing: "You've done good work here. Come back anytime. Watchman are still praying."
             };
 
             // ============================================
@@ -1870,12 +1883,35 @@
 
                     recordFlare();
                     
-                    // Show prayer screen
-                    document.getElementById('prayerIdBadge').textContent = currentPrayerId;
-                    document.getElementById('wallLinkBtn').href = `wall.html?id=${currentPrayerId}&token=${currentAccessToken}`;
+                    // Update wall link with PF number
+                    document.getElementById('wallExplainerPf').textContent = currentPrayerId;
+                    document.getElementById('wallExplainerBtn').href = `wall.html?id=${currentPrayerId}&token=${currentAccessToken}`;
+                    
+                    // Set dynamic context line based on category
+                    const contextLines = {
+                        'Anxiety / Panic': "Your heart is racing. But you're not running. You're standing.",
+                        'Temptation': "The pull is strong. But you reached out instead of giving in.",
+                        'Addiction craving': "The craving is screaming. But you reached out instead of reaching for it.",
+                        'Depression / Giving up': "It feels like the end. But you're still here. That matters.",
+                        'Anger / Rage': "The fire is burning. But you paused before it consumed you.",
+                        'Grief / Loss': "The pain is heavy. But you didn't carry it alone.",
+                        'Fear': "Fear is loud right now. But you didn't let it silence you.",
+                        'Spiritual Attack': "The enemy is real. But so is your God.",
+                        'Just need prayer': "You don't need a reason. You just need prayer. We get it.",
+                        'Other': "Whatever you're facing, you didn't face it alone."
+                    };
+                    const catKey = selectedCategory?.startsWith('Other:') ? 'Other' : selectedCategory;
+                    document.getElementById('contextLine').querySelector('p').textContent = contextLines[catKey] || contextLines['Other'];
+                    
+                    // Show crisis note if needed
+                    if (showCrisisResources || selectedCategory === 'Depression / Giving up') {
+                        document.getElementById('crisisNote').style.display = 'block';
+                    } else {
+                        document.getElementById('crisisNote').style.display = 'none';
+                    }
+                    
                     currentStep = 1;
                     renderPrayer();
-                    updateStepDots();
                     showScreen(prayerScreen);
 
                 } catch (err) {
@@ -1991,23 +2027,13 @@
             }
 
             // ============================================
-            // STEP DOTS
-            // ============================================
-            function updateStepDots() {
-                for (let i = 1; i <= 4; i++) {
-                    const dot = document.getElementById('dot' + i);
-                    dot.classList.remove('active', 'completed');
-                    if (i < currentStep) {
-                        dot.classList.add('completed');
-                    } else if (i === currentStep) {
-                        dot.classList.add('active');
-                    }
-                }
-            }
-
-            // ============================================
             // ACTION BUTTONS
             // ============================================
+            document.getElementById('startPrayerBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('prayerContent').scrollIntoView({ behavior: 'smooth' });
+            });
+
             document.getElementById('prayedBtn').addEventListener('click', function() {
                 this.textContent = '✓ Amen';
                 this.style.background = 'rgba(255, 107, 53, 0.2)';
@@ -2017,7 +2043,6 @@
                 currentStep++;
                 if (currentStep > 4) currentStep = 4;
                 renderPrayer();
-                updateStepDots();
                 window.scrollTo(0, 0);
             });
 
