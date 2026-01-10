@@ -806,49 +806,50 @@
             text-align: center;
         }
 
-        /* Borrow Faith Box */
-        .borrow-faith-box {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.12) 0%, rgba(255, 215, 0, 0.04) 100%);
-            border: 1px solid rgba(255, 215, 0, 0.3);
+        /* Grace Box */
+        .grace-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.10) 0%, rgba(255, 215, 0, 0.03) 100%);
+            border: 1px solid rgba(255, 215, 0, 0.20);
             border-radius: 20px;
             padding: 28px 24px;
             margin-bottom: 20px;
             text-align: center;
         }
 
-        .borrow-faith-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 28px;
-            letter-spacing: 3px;
-            color: var(--gold);
-            margin-bottom: 16px;
-            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8);
-        }
-
-        .borrow-faith-text {
+        .grace-text {
             font-size: 16px;
             color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 14px;
+            line-height: 1.8;
+            margin-bottom: 16px;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
         }
 
-        .borrow-faith-btn {
-            display: inline-block;
-            color: var(--gold);
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration: none;
-            margin-top: 8px;
-            padding: 12px 24px;
-            border: 2px solid rgba(255, 215, 0, 0.4);
-            border-radius: 30px;
-            transition: all 0.3s;
+        .grace-text:last-of-type {
+            margin-bottom: 20px;
         }
 
-        .borrow-faith-btn:hover {
-            background: rgba(255, 215, 0, 0.15);
-            border-color: rgba(255, 215, 0, 0.6);
+        .grace-text strong {
+            color: var(--gold);
+        }
+
+        .grace-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold) 0%, #f59e0b 100%);
+            color: #000;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            letter-spacing: 3px;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 16px 32px;
+            border-radius: 30px;
+            transition: all 0.3s;
+            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.25);
+        }
+
+        .grace-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 35px rgba(255, 215, 0, 0.35);
         }
 
         /* Context Line */
@@ -866,98 +867,128 @@
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
         }
 
-        /* Wall Access Box */
-        .wall-access-box {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.12) 0%, rgba(255, 215, 0, 0.04) 100%);
-            border: 1px solid rgba(255, 215, 0, 0.25);
+        /* Wall Direct Access Box */
+        .wall-direct-box {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.12) 0%, rgba(255, 107, 53, 0.04) 100%);
+            border: 1px solid rgba(255, 107, 53, 0.25);
             border-radius: 20px;
-            padding: 28px 24px;
-            margin: 28px 0;
+            padding: 24px;
+            margin: 28px 0 16px;
             text-align: center;
         }
 
-        .wall-access-icon {
-            font-size: 40px;
+        .wall-direct-icon {
+            font-size: 36px;
             margin-bottom: 12px;
         }
 
-        .wall-access-title {
+        .wall-direct-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 24px;
+            font-size: 22px;
             letter-spacing: 2px;
-            color: var(--gold);
+            color: var(--flare-orange);
+            margin-bottom: 10px;
+        }
+
+        .wall-direct-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .wall-direct-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
+            color: white;
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 16px;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            box-shadow: 0 6px 25px var(--flare-glow);
+        }
+
+        .wall-direct-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 35px var(--flare-glow);
+        }
+
+        /* Save Wall Box (smaller, secondary) */
+        .save-wall-box {
+            background: rgba(20, 20, 25, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .save-wall-label {
+            font-size: 13px;
+            color: var(--text-muted);
             margin-bottom: 12px;
         }
 
-        .wall-access-text {
-            font-size: 15px;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 20px;
+        .save-wall-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
         }
 
-        .wall-access-input {
-            width: 100%;
+        .save-wall-input {
+            flex: 1;
             background: rgba(10, 10, 15, 0.6);
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 14px;
-            padding: 16px 18px;
-            font-size: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 14px;
             color: var(--text-primary);
             outline: none;
-            transition: all 0.3s;
-            margin-bottom: 14px;
         }
 
-        .wall-access-input:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
+        .save-wall-input:focus {
+            border-color: var(--flare-orange);
         }
 
-        .wall-access-input::placeholder {
+        .save-wall-input::placeholder {
             color: var(--text-muted);
         }
 
-        .wall-access-btn {
-            width: 100%;
-            background: linear-gradient(135deg, var(--gold) 0%, #f59e0b 100%);
-            color: #000;
+        .save-wall-btn {
+            background: var(--flare-orange);
+            color: white;
             border: none;
-            padding: 16px 24px;
-            border-radius: 14px;
+            padding: 12px 20px;
+            border-radius: 10px;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
-            letter-spacing: 2px;
+            font-size: 14px;
+            letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.3s;
-            font-weight: 700;
         }
 
-        .wall-access-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3);
-        }
-
-        .wall-access-btn:disabled {
+        .save-wall-btn:disabled {
             opacity: 0.4;
             cursor: not-allowed;
         }
 
-        .wall-access-note {
-            font-size: 12px;
+        .save-wall-note {
+            font-size: 11px;
             color: var(--text-muted);
-            margin-top: 14px;
             font-style: italic;
         }
 
-        .wall-access-success {
+        .save-wall-success {
             background: rgba(20, 184, 166, 0.2);
             border: 1px solid rgba(20, 184, 166, 0.4);
             color: #5eead4;
-            padding: 14px;
-            border-radius: 12px;
-            margin-top: 14px;
-            font-size: 14px;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 13px;
             font-weight: 600;
         }
 
@@ -1447,14 +1478,16 @@
                 <div class="prayer-header">
                     <div class="prayer-header-icon">🔥</div>
                     <h2 class="prayer-header-title">Right Now Prayer</h2>
-                    <p class="prayer-header-subtitle">Watchman are praying. But you don't have to wait.</p>
+                    <p class="prayer-header-subtitle">Watchman activated. You are covered.</p>
                 </div>
 
-                <div class="borrow-faith-box" id="borrowFaithBox">
-                    <h3 class="borrow-faith-title">Borrow Our Faith</h3>
-                    <p class="borrow-faith-text">We see you. This is a dark moment, but Jesus is extending His hand to you right now.</p>
-                    <p class="borrow-faith-text">You don't have to believe it to receive it. Just trust us — <strong>He is here.</strong> We have words for you when you have none of your own.</p>
-                    <a href="#prayerContent" class="borrow-faith-btn" id="startPrayerBtn">Let's pray this together →</a>
+                <div class="grace-box" id="graceBox">
+                    <p class="grace-text"><strong>Watchman are now activated</strong> to pray for you.</p>
+                    <p class="grace-text">You are not alone in this moment.</p>
+                    <p class="grace-text">Jesus is extending His hand to you in love, not judgment. And His grace is always enough.</p>
+                    <p class="grace-text">Even if your heart feels heavy or uncertain, we are standing in faith for you — trusting in His power to bring peace and hope.</p>
+                    <p class="grace-text">Let His grace surround you as we lift these prayers together.</p>
+                    <a href="#prayerContent" class="grace-btn" id="startPrayerBtn">✙ PRAY THIS WITH US</a>
                 </div>
 
                 <div class="context-line" id="contextLine">
@@ -1468,14 +1501,21 @@
                     <button class="action-btn secondary" id="moreBtn">I Need More</button>
                 </div>
 
-                <div class="wall-access-box" id="wallAccessBox">
-                    <div class="wall-access-icon">🙏</div>
-                    <h3 class="wall-access-title">Your Prayer Wall is Ready</h3>
-                    <p class="wall-access-text">Watchman are posting prayers for you right now. Your wall is free — just enter your email to access it anytime.</p>
-                    <input type="email" class="wall-access-input" id="wallEmailInput" placeholder="your@email.com">
-                    <button class="wall-access-btn" id="wallAccessBtn" disabled>SEND ME ACCESS</button>
-                    <p class="wall-access-note">We'll only email you about your prayer wall. Nothing else.</p>
-                    <p class="wall-access-success" id="wallAccessSuccess" style="display: none;">✓ Check your email! Your prayer wall link is on the way.</p>
+                <div class="wall-direct-box" id="wallDirectBox">
+                    <div class="wall-direct-icon">🙏</div>
+                    <h3 class="wall-direct-title">Your Prayer Wall</h3>
+                    <p class="wall-direct-text">Scriptures, prayers, and encouragement for your struggle — plus prayers from Watchman lifting you up right now.</p>
+                    <a href="#" class="wall-direct-btn" id="visitWallBtn">VISIT YOUR PRAYER WALL →</a>
+                </div>
+
+                <div class="save-wall-box" id="saveWallBox">
+                    <p class="save-wall-label">Want to return later?</p>
+                    <div class="save-wall-row">
+                        <input type="email" class="save-wall-input" id="wallEmailInput" placeholder="your@email.com">
+                        <button class="save-wall-btn" id="wallAccessBtn" disabled>SAVE</button>
+                    </div>
+                    <p class="save-wall-note">We'll send you access to return anytime.</p>
+                    <p class="save-wall-success" id="wallAccessSuccess" style="display: none;">✓ Saved! Check your email.</p>
                 </div>
 
                 <p class="crisis-note" id="crisisNote" style="display: none;">If you feel you may hurt yourself or others, there are emergency hotlines available below.</p>
@@ -2149,6 +2189,10 @@
                     };
                     const catKey = selectedCategory?.startsWith('Other:') ? 'Other' : selectedCategory;
                     document.getElementById('contextLine').querySelector('p').textContent = contextLines[catKey] || contextLines['Other'];
+                    
+                    // Set wall link with prayer ID and category
+                    const categoryParam = encodeURIComponent(catKey);
+                    document.getElementById('visitWallBtn').href = `wall.html?id=${currentPrayerId}&cat=${categoryParam}`;
                     
                     // Show crisis note if needed
                     if (showCrisisResources || selectedCategory === 'Depression / Giving up') {
