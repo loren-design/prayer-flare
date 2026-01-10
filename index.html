@@ -352,6 +352,136 @@
             display: block;
         }
 
+        /* PF Code Card */
+        .pf-card {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.12) 0%, rgba(255, 107, 53, 0.04) 100%);
+            border: 1px solid rgba(255, 107, 53, 0.25);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 28px;
+        }
+
+        .pf-card .location-title {
+            color: var(--flare-orange);
+        }
+
+        .pf-highlight {
+            color: var(--flare-orange);
+            font-weight: 600;
+        }
+
+        .pf-input-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .pf-prefix-form {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            letter-spacing: 2px;
+            color: var(--flare-orange);
+        }
+
+        .pf-input-form {
+            width: 140px;
+            background: rgba(10, 10, 15, 0.6);
+            border: 2px solid rgba(255, 107, 53, 0.3);
+            border-radius: 14px;
+            padding: 16px;
+            font-size: 28px;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 8px;
+            color: var(--text-primary);
+            text-align: center;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .pf-input-form:focus {
+            border-color: var(--flare-orange);
+            box-shadow: 0 0 25px var(--flare-glow);
+        }
+
+        .pf-input-form::placeholder {
+            color: var(--text-muted);
+            letter-spacing: 6px;
+        }
+
+        .pf-error {
+            color: var(--flare-red);
+            font-size: 12px;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+
+        .pf-error.show {
+            display: block;
+        }
+
+        .pf-privacy-note {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 16px;
+            font-style: italic;
+        }
+
+        /* Email Card */
+        .email-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(99, 102, 241, 0.04) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 28px;
+        }
+
+        .email-card .location-title {
+            color: #a5b4fc;
+        }
+
+        .location-optional {
+            background: rgba(99, 102, 241, 0.3);
+            color: #a5b4fc;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 12px;
+            letter-spacing: 1px;
+            margin-left: auto;
+        }
+
+        .email-input {
+            width: 100%;
+            background: rgba(10, 10, 15, 0.6);
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: 14px;
+            padding: 16px 18px;
+            font-size: 16px;
+            color: var(--text-primary);
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .email-input:focus {
+            border-color: #a5b4fc;
+            box-shadow: 0 0 25px rgba(99, 102, 241, 0.3);
+        }
+
+        .email-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .email-privacy-note {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 12px;
+            font-style: italic;
+        }
+
         .section-label {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 14px;
@@ -1150,6 +1280,36 @@
                     <p class="zip-error" id="zipError">Please enter your 5-digit zip code</p>
                 </div>
 
+                <div class="pf-card">
+                    <div class="location-header">
+                        <span class="location-icon">🔑</span>
+                        <span class="location-title">Your Prayer Code</span>
+                        <span class="location-required">REQUIRED</span>
+                    </div>
+                    <p class="location-text">
+                        Pick a <span class="pf-highlight">4-character code</span> you'll remember — like your initials + birth year (LB91) or any combo. This is your private key to access your prayer wall.
+                    </p>
+                    <p class="pf-privacy-note">We don't track you. This code is just for you to return to your wall.</p>
+                    <div class="pf-input-row">
+                        <span class="pf-prefix-form">PF-</span>
+                        <input type="text" class="pf-input-form" id="pfInputForm" placeholder="LB91" maxlength="4">
+                    </div>
+                    <p class="pf-error" id="pfError">That code is taken. Try another.</p>
+                </div>
+
+                <div class="email-card">
+                    <div class="location-header">
+                        <span class="location-icon">📧</span>
+                        <span class="location-title">Email Your Wall Link</span>
+                        <span class="location-optional">OPTIONAL</span>
+                    </div>
+                    <p class="location-text">
+                        Want easy access to your prayer wall? We'll send you a link so you can return anytime to see prayers from Watchman.
+                    </p>
+                    <input type="email" class="email-input" id="emailInput" placeholder="your@email.com">
+                    <p class="email-privacy-note">We'll only use this to send your wall link. Nothing else.</p>
+                </div>
+
                 <p class="section-label">WHAT'S HAPPENING RIGHT NOW THAT WE CAN PRAY FOR?</p>
                 <div class="options-grid" id="optionsGrid">
                     <button class="option-btn" data-value="Anxiety / Panic">
@@ -1789,25 +1949,50 @@
             });
 
             // ============================================
+            // PF CODE INPUT
+            // ============================================
+            const pfInputForm = document.getElementById('pfInputForm');
+            const pfError = document.getElementById('pfError');
+
+            pfInputForm.addEventListener('input', function() {
+                // Allow letters and numbers, uppercase it
+                this.value = this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 4);
+                pfError.classList.remove('show');
+                validateForm();
+            });
+
+            // ============================================
             // FORM VALIDATION
             // ============================================
             function validateForm() {
                 const zipValid = zipInput.value.length === 5;
+                const pfValid = pfInputForm.value.length === 4;
                 const categoryValid = selectedCategory !== null;
-                const rateLimitOk = checkRateLimit();
+                const rateLimitOk = checkRateLimitSilent();
                 
                 document.getElementById('zipError').classList.toggle('show', zipInput.value.length > 0 && !zipValid);
-                submitBtn.disabled = !(zipValid && categoryValid && rateLimitOk);
+                submitBtn.disabled = !(zipValid && pfValid && categoryValid && rateLimitOk);
+            }
+
+            // Silent rate limit check (doesn't prompt)
+            function checkRateLimitSilent() {
+                const history = JSON.parse(localStorage.getItem('flareHistory') || '[]');
+                const now = Date.now();
+                const recent = history.filter(t => now - t < RATE_LIMIT_WINDOW);
+                return recent.length < RATE_LIMIT_MAX;
             }
 
             function resetForm() {
                 zipInput.value = '';
+                pfInputForm.value = '';
+                document.getElementById('emailInput').value = '';
                 selectedCategory = null;
                 currentStep = 1;
                 showCrisisResources = false;
                 document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
                 submitBtn.disabled = true;
                 document.getElementById('zipError').classList.remove('show');
+                pfError.classList.remove('show');
                 otherInputContainer.style.display = 'none';
                 otherInput.value = '';
             }
@@ -1856,13 +2041,14 @@
             submitBtn.addEventListener('click', sendFlare);
 
             async function sendFlare() {
-                if (!selectedCategory || zipInput.value.length !== 5) return;
+                if (!selectedCategory || zipInput.value.length !== 5 || pfInputForm.value.length !== 4) return;
                 if (!checkRateLimit()) return;
 
                 loading.classList.add('active');
                 submitBtn.disabled = true;
 
-                currentPrayerId = 'PF-' + Math.floor(1000 + Math.random() * 9000);
+                // Use user's chosen PF code
+                currentPrayerId = 'PF-' + pfInputForm.value;
                 currentAccessToken = generateToken();
 
                 // Get Other text if applicable
@@ -1876,16 +2062,34 @@
                 }
 
                 try {
-                    // Save flare
+                    // Check if PF code is already taken
                     if (db) {
+                        const { data: existing } = await db
+                            .from('Prayer Flares')
+                            .select('prayer_id')
+                            .eq('prayer_id', currentPrayerId)
+                            .single();
+
+                        if (existing) {
+                            // Code is taken
+                            loading.classList.remove('active');
+                            submitBtn.disabled = false;
+                            pfError.classList.add('show');
+                            pfInputForm.focus();
+                            return;
+                        }
+
+                        // Save flare (with optional email)
+                        const emailValue = document.getElementById('emailInput').value.trim();
                         await db.from('Prayer Flares').insert([{
                             prayer_id: currentPrayerId,
                             zip_code: zipInput.value,
                             category: categoryToSave,
                             status: 'active',
-                            prayer_count: 0
+                            prayer_count: 0,
+                            email: emailValue || null
                         }]);
-                        console.log('✅ Flare saved');
+                        console.log('✅ Flare saved' + (emailValue ? ' with email' : ''));
 
                         // Create wall
                         const { data: wallData } = await db.from('Prayer Walls').insert([{
@@ -1900,9 +2104,10 @@
 
                     recordFlare();
                     
-                    // Update wall link with PF number
+                    // Update wall link with PF number (just the 4 digits)
+                    const pfDigits = currentPrayerId.replace('PF-', '');
                     document.getElementById('wallExplainerPf').textContent = currentPrayerId;
-                    document.getElementById('wallExplainerBtn').href = `wall.html?id=${currentPrayerId}&token=${currentAccessToken}`;
+                    document.getElementById('wallExplainerBtn').href = `wall.html?pf=${pfDigits}`;
                     
                     // Set dynamic context line based on category
                     const contextLines = {
@@ -2055,7 +2260,8 @@
                 currentStep++;
                 if (currentStep > 4) currentStep = 4;
                 renderPrayer();
-                window.scrollTo(0, 0);
+                // Scroll to prayer content, not top
+                document.getElementById('prayerContent').scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
 
             // ============================================
