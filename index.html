@@ -1816,6 +1816,8 @@
             // ============================================
             // RATE LIMITING
             // ============================================
+            const ADMIN_CODE = '4013';
+
             function checkRateLimit() {
                 const history = JSON.parse(localStorage.getItem('flareHistory') || '[]');
                 const now = Date.now();
@@ -1823,8 +1825,24 @@
                 localStorage.setItem('flareHistory', JSON.stringify(recent));
                 
                 const limited = recent.length >= RATE_LIMIT_MAX;
-                document.getElementById('rateLimitMsg').classList.toggle('show', limited);
-                return !limited;
+                
+                if (limited) {
+                    // Show admin bypass prompt
+                    const code = prompt('Rate limit reached.\n\nIf you are a Watchman or Admin testing, please enter your code:');
+                    if (code === ADMIN_CODE) {
+                        // Clear history and allow
+                        localStorage.setItem('flareHistory', '[]');
+                        document.getElementById('rateLimitMsg').classList.remove('show');
+                        return true;
+                    } else if (code !== null) {
+                        alert('Invalid code. Please wait before sending another flare.');
+                    }
+                    document.getElementById('rateLimitMsg').classList.add('show');
+                    return false;
+                }
+                
+                document.getElementById('rateLimitMsg').classList.remove('show');
+                return true;
             }
 
             function recordFlare() {
@@ -1915,8 +1933,9 @@
                     showScreen(prayerScreen);
 
                 } catch (err) {
-                    console.error('Error:', err);
-                    alert('Something went wrong. Please try again.');
+                    console.error('Error details:', err);
+                    console.error('Error message:', err.message);
+                    alert('Something went wrong: ' + (err.message || 'Unknown error'));
                 }
 
                 loading.classList.remove('active');
