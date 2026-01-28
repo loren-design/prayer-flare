@@ -279,12 +279,39 @@
 
         .form-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 32px;
-            letter-spacing: 3px;
-            margin-bottom: 28px;
+            font-size: 28px;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
             text-transform: uppercase;
             text-align: center;
             text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8);
+            line-height: 1.3;
+            color: var(--flare-orange);
+        }
+
+        /* Zip Section */
+        .zip-section {
+            background: rgba(20, 184, 166, 0.08);
+            border: 1px solid rgba(20, 184, 166, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 24px 0;
+            text-align: center;
+        }
+
+        .zip-label {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            letter-spacing: 2px;
+            color: #5eead4;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .zip-note {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 14px;
         }
 
         .location-card {
@@ -669,27 +696,49 @@
         }
 
         /* ============================================
-           PRAYER SCREEN
+           PRAYER SCREEN - ENHANCED
            ============================================ */
         .prayer-header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .prayer-header-glow {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 100px;
+            background: radial-gradient(ellipse at center, rgba(255, 107, 53, 0.3) 0%, transparent 70%);
+            pointer-events: none;
+            animation: headerPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes headerPulse {
+            0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+            50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
         }
 
         .prayer-header-icon {
-            font-size: 52px;
+            font-size: 48px;
             margin-bottom: 12px;
-            filter: drop-shadow(0 0 20px var(--flare-glow));
+            filter: drop-shadow(0 0 25px var(--flare-glow));
+            position: relative;
+            z-index: 2;
         }
 
         .prayer-header-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 30px;
-            letter-spacing: 3px;
+            font-size: 32px;
+            letter-spacing: 4px;
             color: var(--flare-orange);
             text-transform: uppercase;
             margin-bottom: 8px;
-            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8);
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.9);
+            position: relative;
+            z-index: 2;
         }
 
         .prayer-header-subtitle {
@@ -699,17 +748,210 @@
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
         }
 
-        .prayer-id-badge {
-            display: inline-block;
-            background: rgba(255, 107, 53, 0.15);
-            border: 1px solid rgba(255, 107, 53, 0.3);
-            padding: 10px 20px;
-            border-radius: 25px;
+        /* Flare Received Badge */
+        .flare-received-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.15) 0%, rgba(20, 184, 166, 0.05) 100%);
+            border: 1px solid rgba(20, 184, 166, 0.3);
+            padding: 12px 20px;
+            border-radius: 30px;
+            margin-top: 16px;
+        }
+
+        .flare-badge-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--teal);
+            border-radius: 50%;
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.4); }
+            50% { opacity: 0.8; box-shadow: 0 0 0 8px rgba(20, 184, 166, 0); }
+        }
+
+        .flare-badge-text {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--teal);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Journey Steps */
+        .journey-steps {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 24px 0;
+        }
+
+        .journey-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            opacity: 0.4;
+            transition: all 0.3s;
+        }
+
+        .journey-step.active {
+            opacity: 1;
+        }
+
+        .journey-step.completed {
+            opacity: 0.7;
+        }
+
+        .journey-icon {
+            font-size: 20px;
+        }
+
+        .journey-label {
+            font-size: 9px;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 15px;
-            letter-spacing: 3px;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        .journey-step.active .journey-label {
             color: var(--flare-orange);
-            margin-top: 14px;
+        }
+
+        .journey-line {
+            width: 24px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-top: 10px;
+        }
+
+        /* Grace Box - Enhanced */
+        .grace-box {
+            background: linear-gradient(180deg, rgba(255, 215, 0, 0.08) 0%, rgba(255, 215, 0, 0.02) 100%);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 24px;
+            padding: 32px 24px;
+            margin-bottom: 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grace-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle at center, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .grace-cross {
+            font-size: 28px;
+            color: var(--gold);
+            margin-bottom: 16px;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+            position: relative;
+            z-index: 2;
+        }
+
+        .grace-lead {
+            font-size: 18px;
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+        }
+
+        .grace-text {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.85;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+            position: relative;
+            z-index: 2;
+        }
+
+        .grace-text:last-of-type {
+            margin-bottom: 24px;
+        }
+
+        .grace-text strong {
+            color: var(--gold);
+        }
+
+        .grace-highlight {
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 3px solid var(--gold);
+            padding: 14px 18px;
+            margin: 20px 0;
+            text-align: left;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .grace-highlight p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin: 0;
+            font-style: italic;
+        }
+
+        .grace-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--gold) 0%, #e8a910 100%);
+            color: #000;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            letter-spacing: 3px;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 18px 36px;
+            border-radius: 30px;
+            transition: all 0.3s;
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .grace-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Context Line */
+        .context-line {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
+        }
+
+        .context-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .context-line p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            font-style: italic;
+            line-height: 1.7;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+            max-width: 320px;
+            margin: 0 auto;
         }
 
         /* Prayer Intro */
@@ -726,29 +968,43 @@
             text-shadow: 0 2px 15px rgba(0,0,0,0.9);
         }
 
-        /* Prayer Box */
+        /* Prayer Box - Enhanced */
         .prayer-box {
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.08) 0%, rgba(255, 68, 68, 0.04) 100%);
+            background: linear-gradient(180deg, rgba(255, 107, 53, 0.10) 0%, rgba(255, 68, 68, 0.03) 100%);
             border: 1px solid rgba(255, 107, 53, 0.15);
-            border-radius: 20px;
-            padding: 28px 24px;
+            border-radius: 24px;
+            padding: 32px 24px;
             margin-bottom: 24px;
+            position: relative;
+        }
+
+        .prayer-box::before {
+            content: '✙';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-dark);
+            padding: 4px 16px;
+            font-size: 20px;
+            color: var(--flare-orange);
         }
 
         .prayer-instruction {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-muted);
             text-align: center;
-            margin-bottom: 20px;
-            font-style: italic;
+            margin-bottom: 24px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         .prayer-line {
             font-size: 18px;
             color: var(--text-primary);
             text-align: center;
-            margin-bottom: 14px;
-            line-height: 1.5;
+            margin-bottom: 16px;
+            line-height: 1.6;
             font-weight: 500;
         }
 
@@ -756,15 +1012,27 @@
             font-style: italic;
             color: var(--gold);
             font-size: 20px;
+            padding: 10px 0;
         }
 
         .prayer-pause {
-            text-align: center;
-            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 11px;
             color: var(--text-muted);
-            margin: 16px 0;
-            letter-spacing: 2px;
+            margin: 24px 0;
+            letter-spacing: 3px;
             text-transform: uppercase;
+        }
+
+        .prayer-pause::before,
+        .prayer-pause::after {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .prayer-context {
@@ -775,21 +1043,34 @@
             font-style: italic;
         }
 
-        /* Scripture */
+        /* Scripture - Enhanced */
         .scripture-box {
-            background: rgba(20, 20, 25, 0.6);
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(255, 215, 0, 0.02) 100%);
             border-left: 4px solid var(--gold);
-            padding: 20px 24px;
-            border-radius: 0 14px 14px 0;
+            padding: 24px;
+            border-radius: 0 20px 20px 0;
             margin-bottom: 24px;
+            position: relative;
+        }
+
+        .scripture-label {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: var(--bg-dark);
+            padding: 2px 12px;
+            font-size: 10px;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 2px;
+            color: var(--gold);
         }
 
         .scripture-text {
             font-style: italic;
             color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 10px;
-            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 14px;
+            font-size: 16px;
         }
 
         .scripture-ref {
@@ -806,48 +1087,101 @@
             text-align: center;
         }
 
-        /* Grace Box */
-        .grace-box {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.10) 0%, rgba(255, 215, 0, 0.03) 100%);
-            border: 1px solid rgba(255, 215, 0, 0.20);
-            border-radius: 20px;
+        /* Redirect Box - Enhanced */
+        .redirect-box {
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.12) 0%, rgba(20, 184, 166, 0.04) 100%);
+            border: 1px solid rgba(20, 184, 166, 0.2);
+            border-radius: 24px;
             padding: 28px 24px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             text-align: center;
         }
 
-        .grace-text {
-            font-size: 16px;
-            color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 16px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+        .redirect-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 22px;
+            letter-spacing: 2px;
+            color: var(--teal);
+            margin-bottom: 12px;
         }
 
-        .grace-text:last-of-type {
+        .redirect-text {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
             margin-bottom: 20px;
         }
 
-        .grace-text strong {
-            color: var(--gold);
+        .redirect-items {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        .grace-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--gold) 0%, #f59e0b 100%);
-            color: #000;
+        .redirect-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(20, 184, 166, 0.1);
+            padding: 14px 18px;
+            border-radius: 12px;
+            text-align: left;
+        }
+
+        .redirect-icon {
+            font-size: 24px;
+        }
+
+        .redirect-item span:last-child {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Action Buttons - Enhanced */
+        .prayer-actions {
+            display: flex;
+            gap: 12px;
+            margin: 28px 0;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 18px 16px;
+            border-radius: 16px;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
-            letter-spacing: 3px;
-            font-weight: 700;
-            text-decoration: none;
-            padding: 16px 32px;
-            border-radius: 30px;
+            font-size: 16px;
+            letter-spacing: 2px;
+            cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.25);
+            border: none;
         }
 
-        .grace-btn:hover {
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
+            color: white;
+            box-shadow: 0 6px 25px var(--flare-glow);
+        }
+
+        .action-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 35px var(--flare-glow);
+        }
+
+        .action-btn.primary.completed {
+            background: linear-gradient(135deg, var(--teal) 0%, #0d9488 100%);
+            box-shadow: 0 6px 25px rgba(20, 184, 166, 0.3);
+        }
+
+        .action-btn.secondary {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-secondary);
+        }
+
+        .action-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
             transform: translateY(-2px);
             box-shadow: 0 10px 35px rgba(255, 215, 0, 0.35);
         }
@@ -1000,6 +1334,45 @@
             font-style: italic;
             margin: 16px 0;
             padding: 0 20px;
+        }
+
+        /* Warrior Image */
+        .warrior-image-box {
+            margin: 24px 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .warrior-image {
+            width: 100%;
+            display: block;
+        }
+
+        /* Pray With Button */
+        .pray-with-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            background: linear-gradient(135deg, var(--gold) 0%, #e8a910 100%);
+            color: #000;
+            text-decoration: none;
+            padding: 20px 24px;
+            border-radius: 16px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 22px;
+            letter-spacing: 3px;
+            font-weight: 700;
+            margin: 24px 0;
+            box-shadow: 0 8px 35px rgba(255, 215, 0, 0.3);
+            transition: all 0.3s;
+        }
+
+        .pray-with-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 45px rgba(255, 215, 0, 0.4);
         }
 
         /* Action Buttons */
@@ -1349,18 +1722,8 @@
                         <span class="btn-sub">🔥 SEND A FLARE!</span>
                     </button>
 
-                    <div class="home-divider">
-                        <span>or</span>
-                    </div>
-
-                    <a href="wall.html" class="btn-secondary-link">
-                        <span>🙏</span>
-                        <span>Visit My Prayer Wall</span>
-                    </a>
-
                     <div class="tagline">
                         <span class="tagline-badge">🔒 Anonymous</span>
-                        <span class="tagline-badge teal">⚡ Immediate</span>
                         <span class="tagline-badge teal">📍 Local</span>
                     </div>
 
@@ -1382,26 +1745,8 @@
             <div id="formScreen" class="screen">
                 <button class="back-btn" id="backBtn">← Back</button>
                 
-                <h2 class="form-title">Send Your Flare</h2>
+                <h2 class="form-title">WHAT'S HAPPENING RIGHT NOW<br>THAT WE CAN PRAY FOR?</h2>
 
-                <div class="location-card">
-                    <div class="location-header">
-                        <span class="location-icon">📍</span>
-                        <span class="location-title">Your Location</span>
-                        <span class="location-anonymous">ANONYMOUS</span>
-                        <span class="location-required">REQUIRED</span>
-                    </div>
-                    <p class="location-text">
-                        <strong class="anonymous-statement">YOUR COMMUNICATIONS HERE ARE ANONYMOUS.</strong>
-                        If we have <span class="location-highlight">local Watchman</span> in your area, 
-                        we'll notify them. If not, our <span class="location-highlight">global Watchman</span> 
-                        have you covered 24/7.
-                    </p>
-                    <input type="text" class="zip-input" id="zipInput" placeholder="00000" maxlength="5" inputmode="numeric">
-                    <p class="zip-error" id="zipError">Please enter your 5-digit zip code</p>
-                </div>
-
-                <p class="section-label">WHAT'S HAPPENING RIGHT NOW THAT WE CAN PRAY FOR?</p>
                 <div class="options-grid" id="optionsGrid">
                     <button class="option-btn" data-value="Anxiety / Panic">
                         <span class="option-icon">😰</span>
@@ -1449,6 +1794,13 @@
                     <textarea class="other-input" id="otherInput" placeholder="Tell us what's going on..." rows="3"></textarea>
                 </div>
 
+                <div class="zip-section">
+                    <label class="zip-label">Enter Your Zip Code</label>
+                    <p class="zip-note">Anonymous. Helps us connect you with local Watchmen.</p>
+                    <input type="text" class="zip-input" id="zipInput" placeholder="00000" maxlength="5" inputmode="numeric">
+                    <p class="zip-error" id="zipError">Please enter your 5-digit zip code</p>
+                </div>
+
                 <div class="rate-limit-msg" id="rateLimitMsg">
                     <p class="rate-limit-text">⚠️ Please wait before sending another flare. We want every prayer request to get attention.</p>
                 </div>
@@ -1472,53 +1824,35 @@
             </div>
 
             <!-- ============================================
-                 PRAYER SCREEN
+                 PRAYER SCREEN - SIMPLIFIED
                  ============================================ -->
             <div id="prayerScreen" class="screen">
                 <div class="prayer-header">
+                    <div class="prayer-header-glow"></div>
                     <div class="prayer-header-icon">🔥</div>
-                    <h2 class="prayer-header-title">Right Now Prayer</h2>
-                    <p class="prayer-header-subtitle">Watchman activated. You are covered.</p>
+                    <h2 class="prayer-header-title">WATCHMEN ARE BEING ACTIVATED</h2>
+                    <p class="prayer-header-subtitle">Your flare was received. Prayer is on the way.</p>
                 </div>
 
-                <div class="grace-box" id="graceBox">
-                    <p class="grace-text"><strong>Watchman are now activated</strong> to pray for you.</p>
-                    <p class="grace-text">You are not alone in this moment.</p>
-                    <p class="grace-text">Jesus is extending His hand to you in love, not judgment. And His grace is always enough.</p>
-                    <p class="grace-text">Even if your heart feels heavy or uncertain, we are standing in faith for you — trusting in His power to bring peace and hope.</p>
-                    <p class="grace-text">Let His grace surround you as we lift these prayers together.</p>
-                    <a href="#prayerContent" class="grace-btn" id="startPrayerBtn">✙ PRAY THIS WITH US</a>
+                <div class="scripture-box">
+                    <p class="scripture-text">"No temptation has overtaken you except what is common to mankind. And God is faithful; he will not let you be tempted beyond what you can bear. But when you are tempted, he will also provide a way out so that you can endure it."</p>
+                    <p class="scripture-ref">— 1 Corinthians 10:13</p>
+                </div>
+
+                <div class="warrior-image-box">
+                    <img src="warrior-praying.png" alt="You aren't alone. Prayer partners are coming. Jesus wants you home." class="warrior-image">
                 </div>
 
                 <div class="context-line" id="contextLine">
-                    <p>The craving is screaming. But you reached out instead of reaching for it.</p>
+                    <p>The pull is strong. But you sent up a flare instead of giving in. That took guts. God sees that.</p>
                 </div>
 
-                <div id="prayerContent"></div>
+                <a href="video.html" class="pray-with-btn" id="prayWithBtn">
+                    <span>🙏</span>
+                    <span>CAN WE PRAY WITH YOU?</span>
+                </a>
 
-                <div class="prayer-actions">
-                    <button class="action-btn primary" id="prayedBtn">✓ I Prayed This</button>
-                    <button class="action-btn secondary" id="moreBtn">I Need More</button>
-                </div>
-
-                <div class="wall-direct-box" id="wallDirectBox">
-                    <div class="wall-direct-icon">🙏</div>
-                    <h3 class="wall-direct-title">Your Prayer Wall</h3>
-                    <p class="wall-direct-text">Scriptures, prayers, and encouragement for your struggle — plus prayers from Watchman lifting you up right now.</p>
-                    <a href="#" class="wall-direct-btn" id="visitWallBtn">VISIT YOUR PRAYER WALL →</a>
-                </div>
-
-                <div class="save-wall-box" id="saveWallBox">
-                    <p class="save-wall-label">Want to return later?</p>
-                    <div class="save-wall-row">
-                        <input type="email" class="save-wall-input" id="wallEmailInput" placeholder="your@email.com">
-                        <button class="save-wall-btn" id="wallAccessBtn" disabled>SAVE</button>
-                    </div>
-                    <p class="save-wall-note">We'll send you access to return anytime.</p>
-                    <p class="save-wall-success" id="wallAccessSuccess" style="display: none;">✓ Saved! Check your email.</p>
-                </div>
-
-                <p class="crisis-note" id="crisisNote" style="display: none;">If you feel you may hurt yourself or others, there are emergency hotlines available below.</p>
+                <p class="crisis-note" id="crisisNote" style="display: none;">If you feel you may hurt yourself or others, please reach out to the emergency resources below.</p>
 
                 <div class="home-link">
                     <button id="homeBtn">← Back to Home</button>
@@ -2313,68 +2647,6 @@
             }
 
             // ============================================
-            // ACTION BUTTONS
-            // ============================================
-            document.getElementById('startPrayerBtn').addEventListener('click', function(e) {
-                e.preventDefault();
-                document.getElementById('prayerContent').scrollIntoView({ behavior: 'smooth' });
-            });
-
-            document.getElementById('prayedBtn').addEventListener('click', function() {
-                this.textContent = '✓ Amen';
-                this.style.background = 'rgba(255, 107, 53, 0.2)';
-            });
-
-            document.getElementById('moreBtn').addEventListener('click', function() {
-                currentStep++;
-                if (currentStep > 4) currentStep = 4;
-                renderPrayer();
-                // Scroll to prayer content, not top
-                document.getElementById('prayerContent').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-
-            // ============================================
-            // WALL EMAIL CAPTURE
-            // ============================================
-            const wallEmailInput = document.getElementById('wallEmailInput');
-            const wallAccessBtn = document.getElementById('wallAccessBtn');
-            const wallAccessSuccess = document.getElementById('wallAccessSuccess');
-
-            wallEmailInput.addEventListener('input', function() {
-                // Simple email validation
-                const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value);
-                wallAccessBtn.disabled = !isValid;
-            });
-
-            wallAccessBtn.addEventListener('click', async function() {
-                const email = wallEmailInput.value.trim();
-                if (!email || !currentPrayerId) return;
-
-                this.textContent = 'SENDING...';
-                this.disabled = true;
-
-                try {
-                    // Update the flare with email
-                    if (db) {
-                        await db.from('Prayer Flares')
-                            .update({ email: email })
-                            .eq('prayer_id', currentPrayerId);
-                        console.log('✅ Email saved for', currentPrayerId);
-                    }
-
-                    // Show success (email will be sent via GHL later)
-                    wallAccessSuccess.style.display = 'block';
-                    this.textContent = '✓ SENT';
-                    wallEmailInput.disabled = true;
-
-                } catch (err) {
-                    console.error('Error saving email:', err);
-                    this.textContent = 'TRY AGAIN';
-                    this.disabled = false;
-                }
-            });
-
-            // ============================================
             // HELPERS
             // ============================================
             function generateToken() {
@@ -2386,7 +2658,7 @@
                 return token;
             }
 
-            console.log('✅ Prayer Flare V8 loaded');
+            console.log('✅ Prayer Flare V9 - Simplified');
 
             // ============================================
             // PWA INSTALL PROMPT

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0a0a0f">
-    <title>Watchman Portal - Prayer Flare</title>
+    <title>Become a Watchman - Prayer Flare</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,16 +12,17 @@
     <style>
         :root {
             --bg-dark: #0a0a0f;
-            --bg-card: #141419;
-            --bg-elevated: #1c1c24;
+            --bg-card: #12121a;
+            --bg-elevated: #1a1a24;
             --text-primary: #ffffff;
-            --text-secondary: #b0b0c0;
-            --text-muted: #707080;
+            --text-secondary: #d4c4b0;
+            --text-muted: #8a8090;
             --flare-orange: #ff6b35;
             --flare-red: #ff4444;
             --flare-glow: rgba(255, 107, 53, 0.4);
-            --success-green: #34d399;
             --gold: #ffd700;
+            --gold-soft: #e8c547;
+            --teal: #14b8a6;
             --border-subtle: rgba(255, 255, 255, 0.08);
         }
 
@@ -32,443 +33,880 @@
             background: var(--bg-dark);
             color: var(--text-primary);
             min-height: 100vh;
+            line-height: 1.6;
         }
 
-        .header {
-            background: var(--bg-card);
-            border-bottom: 1px solid var(--border-subtle);
-            padding: 16px 20px;
+        /* ============================
+           HERO SECTION
+           ============================ */
+        .hero {
+            position: relative;
+            min-height: 70vh;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-        }
-
-        .header-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 24px;
-            letter-spacing: 3px;
-            color: var(--flare-orange);
-        }
-
-        .header-badge {
-            background: rgba(52, 211, 153, 0.15);
-            border: 1px solid rgba(52, 211, 153, 0.3);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            color: var(--success-green);
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .stat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: 16px;
             text-align: center;
+            padding: 60px 24px;
+            background: linear-gradient(180deg, 
+                #0a0a0f 0%, 
+                #15101a 40%,
+                #1f1525 70%,
+                #2a1a30 100%
+            );
+            overflow: hidden;
         }
 
-        .stat-value {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 32px;
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center top, rgba(255, 107, 53, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 107, 53, 0.15);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            padding: 10px 20px;
+            border-radius: 30px;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge-icon { font-size: 18px; }
+
+        .hero-badge-text {
+            font-size: 12px;
+            font-weight: 600;
             color: var(--flare-orange);
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        .stat-label {
-            font-size: 11px;
+        .hero-icon {
+            font-size: 72px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 40px var(--flare-glow));
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 52px;
+            letter-spacing: 6px;
+            color: var(--text-primary);
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin-bottom: 32px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-scripture {
+            font-style: italic;
+            color: var(--gold-soft);
+            font-size: 16px;
+            max-width: 450px;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-scripture-ref {
+            font-size: 14px;
             color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
+            color: white;
+            text-decoration: none;
+            padding: 18px 40px;
+            border-radius: 30px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            letter-spacing: 3px;
+            margin-top: 32px;
+            box-shadow: 0 8px 35px var(--flare-glow);
+            transition: all 0.3s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 45px var(--flare-glow);
+        }
+
+        /* ============================
+           CONTAINER
+           ============================ */
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ============================
+           SECTIONS
+           ============================ */
+        .section {
+            padding: 60px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-icon {
+            font-size: 36px;
+            margin-bottom: 16px;
         }
 
         .section-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
-            letter-spacing: 2px;
-            color: var(--text-muted);
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-size: 36px;
+            letter-spacing: 4px;
+            color: var(--flare-orange);
+            margin-bottom: 12px;
         }
 
-        .flare-card {
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* What is a Watchman */
+        .what-section {
+            background: linear-gradient(180deg, #2a1a30 0%, var(--bg-dark) 100%);
+        }
+
+        .what-content {
             background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 32px;
+        }
+
+        .what-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .what-text:last-child {
+            margin-bottom: 0;
+        }
+
+        .what-highlight {
+            background: rgba(255, 215, 0, 0.08);
+            border-left: 3px solid var(--gold);
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .what-highlight p {
+            font-style: italic;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .what-highlight cite {
+            display: block;
+            margin-top: 10px;
+            font-size: 14px;
+            color: var(--gold-soft);
+            font-style: normal;
+        }
+
+        /* Role Cards */
+        .role-grid {
+            display: grid;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .role-card {
+            display: flex;
+            gap: 16px;
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-subtle);
             border-radius: 16px;
             padding: 20px;
-            margin-bottom: 16px;
+            transition: all 0.3s;
         }
 
-        .flare-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
+        .role-card:hover {
+            border-color: rgba(255, 107, 53, 0.3);
+            background: rgba(255, 107, 53, 0.05);
         }
 
-        .flare-id {
+        .role-icon {
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .role-content h4 {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 18px;
             letter-spacing: 2px;
             color: var(--flare-orange);
+            margin-bottom: 6px;
         }
 
-        .flare-time {
-            font-size: 12px;
+        .role-content p {
+            font-size: 14px;
             color: var(--text-muted);
+            line-height: 1.6;
         }
 
-        .flare-category {
-            display: inline-block;
-            background: rgba(255, 107, 53, 0.15);
-            border: 1px solid rgba(255, 107, 53, 0.3);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            color: #ff8c5a;
+        /* Commitment Section */
+        .commitment-section {
+            background: var(--bg-dark);
+        }
+
+        .commitment-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .commitment-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .commitment-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .commitment-icon {
+            font-size: 32px;
             margin-bottom: 12px;
         }
 
-        .flare-location {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 16px;
-        }
-
-        .pray-btn {
-            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .pray-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px var(--flare-glow);
-        }
-
-        .pray-btn.prayed {
-            background: rgba(52, 211, 153, 0.2);
-            color: var(--success-green);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-muted);
-        }
-
-        .empty-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-        }
-
-        .prayer-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .prayer-modal.show {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--bg-card);
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 500px;
-            width: 100%;
-        }
-
-        .modal-title {
+        .commitment-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 24px;
+            font-size: 16px;
             letter-spacing: 2px;
-            color: var(--flare-orange);
+            color: var(--text-primary);
             margin-bottom: 8px;
         }
 
-        .modal-subtitle {
-            font-size: 14px;
+        .commitment-text {
+            font-size: 13px;
             color: var(--text-muted);
-            margin-bottom: 20px;
+            line-height: 1.5;
         }
 
-        .prayer-textarea {
-            width: 100%;
-            background: var(--bg-dark);
-            border: 2px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: 16px;
-            font-size: 15px;
-            color: var(--text-primary);
-            resize: none;
-            font-family: 'Inter', sans-serif;
-            margin-bottom: 12px;
+        /* Requirements Section */
+        .requirements-section {
+            background: linear-gradient(180deg, var(--bg-dark) 0%, #0f0a12 100%);
         }
 
-        .prayer-textarea:focus {
-            outline: none;
-            border-color: var(--flare-orange);
-        }
-
-        .scripture-input {
-            width: 100%;
-            background: var(--bg-dark);
-            border: 2px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: 14px 16px;
-            font-size: 14px;
-            color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
-            margin-bottom: 20px;
-        }
-
-        .scripture-input:focus {
-            outline: none;
-            border-color: var(--gold);
-        }
-
-        .modal-actions {
+        .requirements-list {
             display: flex;
+            flex-direction: column;
             gap: 12px;
         }
 
-        .modal-btn {
-            flex: 1;
-            padding: 14px;
+        .requirement-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
             border-radius: 12px;
-            font-size: 14px;
+            padding: 18px 20px;
+        }
+
+        .requirement-check {
+            width: 24px;
+            height: 24px;
+            background: rgba(20, 184, 166, 0.15);
+            border: 2px solid var(--teal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--teal);
+            flex-shrink: 0;
+        }
+
+        .requirement-text {
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        /* ============================
+           APPLICATION FORM
+           ============================ */
+        .apply-section {
+            background: linear-gradient(180deg, #0f0a12 0%, var(--bg-dark) 50%, #0f0a12 100%);
+            padding: 80px 0;
+        }
+
+        .apply-form {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 40px 32px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
             font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .form-label .required {
+            color: var(--flare-orange);
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            background: rgba(10, 10, 15, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 16px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--flare-orange);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238a8090' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 500px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Checkbox Group */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+
+        .checkbox-label:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .checkbox-label input {
+            display: none;
+        }
+
+        .checkbox-custom {
+            width: 22px;
+            height: 22px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .checkbox-label input:checked + .checkbox-custom {
+            background: var(--flare-orange);
+            border-color: var(--flare-orange);
+        }
+
+        .checkbox-label input:checked + .checkbox-custom::after {
+            content: '✓';
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .checkbox-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Availability Grid */
+        .availability-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        @media (max-width: 500px) {
+            .availability-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .availability-option {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.2s;
         }
 
-        .modal-btn.primary {
+        .availability-option:hover {
+            border-color: rgba(255, 107, 53, 0.3);
+        }
+
+        .availability-option input {
+            display: none;
+        }
+
+        .availability-option input:checked + .availability-text {
+            color: var(--flare-orange);
+        }
+
+        .availability-option:has(input:checked) {
+            background: rgba(255, 107, 53, 0.1);
+            border-color: rgba(255, 107, 53, 0.4);
+        }
+
+        .availability-text {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Divider */
+        .form-divider {
+            height: 1px;
+            background: var(--border-subtle);
+            margin: 32px 0;
+        }
+
+        .form-section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
             background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
             color: white;
             border: none;
+            padding: 20px;
+            border-radius: 16px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 22px;
+            letter-spacing: 3px;
+            cursor: pointer;
+            box-shadow: 0 8px 35px var(--flare-glow);
+            transition: all 0.3s;
+            margin-top: 16px;
         }
 
-        .modal-btn.secondary {
-            background: transparent;
-            color: var(--text-secondary);
-            border: 1px solid var(--border-subtle);
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 45px var(--flare-glow);
         }
 
-        .home-link {
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .form-note {
             text-align: center;
-            margin-top: 30px;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 20px;
         }
 
-        .home-link a {
-            color: var(--flare-orange);
+        /* GHL Embed Container */
+        .apply-form-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 24px;
+            padding: 8px;
+            min-height: 400px;
+        }
+
+        .ghl-embed-placeholder iframe {
+            width: 100%;
+            min-height: 800px;
+            border: none;
+            border-radius: 16px;
+        }
+
+        .embed-placeholder-message {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 40px;
+            text-align: center;
+        }
+
+        .placeholder-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .embed-placeholder-message h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .embed-placeholder-message p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .placeholder-note {
+            font-size: 12px !important;
+            color: var(--flare-orange) !important;
+            margin-top: 20px !important;
+            padding: 8px 16px;
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .success-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .success-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px;
+            letter-spacing: 3px;
+            color: var(--teal);
+            margin-bottom: 12px;
+        }
+
+        .success-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* ============================
+           FOOTER
+           ============================ */
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .footer-link {
+            color: var(--text-muted);
             text-decoration: none;
             font-size: 14px;
+        }
+
+        .footer-link:hover {
+            color: var(--flare-orange);
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1 class="header-title">⚔️ WATCHMAN PORTAL</h1>
-        <span class="header-badge">● Online</span>
-    </div>
-
-    <div class="container">
-        <div class="stats-row">
-            <div class="stat-card">
-                <div class="stat-value" id="activeCount">-</div>
-                <div class="stat-label">Active Flares</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="todayCount">-</div>
-                <div class="stat-label">Today</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="prayerCount">-</div>
-                <div class="stat-label">Prayers Sent</div>
-            </div>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-badge">
+            <span class="hero-badge-icon">🛡️</span>
+            <span class="hero-badge-text">Join the Watch</span>
         </div>
+        <div class="hero-icon">🔥</div>
+        <h1 class="hero-title">BECOME A WATCHMAN</h1>
+        <p class="hero-subtitle">Stand on the wall. Fight in the Spirit. Intercede for those in crisis.</p>
+        <p class="hero-scripture">"I have posted watchmen on your walls, Jerusalem; they will never be silent day or night."</p>
+        <p class="hero-scripture-ref">— Isaiah 62:6</p>
+        <a href="#apply" class="hero-cta">APPLY NOW</a>
+    </section>
 
-        <h2 class="section-title">🔥 ACTIVE FLARES</h2>
-        <div id="flaresList"></div>
-
-        <div class="home-link">
-            <a href="index.html">← Back to Home</a>
-        </div>
-    </div>
-
-    <!-- Prayer Modal -->
-    <div class="prayer-modal" id="prayerModal">
-        <div class="modal-content">
-            <h3 class="modal-title">SEND A PRAYER</h3>
-            <p class="modal-subtitle" id="modalSubtitle">For PF-0000</p>
-            <textarea class="prayer-textarea" id="prayerText" rows="5" placeholder="Write your prayer here..."></textarea>
-            <input type="text" class="scripture-input" id="scriptureRef" placeholder="Scripture reference (optional, e.g. Psalm 23:1)">
-            <div class="modal-actions">
-                <button class="modal-btn secondary" onclick="closeModal()">Cancel</button>
-                <button class="modal-btn primary" onclick="submitPrayer()">Send Prayer 🙏</button>
+    <!-- What is a Watchman -->
+    <section class="section what-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-icon">🛡️</div>
+                <h2 class="section-title">WHAT IS A WATCHMAN?</h2>
+                <p class="section-subtitle">Ancient calling. Modern mission.</p>
             </div>
-        </div>
-    </div>
+            
+            <div class="what-content">
+                <p class="what-text">In ancient times, watchmen stood on city walls through the night. They watched for danger. They sounded the alarm. They never slept when others needed protection.</p>
+                
+                <p class="what-text">Today, people are fighting battles alone — addiction, anxiety, depression, spiritual attack. They're reaching out in their darkest moments, and they need someone standing in the gap.</p>
+                
+                <div class="what-highlight">
+                    <p>"I looked for someone among them who would build up the wall and stand before me in the gap on behalf of the land..."</p>
+                    <cite>— Ezekiel 22:30</cite>
+                </div>
+                
+                <p class="what-text"><strong>That's where you come in.</strong> Prayer Flare Watchman receive real-time prayer requests from people in crisis. You pray. You intercede. You post prayers of encouragement to their private prayer wall. You stand when they can't.</p>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        const SUPABASE_URL = 'https://shesaxxugzfdozlmigrk.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNoZXNheHh1Z3pmZG96bG1pZ3JrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ4MzIxMTAsImV4cCI6MjA4MDQwODExMH0.CXQqq8EAQ50w7NxnVvKwOVf5LuRr-x8tnuDajQK_qds';
-
-        const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-        let currentFlareId = null;
-        let prayedFlares = JSON.parse(localStorage.getItem('prayedFlares') || '[]');
-
-        async function loadFlares() {
-            try {
-                // Get active flares
-                const { data: flares, error } = await db
-                    .from('Prayer Flares')
-                    .select('*')
-                    .eq('status', 'active')
-                    .order('created_at', { ascending: false });
-
-                if (error) throw error;
-
-                // Update stats
-                document.getElementById('activeCount').textContent = flares?.length || 0;
-
-                // Get today's count
-                const today = new Date().toISOString().split('T')[0];
-                const todayFlares = flares?.filter(f => f.created_at?.startsWith(today)) || [];
-                document.getElementById('todayCount').textContent = todayFlares.length;
-
-                // Get prayer count
-                const { count } = await db.from('Prayers').select('*', { count: 'exact', head: true });
-                document.getElementById('prayerCount').textContent = count || 0;
-
-                // Render flares
-                if (!flares || flares.length === 0) {
-                    document.getElementById('flaresList').innerHTML = `
-                        <div class="empty-state">
-                            <div class="empty-icon">🕊️</div>
-                            <p>No active flares right now. Check back soon.</p>
+                <div class="role-grid">
+                    <div class="role-card">
+                        <span class="role-icon">📱</span>
+                        <div class="role-content">
+                            <h4>RECEIVE FLARES</h4>
+                            <p>Get notified when someone in your area (or globally) sends a prayer flare.</p>
                         </div>
-                    `;
-                    return;
-                }
+                    </div>
+                    <div class="role-card">
+                        <span class="role-icon">🙏</span>
+                        <div class="role-content">
+                            <h4>PRAY IN REAL-TIME</h4>
+                            <p>Intercede immediately. They'll know someone is fighting alongside them.</p>
+                        </div>
+                    </div>
+                    <div class="role-card">
+                        <span class="role-icon">✍️</span>
+                        <div class="role-content">
+                            <h4>POST ENCOURAGEMENT</h4>
+                            <p>Write prayers and scriptures to their private wall. Your words bring hope.</p>
+                        </div>
+                    </div>
+                    <div class="role-card">
+                        <span class="role-icon">🔒</span>
+                        <div class="role-content">
+                            <h4>GUARD CONFIDENTIALITY</h4>
+                            <p>Everything is anonymous. You never know who you're praying for. Sacred trust.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                let html = '';
-                flares.forEach(flare => {
-                    const time = new Date(flare.created_at).toLocaleString();
-                    const hasPrayed = prayedFlares.includes(flare.prayer_id);
+    <!-- The Commitment -->
+    <section class="section commitment-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-icon">⚡</div>
+                <h2 class="section-title">THE COMMITMENT</h2>
+                <p class="section-subtitle">What it means to stand on the wall.</p>
+            </div>
+
+            <div class="commitment-grid">
+                <div class="commitment-card">
+                    <div class="commitment-icon">⏱️</div>
+                    <h4 class="commitment-title">15-30 MIN/WEEK</h4>
+                    <p class="commitment-text">Minimum time commitment. Pray when flares come in during your available hours.</p>
+                </div>
+                <div class="commitment-card">
+                    <div class="commitment-icon">🔔</div>
+                    <h4 class="commitment-title">RESPOND PROMPTLY</h4>
+                    <p class="commitment-text">When you're on duty, respond within minutes. Speed matters in crisis.</p>
+                </div>
+                <div class="commitment-card">
+                    <div class="commitment-icon">🤐</div>
+                    <h4 class="commitment-title">ABSOLUTE CONFIDENTIALITY</h4>
+                    <p class="commitment-text">Never share prayer requests. Never try to identify users. Sacred trust.</p>
+                </div>
+                <div class="commitment-card">
+                    <div class="commitment-icon">❤️</div>
+                    <h4 class="commitment-title">GRACE, NOT JUDGMENT</h4>
+                    <p class="commitment-text">Meet people where they are. No lectures. Just love and intercession.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Requirements -->
+    <section class="section requirements-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-icon">✓</div>
+                <h2 class="section-title">REQUIREMENTS</h2>
+                <p class="section-subtitle">Who we're looking for.</p>
+            </div>
+
+            <div class="requirements-list">
+                <div class="requirement-item">
+                    <div class="requirement-check">✓</div>
+                    <span class="requirement-text">Active, personal faith in Jesus Christ</span>
+                </div>
+                <div class="requirement-item">
+                    <div class="requirement-check">✓</div>
+                    <span class="requirement-text">Heart for the hurting, broken, and struggling</span>
+                </div>
+                <div class="requirement-item">
+                    <div class="requirement-check">✓</div>
+                    <span class="requirement-text">Reliable and consistent — people are counting on you</span>
+                </div>
+                <div class="requirement-item">
+                    <div class="requirement-check">✓</div>
+                    <span class="requirement-text">Can handle heavy topics (addiction, depression, crisis) with maturity</span>
+                </div>
+                <div class="requirement-item">
+                    <div class="requirement-check">✓</div>
+                    <span class="requirement-text">Connected to a local church or faith community</span>
+                </div>
+                <div class="requirement-item">
+                    <div class="requirement-check">✓</div>
+                    <span class="requirement-text">18 years or older</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Form -->
+    <section class="section apply-section" id="apply">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-icon">📝</div>
+                <h2 class="section-title">APPLY TO BE A WATCHMAN</h2>
+                <p class="section-subtitle">Tell us about yourself. We'll be in touch within 48 hours.</p>
+            </div>
+
+            <div class="apply-form-container">
+                <!-- ============================================
+                     GHL FORM EMBED GOES HERE
+                     
+                     Instructions:
+                     1. Go to GHL > Sites > Forms
+                     2. Create your Watchman Application form
+                     3. Click "Integrate Form" > "Embed"
+                     4. Copy the embed code
+                     5. Paste it below (replace the placeholder)
+                     ============================================ -->
+                
+                <div class="ghl-embed-placeholder" id="ghlFormEmbed">
+                    <!-- PASTE YOUR GHL EMBED CODE HERE -->
                     
-                    html += `
-                        <div class="flare-card">
-                            <div class="flare-header">
-                                <span class="flare-id">${flare.prayer_id}</span>
-                                <span class="flare-time">${time}</span>
-                            </div>
-                            <div class="flare-category">${flare.category || 'General'}</div>
-                            <div class="flare-location">📍 ${flare.zip_code || 'Unknown'}</div>
-                            <button class="pray-btn ${hasPrayed ? 'prayed' : ''}" onclick="openPrayerModal('${flare.prayer_id}')">
-                                ${hasPrayed ? '✓ Prayed' : '🙏 Pray for This Person'}
-                            </button>
-                        </div>
-                    `;
-                });
+                    <!-- Example of what it will look like:
+                    <iframe 
+                        src="https://link.yourdomain.com/widget/form/YOUR_FORM_ID" 
+                        style="width:100%;height:800px;border:none;border-radius:16px;"
+                        id="watchman-form"
+                        scrolling="no">
+                    </iframe>
+                    -->
+                    
+                    <!-- DELETE THIS PLACEHOLDER ONCE YOU ADD YOUR FORM -->
+                    <div class="embed-placeholder-message">
+                        <div class="placeholder-icon">📋</div>
+                        <h3>GHL Form Coming Soon</h3>
+                        <p>The application form will appear here once connected.</p>
+                        <p class="placeholder-note">Admin: Replace this with your GHL embed code</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                document.getElementById('flaresList').innerHTML = html;
+    <!-- Footer -->
+    <footer class="footer">
+        <a href="index.html" class="footer-link">← Back to Prayer Flare</a>
+    </footer>
 
-            } catch (err) {
-                console.error('Error loading flares:', err);
-                document.getElementById('flaresList').innerHTML = '<div class="empty-state">Error loading flares. Please refresh.</div>';
-            }
-        }
-
-        function openPrayerModal(prayerId) {
-            currentFlareId = prayerId;
-            document.getElementById('modalSubtitle').textContent = `For ${prayerId}`;
-            document.getElementById('prayerText').value = '';
-            document.getElementById('scriptureRef').value = '';
-            document.getElementById('prayerModal').classList.add('show');
-        }
-
-        function closeModal() {
-            document.getElementById('prayerModal').classList.remove('show');
-            currentFlareId = null;
-        }
-
-        async function submitPrayer() {
-            const prayerText = document.getElementById('prayerText').value.trim();
-            const scriptureRef = document.getElementById('scriptureRef').value.trim();
-
-            if (!prayerText) {
-                alert('Please write a prayer first.');
-                return;
-            }
-
-            try {
-                // Get wall ID
-                const { data: wall } = await db
-                    .from('Prayer Walls')
-                    .select('id')
-                    .eq('prayer_id', currentFlareId)
-                    .single();
-
-                if (wall) {
-                    await db.from('Prayers').insert([{
-                        wall_id: wall.id,
-                        prayer_id: currentFlareId,
-                        watchman_name: 'A Prayer Warrior',
-                        prayer_text: prayerText,
-                        scripture_reference: scriptureRef || null,
-                        is_ai_generated: false
-                    }]);
-                }
-
-                // Update flare prayer count
-                await db.rpc('increment_prayer_count', { flare_id: currentFlareId }).catch(() => {});
-
-                // Mark as prayed locally
-                prayedFlares.push(currentFlareId);
-                localStorage.setItem('prayedFlares', JSON.stringify(prayedFlares));
-
-                closeModal();
-                loadFlares();
-                alert('Prayer sent! 🙏');
-
-            } catch (err) {
-                console.error('Error:', err);
-                alert('Error sending prayer. Please try again.');
-            }
-        }
-
-        // Load on start and refresh every 30 seconds
-        loadFlares();
-        setInterval(loadFlares, 30000);
-    </script>
 </body>
 </html>
