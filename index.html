@@ -17,7 +17,7 @@
     
     <!-- Version-based cache buster - CHANGE THIS NUMBER TO FORCE REFRESH -->
     <script>
-        const APP_VERSION = '2.2.0';
+        const APP_VERSION = '2.4.0';
         const storedVersion = localStorage.getItem('pf_version');
         if (storedVersion !== APP_VERSION) {
             localStorage.setItem('pf_version', APP_VERSION);
@@ -708,6 +708,14 @@
                 -1px 1px 0 #000,
                 1px 1px 0 #000,
                 0 0 8px rgba(0,0,0,0.8);
+            line-height: 1.4;
+        }
+
+        .zip-hint {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            margin-bottom: 0;
         }
 
         .location-card {
@@ -800,8 +808,8 @@
 
         .zip-input::placeholder {
             color: var(--text-muted);
-            letter-spacing: 1px;
-            font-size: 16px;
+            letter-spacing: 0.5px;
+            font-size: 12px;
         }
 
         .zip-error {
@@ -2204,7 +2212,7 @@
                 </div>
 
                 <div class="zip-section">
-                    <p class="zip-note">Get connected with local / national prayer partners.</p>
+                    <p class="zip-note">Get connected with Local &<br>National prayer partners. 👇</p>
                     <input type="text" class="zip-input" id="zipInput" placeholder="Enter Zip Code (or any 5 numbers)" maxlength="5" inputmode="numeric">
                     <p class="zip-error" id="zipError">Please enter your 5-digit zip code</p>
                 </div>
