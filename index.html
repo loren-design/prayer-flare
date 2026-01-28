@@ -388,13 +388,13 @@
             border: 2px solid rgba(20, 184, 166, 0.3);
             border-radius: 14px;
             padding: 18px;
-            font-size: 28px;
-            font-family: 'Bebas Neue', sans-serif;
-            letter-spacing: 12px;
+            font-size: 20px;
+            font-family: 'Inter', sans-serif;
             color: var(--text-primary);
             text-align: center;
             outline: none;
             transition: all 0.3s;
+            letter-spacing: 2px;
         }
 
         .zip-input:focus {
@@ -404,7 +404,8 @@
 
         .zip-input::placeholder {
             color: var(--text-muted);
-            letter-spacing: 8px;
+            letter-spacing: 1px;
+            font-size: 16px;
         }
 
         .zip-error {
@@ -1784,20 +1785,11 @@
                         <span class="option-icon">⚔️</span>
                         <span class="option-label">Spiritual Attack</span>
                     </button>
-                    <button class="option-btn other-btn" data-value="Other">
-                        <span class="option-icon">✏️</span>
-                        <span class="option-label">Other — Tell us what's going on</span>
-                    </button>
-                </div>
-
-                <div class="other-input-container" id="otherInputContainer" style="display: none;">
-                    <textarea class="other-input" id="otherInput" placeholder="Tell us what's going on..." rows="3"></textarea>
                 </div>
 
                 <div class="zip-section">
-                    <label class="zip-label">Enter Your Zip Code</label>
-                    <p class="zip-note">Anonymous. Helps us connect you with local Watchmen.</p>
-                    <input type="text" class="zip-input" id="zipInput" placeholder="00000" maxlength="5" inputmode="numeric">
+                    <p class="zip-note">Get connected with local / national prayer partners.</p>
+                    <input type="text" class="zip-input" id="zipInput" placeholder="Enter Zip Code" maxlength="5" inputmode="numeric">
                     <p class="zip-error" id="zipError">Please enter your 5-digit zip code</p>
                 </div>
 
@@ -2343,36 +2335,17 @@
             // ============================================
             // CATEGORY SELECTION
             // ============================================
-            const otherInputContainer = document.getElementById('otherInputContainer');
-            const otherInput = document.getElementById('otherInput');
-
             document.querySelectorAll('.option-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
                     this.classList.add('selected');
                     selectedCategory = this.dataset.value;
                     
-                    // Show/hide Other text input
-                    if (selectedCategory === 'Other') {
-                        otherInputContainer.style.display = 'block';
-                        otherInput.focus();
-                    } else {
-                        otherInputContainer.style.display = 'none';
-                    }
-                    
                     // Check if Depression selected - will show crisis resources
                     showCrisisResources = (selectedCategory === 'Depression / Giving up');
                     
                     validateForm();
                 });
-            });
-
-            // Check Other input for trigger words
-            otherInput.addEventListener('input', function() {
-                if (checkForTriggerWords(this.value)) {
-                    showCrisisResources = true;
-                }
-                validateForm();
             });
 
             // ============================================
@@ -2411,12 +2384,6 @@
                 document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
                 submitBtn.disabled = true;
                 document.getElementById('zipError').classList.remove('show');
-                otherInputContainer.style.display = 'none';
-                otherInput.value = '';
-                // Reset wall access box
-                document.getElementById('wallEmailInput').value = '';
-                document.getElementById('wallAccessBtn').disabled = true;
-                document.getElementById('wallAccessSuccess').style.display = 'none';
             }
 
             // ============================================
@@ -2473,23 +2440,13 @@
                 currentPrayerId = 'PF-' + Math.floor(1000 + Math.random() * 9000);
                 currentAccessToken = generateToken();
 
-                // Get Other text if applicable
-                let categoryToSave = selectedCategory;
-                if (selectedCategory === 'Other' && otherInput.value.trim()) {
-                    categoryToSave = 'Other: ' + otherInput.value.trim();
-                    // Check for trigger words in Other text
-                    if (checkForTriggerWords(otherInput.value)) {
-                        showCrisisResources = true;
-                    }
-                }
-
                 try {
                     if (db) {
                         // Save flare
                         await db.from('Prayer Flares').insert([{
                             prayer_id: currentPrayerId,
                             zip_code: zipInput.value,
-                            category: categoryToSave,
+                            category: selectedCategory,
                             status: 'active',
                             prayer_count: 0
                         }]);
@@ -2518,15 +2475,16 @@
                         'Grief / Loss': "The pain is heavy. But you didn't carry it alone.",
                         'Fear': "Fear is loud right now. But you didn't let it silence you.",
                         'Spiritual Attack': "The enemy is real. But so is your God.",
-                        'Just need prayer': "You don't need a reason. You just need prayer. We get it.",
-                        'Other': "Whatever you're facing, you didn't face it alone."
+                        'Just need prayer': "You don't need a reason. You just need prayer. We get it."
                     };
-                    const catKey = selectedCategory?.startsWith('Other:') ? 'Other' : selectedCategory;
-                    document.getElementById('contextLine').querySelector('p').textContent = contextLines[catKey] || contextLines['Other'];
-                    
-                    // Set wall link with prayer ID and category
-                    const categoryParam = encodeURIComponent(catKey);
-                    document.getElementById('visitWallBtn').href = `wall.html?id=${currentPrayerId}&cat=${categoryParam}`;
+                    const catKey = selectedCategory;
+                    const contextEl = document.getElementById('contextLine');
+                    if (contextEl) {
+                        const pEl = contextEl.querySelector('p');
+                        if (pEl) {
+                            pEl.textContent = contextLines[catKey] || "The pull is strong. But you sent up a flare instead of giving in. That took guts. God sees that.";
+                        }
+                    }
                     
                     // Show crisis note if needed
                     if (showCrisisResources || selectedCategory === 'Depression / Giving up') {
@@ -2535,8 +2493,6 @@
                         document.getElementById('crisisNote').style.display = 'none';
                     }
                     
-                    currentStep = 1;
-                    renderPrayer();
                     showScreen(prayerScreen);
 
                 } catch (err) {
