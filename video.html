@@ -213,6 +213,54 @@
         .watchman-cta-link:hover {
             text-decoration: underline;
         }
+
+        /* YouTube Channel CTA */
+        .youtube-cta {
+            margin-top: 24px;
+            padding: 24px;
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.08) 0%, rgba(255, 50, 50, 0.04) 100%);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .youtube-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .youtube-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            letter-spacing: 2px;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .youtube-sub {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .youtube-btn {
+            display: inline-block;
+            background: #ff0000;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .youtube-btn:hover {
+            background: #cc0000;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 0, 0, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -226,26 +274,29 @@
 
         <div class="video-container">
             <div class="video-wrapper">
-                <!-- ============================================
-                     VIDEO EMBED GOES HERE
-                     
-                     Replace the placeholder below with:
-                     - YouTube: <iframe src="https://www.youtube.com/embed/VIDEO_ID" ...>
-                     - Vimeo: <iframe src="https://player.vimeo.com/video/VIDEO_ID" ...>
-                     - Direct: <video src="your-video.mp4" controls>
-                     ============================================ -->
-                
-                <div class="video-placeholder">
-                    <div class="placeholder-icon">🎬</div>
-                    <p class="placeholder-text">VIDEO COMING SOON</p>
-                    <p class="placeholder-note">Admin: Embed your prayer video here</p>
-                </div>
+                <iframe 
+                    src="https://www.youtube.com/embed/2Fsv1CZVNgg?rel=0" 
+                    title="Prayer Flare - Let's Pray Together"
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
             </div>
 
             <div class="video-message">
                 <p class="video-message-text">You don't have to have the right words. You don't have to feel ready. Just come as you are. He's been waiting for you.</p>
                 <p class="video-scripture">"Come to me, all you who are weary and burdened, and I will give you rest."</p>
                 <p class="video-scripture-ref">— Matthew 11:28</p>
+            </div>
+
+            <!-- YouTube Channel CTA -->
+            <div class="youtube-cta">
+                <div class="youtube-icon">▶️</div>
+                <p class="youtube-text">Need more encouragement?</p>
+                <p class="youtube-sub">We have close to 1,000 short videos — quick bursts of hope to help you push through the day.</p>
+                <a href="https://www.youtube.com/@KnowGodBetter" target="_blank" class="youtube-btn">
+                    Subscribe on YouTube →
+                </a>
             </div>
         </div>
 
