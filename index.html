@@ -5,11 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0a0a0f">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Cache Control -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Prayer Flare - You Don't Have To Fight This Alone</title>
     <link rel="manifest" href="manifest.json">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Version-based cache buster - CHANGE THIS NUMBER TO FORCE REFRESH -->
+    <script>
+        const APP_VERSION = '1.0.1';
+        const storedVersion = localStorage.getItem('pf_version');
+        if (storedVersion !== APP_VERSION) {
+            localStorage.setItem('pf_version', APP_VERSION);
+            if (storedVersion) {
+                // Clear caches and reload
+                if ('caches' in window) {
+                    caches.keys().then(names => {
+                        names.forEach(name => caches.delete(name));
+                    });
+                }
+                location.reload(true);
+            }
+        }
+    </script>
     
     <style>
         :root {
@@ -177,24 +199,10 @@
         }
 
         .typing-cross {
-            font-size: 28px;
+            font-size: 22px;
             color: var(--gold);
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
-            animation: crossPulse 2s ease-in-out infinite;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
             flex-shrink: 0;
-        }
-
-        @keyframes crossPulse {
-            0%, 100% { 
-                opacity: 0.7;
-                text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-                transform: scale(1);
-            }
-            50% { 
-                opacity: 1;
-                text-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 50px rgba(255, 215, 0, 0.5);
-                transform: scale(1.1);
-            }
         }
 
         .typing-content {
@@ -2045,7 +2053,7 @@
                     
                     <!-- Typing Text Animation -->
                     <div class="typing-box">
-                        <div class="typing-cross">✙</div>
+                        <div class="typing-cross">✝</div>
                         <div class="typing-content">
                             <span class="typing-text" id="typingText"></span>
                             <span class="typing-cursor">|</span>
