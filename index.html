@@ -15,14 +15,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <script>
-        const APP_VERSION = '3.0.0';
-        const storedVersion = localStorage.getItem('pf_version');
+        var APP_VERSION = '3.1.0';
+        var storedVersion = localStorage.getItem('pf_version');
         if (storedVersion !== APP_VERSION) {
             localStorage.setItem('pf_version', APP_VERSION);
             if (storedVersion) {
                 if ('caches' in window) {
-                    caches.keys().then(names => {
-                        names.forEach(name => caches.delete(name));
+                    caches.keys().then(function(names) {
+                        names.forEach(function(name) { caches.delete(name); });
                     });
                 }
                 location.reload(true);
@@ -42,838 +42,208 @@
             --text-secondary: #a0a0a0;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { height: 100%; overflow-x: hidden; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg-dark); color: var(--text-primary); line-height: 1.5; }
+        .app-container { min-height: 100vh; max-width: 100vw; overflow-x: hidden; position: relative; }
+        .screen { display: none; min-height: 100vh; padding: 20px; animation: fadeIn 0.3s ease; }
+        .screen.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .home-content { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: calc(100vh - 40px); text-align: center; padding: 20px 0; }
+        .flare-icon { font-size: 64px; margin-bottom: 20px; animation: flicker 3s ease-in-out infinite; }
+        @keyframes flicker { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.05); } }
+        .headline { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 2px; line-height: 1.1; margin-bottom: 30px; text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8); }
 
-        html, body {
-            height: 100%;
-            overflow-x: hidden;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-primary);
-            line-height: 1.5;
-        }
-
-        .app-container {
-            min-height: 100vh;
-            max-width: 100vw;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        .screen {
-            display: none;
-            min-height: 100vh;
-            padding: 20px;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .screen.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .home-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: calc(100vh - 40px);
-            text-align: center;
-            padding: 20px 0;
-        }
-
-        .flare-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
-            animation: flicker 3s ease-in-out infinite;
-        }
-
-        @keyframes flicker {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.05); }
-        }
-
-        .headline {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 36px;
-            letter-spacing: 2px;
-            line-height: 1.1;
-            margin-bottom: 30px;
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
-            color: white;
-            border: none;
-            padding: 24px 36px;
-            border-radius: 20px;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 40px rgba(255, 107, 53, 0.4);
-            width: 100%;
-            max-width: 340px;
-            text-align: center;
-            line-height: 1.4;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 50px rgba(255, 107, 53, 0.5);
-        }
-
-        .btn-primary:active {
-            transform: translateY(0);
-        }
-
-        .btn-primary .btn-title {
-            font-size: 28px;
-            font-weight: 700;
-            display: block;
-            margin-bottom: 6px;
-            letter-spacing: 1px;
-        }
-
-        .btn-primary .btn-sub {
-            font-size: 14px;
-            font-weight: 600;
-            display: block;
-        }
-
-        /* Desktop styles */
+        .btn-primary { background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%); color: white; border: none; padding: 24px 36px; border-radius: 20px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 10px 40px rgba(255, 107, 53, 0.4); width: 100%; max-width: 340px; text-align: center; line-height: 1.4; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 50px rgba(255, 107, 53, 0.5); }
+        .btn-primary:active { transform: translateY(0); }
+        .btn-primary .btn-title { font-size: 28px; font-weight: 700; display: block; margin-bottom: 6px; letter-spacing: 1px; }
+        .btn-primary .btn-sub { font-size: 14px; font-weight: 600; display: block; }
         @media (min-width: 600px) {
-            .headline {
-                font-size: 48px;
-            }
-
-            .btn-primary {
-                padding: 28px 48px;
-                max-width: 400px;
-                border-radius: 24px;
-            }
-
-            .btn-primary .btn-title {
-                font-size: 36px;
-                margin-bottom: 10px;
-            }
-
-            .btn-primary .btn-sub {
-                font-size: 16px;
-            }
-
-            .flare-icon {
-                font-size: 80px;
-            }
-
-            .tagline-badge {
-                font-size: 14px;
-                padding: 10px 20px;
-            }
-        }
-
-        .tagline {
-            display: flex;
-            gap: 15px;
-            margin-top: 25px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .tagline-badge {
-            background: rgba(255, 215, 0, 0.1);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            padding: 8px 16px;
-            border-radius: 25px;
-            font-size: 13px;
-            color: var(--gold);
-        }
-
-        .tagline-badge.teal {
-            background: rgba(20, 184, 166, 0.1);
-            border-color: rgba(20, 184, 166, 0.3);
-            color: var(--teal);
-        }
-
-        .footer {
-            margin-top: 40px;
-            text-align: center;
-        }
-
-        .footer a {
-            color: var(--teal);
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .footer-links {
-            margin-top: 20px;
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        .footer-links a {
-            color: var(--text-secondary);
-            margin: 0 10px;
-        }
-
-        .disclaimer {
-            font-size: 11px;
-            color: var(--text-secondary);
-            margin-top: 15px;
-            max-width: 300px;
-            line-height: 1.4;
-        }
-
-        /* Form Screen */
-        .form-content {
-            max-width: 400px;
-            margin: 0 auto;
-            padding-top: 20px;
-        }
-
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-secondary);
-            background: none;
-            border: none;
-            font-size: 14px;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-
-        .form-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .form-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 28px;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-        }
-
-        .form-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-        }
-
-        .form-subtitle {
-            font-size: 14px;
-            color: var(--gold);
-            letter-spacing: 1px;
-        }
-
-        .category-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        .category-btn {
-            background: var(--bg-card);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            padding: 16px 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            color: var(--text-primary);
-        }
-
-        .category-btn:hover {
-            border-color: rgba(255, 215, 0, 0.5);
-            background: rgba(255, 215, 0, 0.05);
-        }
-
-        .category-btn.selected {
-            border-color: var(--gold);
-            background: rgba(255, 215, 0, 0.15);
-        }
-
-        .category-btn.full-width {
-            grid-column: span 2;
-        }
-
-        .category-icon {
-            font-size: 28px;
-            margin-bottom: 8px;
-        }
-
-        .category-label {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        /* ZIP Popup Overlay */
-        .zip-popup {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(10, 10, 15, 0.95);
-            z-index: 500;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .zip-popup.active {
-            display: flex;
-        }
-
-        .zip-popup-content {
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 20px;
-            padding: 30px 25px;
-            max-width: 340px;
-            width: 100%;
-            text-align: center;
-        }
-
-        .zip-popup-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 24px;
-            color: var(--gold);
-            margin-bottom: 15px;
-            letter-spacing: 1px;
-        }
-
-        .zip-popup-message {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .zip-popup-message strong {
-            color: var(--text-primary);
-        }
-
-        .zip-popup-input {
-            width: 100%;
-            padding: 16px;
-            background: var(--bg-dark);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 20px;
-            text-align: center;
-            letter-spacing: 6px;
-            margin-bottom: 15px;
-        }
-
-        .zip-popup-input:focus {
-            outline: none;
-            border-color: var(--gold);
-        }
-
-        .zip-popup-input::placeholder {
-            letter-spacing: normal;
-            color: var(--text-secondary);
-            font-size: 16px;
-        }
-
-        .zip-popup-hint {
-            font-size: 12px;
-            color: var(--teal);
-            margin-bottom: 20px;
-        }
-
-        .zip-popup-btn {
-            width: 100%;
-            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
-            color: white;
-            border: none;
-            padding: 16px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .zip-popup-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .zip-section {
-            display: none;
-        }
-
-        .rate-limit-warning {
-            background: rgba(255, 107, 53, 0.1);
-            border: 1px solid rgba(255, 107, 53, 0.3);
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 20px;
-            font-size: 12px;
-            color: var(--flare-orange);
-            text-align: center;
-            display: none;
-        }
-
-        .submit-btn {
-            width: 100%;
-            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
-            color: white;
-            border: none;
-            padding: 18px;
-            border-radius: 14px;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.3);
-        }
-
-        .submit-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .submit-sub {
-            display: block;
-            font-size: 11px;
-            font-weight: 400;
-            opacity: 0.8;
-            margin-top: 4px;
-        }
-
-        .hotlines {
-            margin-top: 30px;
-            padding: 20px;
-            background: var(--bg-card);
-            border-radius: 12px;
-        }
-
-        .hotlines-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 16px;
-            color: var(--gold);
-            margin-bottom: 15px;
-            text-align: center;
-            letter-spacing: 1px;
-        }
-
-        .hotline-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .hotline-item:last-child {
-            border-bottom: none;
-        }
-
-        .hotline-name {
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        .hotline-link {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 8px 16px;
-            border-radius: 20px;
-            color: var(--text-primary);
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        /* Prayer Screen */
-        .prayer-content {
-            max-width: 400px;
-            margin: 0 auto;
-            padding-top: 20px;
-            text-align: center;
-        }
-
-        .prayer-header {
-            margin-bottom: 25px;
-        }
-
-        .prayer-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 24px;
-            color: var(--gold);
-            letter-spacing: 2px;
-            line-height: 1.2;
-        }
-
-        .prayer-image {
-            width: 100%;
-            max-width: 350px;
-            border-radius: 16px;
-            margin-bottom: 25px;
-        }
-
-        .video-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            padding: 16px;
-            background: var(--bg-card);
-            border: 2px solid var(--gold);
-            border-radius: 12px;
-            color: var(--text-primary);
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 25px;
-            transition: all 0.3s ease;
-        }
-
-        .video-btn:hover {
-            background: rgba(255, 215, 0, 0.1);
-        }
-
-        .scripture-box {
-            background: var(--bg-card);
-            border-left: 3px solid var(--gold);
-            padding: 20px;
-            border-radius: 0 12px 12px 0;
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .scripture-text {
-            font-style: italic;
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 10px;
-        }
-
-        .scripture-ref {
-            font-size: 12px;
-            color: var(--gold);
-        }
-
-        .encouragement {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-
-        .home-link {
-            color: var(--teal);
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        /* Loading Overlay */
-        .loading-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(10, 10, 15, 0.95);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .loading-overlay.active {
-            display: flex;
-        }
-
-        .loading-text {
-            color: var(--text-primary);
-            font-size: 16px;
-            margin-top: 20px;
-        }
-
-        .loading-spinner {
-            font-size: 48px;
-            animation: pulse 1s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.2); opacity: 0.7; }
-        }
-
-        /* PWA Prompt */
-        .pwa-prompt {
-            display: none;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--bg-card);
-            padding: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 100;
-        }
-
-        .pwa-prompt.active {
-            display: block;
-        }
-
-        .pwa-content {
-            max-width: 400px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .pwa-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .pwa-subtitle {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-        }
-
-        .pwa-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .pwa-btn {
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            border: none;
-        }
-
-        .pwa-btn.dismiss {
-            background: transparent;
-            color: var(--text-secondary);
-        }
-
-        .pwa-btn.install {
-            background: var(--gold);
-            color: var(--bg-dark);
-        }
+            .headline { font-size: 48px; }
+            .btn-primary { padding: 28px 48px; max-width: 400px; border-radius: 24px; }
+            .btn-primary .btn-title { font-size: 36px; margin-bottom: 10px; }
+            .btn-primary .btn-sub { font-size: 16px; }
+            .flare-icon { font-size: 80px; }
+            .tagline-badge { font-size: 14px; padding: 10px 20px; }
+        }
+
+        .tagline { display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap; justify-content: center; }
+        .tagline-badge { background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); padding: 8px 16px; border-radius: 25px; font-size: 13px; color: var(--gold); }
+        .tagline-badge.teal { background: rgba(20, 184, 166, 0.1); border-color: rgba(20, 184, 166, 0.3); color: var(--teal); }
+        .footer { margin-top: 40px; text-align: center; }
+        .footer a { color: var(--teal); text-decoration: none; font-size: 14px; }
+        .footer-links { margin-top: 20px; font-size: 12px; color: var(--text-secondary); }
+        .footer-links a { color: var(--text-secondary); margin: 0 10px; }
+        .disclaimer { font-size: 11px; color: var(--text-secondary); margin-top: 15px; max-width: 300px; line-height: 1.4; }
+
+        .form-content { max-width: 400px; margin: 0 auto; padding-top: 20px; }
+        .back-btn { display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); background: none; border: none; font-size: 14px; cursor: pointer; margin-bottom: 20px; }
+        .form-header { text-align: center; margin-bottom: 30px; }
+        .form-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; margin-bottom: 10px; }
+        .form-icon { font-size: 40px; margin-bottom: 15px; }
+        .form-subtitle { font-size: 14px; color: var(--gold); letter-spacing: 1px; }
+        .category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; }
+        .category-btn { background: var(--bg-card); border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 12px; padding: 16px 12px; text-align: center; cursor: pointer; transition: all 0.2s ease; color: var(--text-primary); }
+        .category-btn:hover { border-color: rgba(255, 215, 0, 0.5); background: rgba(255, 215, 0, 0.05); }
+        .category-btn.selected { border-color: var(--gold); background: rgba(255, 215, 0, 0.15); }
+        .category-btn.full-width { grid-column: span 2; }
+        .category-icon { font-size: 28px; margin-bottom: 8px; }
+        .category-label { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+
+        .zip-popup { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10, 10, 15, 0.95); z-index: 500; justify-content: center; align-items: center; padding: 20px; }
+        .zip-popup.active { display: flex; }
+        .zip-popup-content { background: var(--bg-card); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 20px; padding: 30px 25px; max-width: 340px; width: 100%; text-align: center; }
+        .zip-popup-title { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--gold); margin-bottom: 15px; letter-spacing: 1px; }
+        .zip-popup-message { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px; }
+        .zip-popup-message strong { color: var(--text-primary); }
+        .zip-popup-input { width: 100%; padding: 16px; background: var(--bg-dark); border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 12px; color: var(--text-primary); font-size: 24px; text-align: center; letter-spacing: 8px; margin-bottom: 15px; }
+        .zip-popup-input:focus { outline: none; border-color: var(--gold); }
+        .zip-popup-input::placeholder { letter-spacing: normal; color: var(--text-secondary); font-size: 16px; }
+        .zip-popup-hint { font-size: 12px; color: var(--teal); margin-bottom: 20px; }
+        .zip-popup-btn { width: 100%; background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%); color: white; border: none; padding: 18px; border-radius: 14px; font-size: 18px; font-weight: 700; cursor: pointer; box-shadow: 0 8px 30px rgba(255, 107, 53, 0.3); }
+        .zip-popup-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .rate-limit-warning { background: rgba(255, 107, 53, 0.1); border: 1px solid rgba(255, 107, 53, 0.3); border-radius: 10px; padding: 12px; margin-bottom: 20px; font-size: 12px; color: var(--flare-orange); text-align: center; display: none; }
+        .hotlines { margin-top: 30px; padding: 20px; background: var(--bg-card); border-radius: 12px; }
+        .hotlines-title { font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: var(--gold); margin-bottom: 15px; text-align: center; letter-spacing: 1px; }
+        .hotline-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .hotline-item:last-child { border-bottom: none; }
+        .hotline-name { font-size: 13px; color: var(--text-secondary); }
+        .hotline-link { background: rgba(255, 255, 255, 0.1); padding: 8px 16px; border-radius: 20px; color: var(--text-primary); text-decoration: none; font-size: 13px; font-weight: 600; }
+
+        .prayer-content { max-width: 400px; margin: 0 auto; padding-top: 20px; text-align: center; }
+        .prayer-header { margin-bottom: 25px; }
+        .prayer-title { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--gold); letter-spacing: 2px; line-height: 1.2; }
+        .prayer-image { width: 100%; max-width: 350px; border-radius: 16px; margin-bottom: 25px; }
+        .video-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 16px; background: var(--bg-card); border: 2px solid var(--gold); border-radius: 12px; color: var(--text-primary); text-decoration: none; font-size: 16px; font-weight: 600; margin-bottom: 25px; transition: all 0.3s ease; }
+        .video-btn:hover { background: rgba(255, 215, 0, 0.1); }
+        .scripture-box { background: var(--bg-card); border-left: 3px solid var(--gold); padding: 20px; border-radius: 0 12px 12px 0; margin-bottom: 20px; text-align: left; }
+        .scripture-text { font-style: italic; font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 10px; }
+        .scripture-ref { font-size: 12px; color: var(--gold); }
+        .encouragement { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 25px; }
+        .home-link { color: var(--teal); text-decoration: none; font-size: 14px; }
+
+        .loading-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10, 10, 15, 0.95); z-index: 1000; justify-content: center; align-items: center; flex-direction: column; }
+        .loading-overlay.active { display: flex; }
+        .loading-text { color: var(--text-primary); font-size: 16px; margin-top: 20px; }
+        .loading-spinner { font-size: 48px; animation: pulse 1s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.7; } }
+
+        .pwa-prompt { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg-card); padding: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); z-index: 100; }
+        .pwa-prompt.active { display: block; }
+        .pwa-content { max-width: 400px; margin: 0 auto; text-align: center; }
+        .pwa-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .pwa-subtitle { font-size: 13px; color: var(--text-secondary); margin-bottom: 15px; }
+        .pwa-buttons { display: flex; gap: 10px; justify-content: center; }
+        .pwa-btn { padding: 10px 20px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; }
+        .pwa-btn.dismiss { background: transparent; color: var(--text-secondary); }
+        .pwa-btn.install { background: var(--gold); color: var(--bg-dark); }
     </style>
 </head>
 <body>
     <div class="app-container">
-        <!-- Home Screen -->
         <div id="homeScreen" class="screen active">
             <div class="home-content">
                 <div class="flare-icon">🔥</div>
                 <h1 class="headline">You don't have to<br>fight this alone</h1>
-                
                 <button class="btn-primary" id="startBtn">
                     <span class="btn-title">NEED PRAYER?</span>
                     <span class="btn-sub">🔥 CLICK HERE TO SEND A FLARE 🔥</span>
                 </button>
-
                 <div class="tagline">
                     <span class="tagline-badge">🔒 Anonymous</span>
                     <span class="tagline-badge teal">📍 Local</span>
                 </div>
-
                 <footer class="footer">
                     <a href="watchman.html">Watchman Enter Here</a>
                     <p class="disclaimer">Prayer Flare is a prayer support community, not a substitute for professional mental health care.</p>
-                    <div class="footer-links">
-                        <a href="about.html">About</a>
-                        <span>•</span>
-                        <a href="privacy.html">Privacy</a>
-                    </div>
+                    <div class="footer-links"><a href="about.html">About</a><span>•</span><a href="privacy.html">Privacy</a></div>
                 </footer>
             </div>
         </div>
 
-        <!-- Form Screen -->
         <div id="formScreen" class="screen">
             <div class="form-content">
                 <button class="back-btn" id="backToHome">← Back</button>
-                
                 <div class="form-header">
                     <h2 class="form-title">WE WANT TO PRAY FOR YOU</h2>
                     <div class="form-icon">🔥</div>
                     <p class="form-subtitle">WHAT'S HAPPENING RIGHT NOW?</p>
                 </div>
-
                 <div class="category-grid">
-                    <button class="category-btn" data-category="anxiety">
-                        <div class="category-icon">😰</div>
-                        <div class="category-label">Anxiety / Panic</div>
-                    </button>
-                    <button class="category-btn" data-category="temptation">
-                        <div class="category-icon">🎯</div>
-                        <div class="category-label">Temptation</div>
-                    </button>
-                    <button class="category-btn" data-category="addiction">
-                        <div class="category-icon">⛓️</div>
-                        <div class="category-label">Addiction Craving</div>
-                    </button>
-                    <button class="category-btn" data-category="depression">
-                        <div class="category-icon">🌑</div>
-                        <div class="category-label">Depression / Giving Up</div>
-                    </button>
-                    <button class="category-btn full-width" data-category="other">
-                        <div class="category-icon">🙏</div>
-                        <div class="category-label">Other / Just Need Prayer</div>
-                    </button>
+                    <button class="category-btn" data-category="anxiety"><div class="category-icon">😰</div><div class="category-label">Anxiety / Panic</div></button>
+                    <button class="category-btn" data-category="temptation"><div class="category-icon">🎯</div><div class="category-label">Temptation</div></button>
+                    <button class="category-btn" data-category="addiction"><div class="category-icon">⛓️</div><div class="category-label">Addiction Craving</div></button>
+                    <button class="category-btn" data-category="depression"><div class="category-icon">🌑</div><div class="category-label">Depression / Giving Up</div></button>
+                    <button class="category-btn full-width" data-category="other"><div class="category-icon">🙏</div><div class="category-label">Other / Just Need Prayer</div></button>
                 </div>
-
-                <div class="rate-limit-warning" id="rateLimitWarning">
-                    ⚠️ Please wait before sending another flare. We want every prayer request to get attention.
-                </div>
-
+                <div class="rate-limit-warning" id="rateLimitWarning">⚠️ Please wait before sending another flare.</div>
                 <div class="hotlines">
                     <div class="hotlines-title">⚡ EMERGENCY HOTLINES</div>
-                    <div class="hotline-item">
-                        <span class="hotline-name">Suicide & Crisis Lifeline</span>
-                        <a href="tel:988" class="hotline-link">📞 988</a>
-                    </div>
-                    <div class="hotline-item">
-                        <span class="hotline-name">Crisis Text Line</span>
-                        <a href="sms:741741&body=HELLO" class="hotline-link">💬 741741</a>
-                    </div>
+                    <div class="hotline-item"><span class="hotline-name">Suicide & Crisis Lifeline</span><a href="tel:988" class="hotline-link">📞 988</a></div>
+                    <div class="hotline-item"><span class="hotline-name">Crisis Text Line</span><a href="sms:741741&body=HELLO" class="hotline-link">💬 741741</a></div>
                 </div>
             </div>
         </div>
 
-        <!-- Prayer Screen -->
         <div id="prayerScreen" class="screen">
             <div class="prayer-content">
-                <div class="prayer-header">
-                    <div class="form-icon">🔥</div>
-                    <h2 class="prayer-title">YOUR FLARE WAS RECEIVED!<br>PRAYER IS ON THE WAY!</h2>
-                </div>
-
-                <img src="warrior-praying.jpg" alt="Prayer warrior interceding for you" class="prayer-image">
-
-                <a href="video.html" class="video-btn">
-                    🙏 CAN WE PRAY WITH YOU?
-                </a>
-
-                <div class="scripture-box">
-                    <p class="scripture-text" id="scriptureText">"No temptation has overtaken you except what is common to mankind. And God is faithful; he will not let you be tempted beyond what you can bear. But when you are tempted, he will also provide a way out so that you can endure it."</p>
-                    <span class="scripture-ref" id="scriptureRef">— 1 Corinthians 10:13</span>
-                </div>
-
-                <p class="encouragement" id="encouragementText">The pull is strong. But you reached out instead of giving in. That took guts.</p>
-
+                <div class="prayer-header"><div class="form-icon">🔥</div><h2 class="prayer-title">YOUR FLARE WAS RECEIVED!<br>PRAYER IS ON THE WAY!</h2></div>
+                <img src="warrior-praying.jpg" alt="Prayer warrior" class="prayer-image">
+                <a href="video.html" class="video-btn">🙏 CAN WE PRAY WITH YOU?</a>
+                <div class="scripture-box"><p class="scripture-text" id="scriptureText">"Cast all your anxiety on him because he cares for you."</p><span class="scripture-ref" id="scriptureRef">— 1 Peter 5:7</span></div>
+                <p class="encouragement" id="encouragementText">You reached out. That took guts.</p>
                 <a href="#" class="home-link" id="backToHomeFromPrayer">← Back to Home</a>
-
                 <div class="hotlines">
                     <div class="hotlines-title">⚡ EMERGENCY HOTLINES</div>
-                    <div class="hotline-item">
-                        <span class="hotline-name">Suicide & Crisis Lifeline</span>
-                        <a href="tel:988" class="hotline-link">📞 988</a>
-                    </div>
-                    <div class="hotline-item">
-                        <span class="hotline-name">Crisis Text Line</span>
-                        <a href="sms:741741&body=HELLO" class="hotline-link">💬 741741</a>
-                    </div>
+                    <div class="hotline-item"><span class="hotline-name">Suicide & Crisis Lifeline</span><a href="tel:988" class="hotline-link">📞 988</a></div>
+                    <div class="hotline-item"><span class="hotline-name">Crisis Text Line</span><a href="sms:741741&body=HELLO" class="hotline-link">💬 741741</a></div>
                 </div>
             </div>
         </div>
 
-        <!-- Loading Overlay -->
-        <div class="loading-overlay" id="loadingOverlay">
-            <div class="loading-spinner">🔥</div>
-            <p class="loading-text">Sending your flare...</p>
-        </div>
+        <div class="loading-overlay" id="loadingOverlay"><div class="loading-spinner">🔥</div><p class="loading-text">Sending your flare...</p></div>
 
-        <!-- ZIP Code Popup -->
         <div class="zip-popup" id="zipPopup">
             <div class="zip-popup-content">
                 <div class="zip-popup-title">ALMOST THERE</div>
-                <p class="zip-popup-message">
-                    <strong>100% anonymous.</strong> Enter any ZIP code to connect with prayer partners near you — or use a fake one. We have national coverage too.
-                </p>
-                <input type="text" class="zip-popup-input" id="zipInput" placeholder="ZIP Code" maxlength="5" inputmode="numeric" pattern="[0-9]*">
+                <p class="zip-popup-message"><strong>100% anonymous.</strong> Enter any ZIP code — or make one up. We have prayer partners nationwide.</p>
+                <input type="text" class="zip-popup-input" id="zipInput" placeholder="ZIP" maxlength="5" inputmode="numeric">
                 <p class="zip-popup-hint">🔒 No personal info. Ever.</p>
-                <button class="zip-popup-btn" id="submitBtn" disabled>
-                    🔥 SEND FLARE 🔥
-                </button>
+                <button class="zip-popup-btn" id="sendFlareBtn" disabled>🔥 SEND FLARE 🔥</button>
             </div>
         </div>
 
-        <!-- PWA Install Prompt -->
         <div class="pwa-prompt" id="pwaPrompt">
             <div class="pwa-content">
-                <div class="pwa-icon">🔥</div>
                 <p class="pwa-title">Add Prayer Flare</p>
                 <p class="pwa-subtitle">Get instant access when you need it most</p>
-                <div class="pwa-buttons">
-                    <button class="pwa-btn dismiss" id="pwaDismiss">Not Now</button>
-                    <button class="pwa-btn install" id="pwaInstall">Add to Home</button>
-                </div>
+                <div class="pwa-buttons"><button class="pwa-btn dismiss" id="pwaDismiss">Not Now</button><button class="pwa-btn install" id="pwaInstall">Add to Home</button></div>
             </div>
         </div>
     </div>
 
-    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
     <script>
-        // ============================================
-        // SUPABASE CONFIG
-        // ============================================
-        const SUPABASE_URL = 'https://iqctlmcgsevcpqbsmpvd.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlxY3RsbWNnc2V2Y3BxYnNtcHZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxODQ3NDYsImV4cCI6MjA1NTc2MDc0Nn0.dpVRTF7R7Ca-yDPWfBRruxYjxGCy7f0ku6DnXaOUJbA';
-        
-        const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        var SUPABASE_URL = 'https://iqctlmcgsevcpqbsmpvd.supabase.co';
+        var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlxY3RsbWNnc2V2Y3BxYnNtcHZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxODQ3NDYsImV4cCI6MjA1NTc2MDc0Nn0.dpVRTF7R7Ca-yDPWfBRruxYjxGCy7f0ku6DnXaOUJbA';
+        var supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // ============================================
-        // STATE
-        // ============================================
-        let selectedCategory = null;
+        var selectedCategory = null;
+        var homeScreen = document.getElementById('homeScreen');
+        var formScreen = document.getElementById('formScreen');
+        var prayerScreen = document.getElementById('prayerScreen');
+        var startBtn = document.getElementById('startBtn');
+        var backToHome = document.getElementById('backToHome');
+        var backToHomeFromPrayer = document.getElementById('backToHomeFromPrayer');
+        var categoryBtns = document.querySelectorAll('.category-btn');
+        var zipInput = document.getElementById('zipInput');
+        var sendFlareBtn = document.getElementById('sendFlareBtn');
+        var loadingOverlay = document.getElementById('loadingOverlay');
+        var rateLimitWarning = document.getElementById('rateLimitWarning');
+        var zipPopup = document.getElementById('zipPopup');
 
-        // ============================================
-        // DOM ELEMENTS
-        // ============================================
-        const homeScreen = document.getElementById('homeScreen');
-        const formScreen = document.getElementById('formScreen');
-        const prayerScreen = document.getElementById('prayerScreen');
-        const startBtn = document.getElementById('startBtn');
-        const backToHome = document.getElementById('backToHome');
-        const backToHomeFromPrayer = document.getElementById('backToHomeFromPrayer');
-        const categoryBtns = document.querySelectorAll('.category-btn');
-        const zipInput = document.getElementById('zipInput');
-        const submitBtn = document.getElementById('submitBtn');
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        const rateLimitWarning = document.getElementById('rateLimitWarning');
-        const zipPopup = document.getElementById('zipPopup');
-
-        // ============================================
-        // NAVIGATION
-        // ============================================
         function showScreen(screen) {
             homeScreen.classList.remove('active');
             formScreen.classList.remove('active');
@@ -882,181 +252,77 @@
             window.scrollTo(0, 0);
         }
 
-        startBtn.addEventListener('click', () => showScreen(formScreen));
-        backToHome.addEventListener('click', () => {
-            resetForm();
-            showScreen(homeScreen);
-        });
-        backToHomeFromPrayer.addEventListener('click', (e) => {
-            e.preventDefault();
-            resetForm();
-            showScreen(homeScreen);
-        });
+        startBtn.onclick = function() { showScreen(formScreen); };
+        backToHome.onclick = function() { resetForm(); showScreen(homeScreen); };
+        backToHomeFromPrayer.onclick = function(e) { e.preventDefault(); resetForm(); showScreen(homeScreen); };
 
-        // ============================================
-        // CATEGORY SELECTION - Opens ZIP Popup
-        // ============================================
-        categoryBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                categoryBtns.forEach(b => b.classList.remove('selected'));
-                btn.classList.add('selected');
-                selectedCategory = btn.dataset.category;
-                
-                // Show ZIP popup
+        for (var i = 0; i < categoryBtns.length; i++) {
+            categoryBtns[i].onclick = function() {
+                for (var j = 0; j < categoryBtns.length; j++) { categoryBtns[j].classList.remove('selected'); }
+                this.classList.add('selected');
+                selectedCategory = this.dataset.category;
                 zipPopup.classList.add('active');
-                zipInput.focus();
-            });
-        });
+                zipInput.value = '';
+                sendFlareBtn.disabled = true;
+                setTimeout(function() { zipInput.focus(); }, 100);
+            };
+        }
 
-        // Close popup if clicking outside
-        zipPopup.addEventListener('click', (e) => {
-            if (e.target === zipPopup) {
-                zipPopup.classList.remove('active');
-            }
-        });
+        zipPopup.onclick = function(e) { if (e.target === zipPopup) { zipPopup.classList.remove('active'); } };
+        zipInput.oninput = function() { this.value = this.value.replace(/[^0-9]/g, '').slice(0, 5); sendFlareBtn.disabled = this.value.length !== 5; };
 
-        // ============================================
-        // ZIP INPUT
-        // ============================================
-        zipInput.addEventListener('input', (e) => {
-            e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 5);
-            submitBtn.disabled = e.target.value.length !== 5;
-        });
-
-        // ============================================
-        // FORM VALIDATION
-        // ============================================
         function resetForm() {
             selectedCategory = null;
-            categoryBtns.forEach(b => b.classList.remove('selected'));
+            for (var i = 0; i < categoryBtns.length; i++) { categoryBtns[i].classList.remove('selected'); }
             zipInput.value = '';
-            submitBtn.disabled = true;
+            sendFlareBtn.disabled = true;
             zipPopup.classList.remove('active');
         }
 
-        // ============================================
-        // RATE LIMITING
-        // ============================================
         function canSubmit() {
-            const lastSubmit = localStorage.getItem('pf_last_submit');
+            var lastSubmit = localStorage.getItem('pf_last_submit');
             if (!lastSubmit) return true;
-            const elapsed = Date.now() - parseInt(lastSubmit);
-            return elapsed > 60000; // 1 minute cooldown
+            return Date.now() - parseInt(lastSubmit) > 60000;
         }
 
-        function recordSubmit() {
-            localStorage.setItem('pf_last_submit', Date.now().toString());
-        }
-
-        // ============================================
-        // SCRIPTURES BY CATEGORY
-        // ============================================
-        const scriptures = {
-            anxiety: {
-                text: '"Cast all your anxiety on him because he cares for you."',
-                ref: '1 Peter 5:7',
-                encouragement: 'Your mind is racing, but you paused to reach out. That takes strength.'
-            },
-            temptation: {
-                text: '"No temptation has overtaken you except what is common to mankind. And God is faithful; he will not let you be tempted beyond what you can bear."',
-                ref: '1 Corinthians 10:13',
-                encouragement: 'The pull is strong. But you reached out instead of giving in. That took guts.'
-            },
-            addiction: {
-                text: '"I can do all things through Christ who strengthens me."',
-                ref: 'Philippians 4:13',
-                encouragement: 'Every minute you hold on is a victory. You are stronger than you know.'
-            },
-            depression: {
-                text: '"The Lord is close to the brokenhearted and saves those who are crushed in spirit."',
-                ref: 'Psalm 34:18',
-                encouragement: 'The darkness feels heavy, but you reached out. That light is still in you.'
-            },
-            other: {
-                text: '"Come to me, all you who are weary and burdened, and I will give you rest."',
-                ref: 'Matthew 11:28',
-                encouragement: 'Whatever you are carrying, you do not have to carry it alone.'
-            }
+        var scriptures = {
+            anxiety: { text: '"Cast all your anxiety on him because he cares for you."', ref: '1 Peter 5:7', encouragement: 'Your mind is racing, but you paused to reach out. That takes strength.' },
+            temptation: { text: '"No temptation has overtaken you except what is common to mankind."', ref: '1 Corinthians 10:13', encouragement: 'The pull is strong. But you reached out instead of giving in.' },
+            addiction: { text: '"I can do all things through Christ who strengthens me."', ref: 'Philippians 4:13', encouragement: 'Every minute you hold on is a victory.' },
+            depression: { text: '"The Lord is close to the brokenhearted."', ref: 'Psalm 34:18', encouragement: 'The darkness feels heavy, but you reached out. That light is still in you.' },
+            other: { text: '"Come to me, all you who are weary and burdened, and I will give you rest."', ref: 'Matthew 11:28', encouragement: 'Whatever you are carrying, you do not have to carry it alone.' }
         };
 
-        // ============================================
-        // SUBMIT FLARE
-        // ============================================
-        submitBtn.addEventListener('click', async () => {
-            if (!canSubmit()) {
-                rateLimitWarning.style.display = 'block';
-                return;
-            }
-
+        sendFlareBtn.onclick = function() {
+            if (!canSubmit()) { rateLimitWarning.style.display = 'block'; zipPopup.classList.remove('active'); return; }
+            if (!selectedCategory || zipInput.value.length !== 5) return;
+            
             zipPopup.classList.remove('active');
             loadingOverlay.classList.add('active');
 
-            try {
-                const { error } = await db
-                    .from('Prayer Flares')
-                    .insert([{
-                        category: selectedCategory,
-                        zip_code: zipInput.value,
-                        created_at: new Date().toISOString()
-                    }]);
-
-                if (error) throw error;
-
-                recordSubmit();
-
-                // Update scripture based on category
-                const scripture = scriptures[selectedCategory] || scriptures.other;
-                document.getElementById('scriptureText').textContent = scripture.text;
-                document.getElementById('scriptureRef').textContent = '— ' + scripture.ref;
-                document.getElementById('encouragementText').textContent = scripture.encouragement;
-
+            supabaseClient.from('Prayer Flares').insert([{ category: selectedCategory, zip_code: zipInput.value, created_at: new Date().toISOString() }])
+            .then(function(result) {
+                if (result.error) throw result.error;
+                localStorage.setItem('pf_last_submit', Date.now().toString());
+                var s = scriptures[selectedCategory] || scriptures.other;
+                document.getElementById('scriptureText').textContent = s.text;
+                document.getElementById('scriptureRef').textContent = '— ' + s.ref;
+                document.getElementById('encouragementText').textContent = s.encouragement;
                 loadingOverlay.classList.remove('active');
                 showScreen(prayerScreen);
-
-            } catch (err) {
+            })
+            .catch(function(err) {
                 console.error('Error:', err);
                 loadingOverlay.classList.remove('active');
                 alert('Something went wrong. Please try again.');
-            }
-        });
+            });
+        };
 
-        // ============================================
-        // PWA INSTALL
-        // ============================================
-        let deferredPrompt;
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            
-            // Show prompt after 5 seconds
-            setTimeout(() => {
-                if (!localStorage.getItem('pf_pwa_dismissed')) {
-                    document.getElementById('pwaPrompt').classList.add('active');
-                }
-            }, 5000);
-        });
-
-        document.getElementById('pwaDismiss').addEventListener('click', () => {
-            document.getElementById('pwaPrompt').classList.remove('active');
-            localStorage.setItem('pf_pwa_dismissed', 'true');
-        });
-
-        document.getElementById('pwaInstall').addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                deferredPrompt = null;
-            }
-            document.getElementById('pwaPrompt').classList.remove('active');
-        });
-
-        // ============================================
-        // SERVICE WORKER
-        // ============================================
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').catch(() => {});
-        }
+        var deferredPrompt;
+        window.addEventListener('beforeinstallprompt', function(e) { e.preventDefault(); deferredPrompt = e; setTimeout(function() { if (!localStorage.getItem('pf_pwa_dismissed')) { document.getElementById('pwaPrompt').classList.add('active'); } }, 5000); });
+        document.getElementById('pwaDismiss').onclick = function() { document.getElementById('pwaPrompt').classList.remove('active'); localStorage.setItem('pf_pwa_dismissed', 'true'); };
+        document.getElementById('pwaInstall').onclick = function() { if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt = null; } document.getElementById('pwaPrompt').classList.remove('active'); };
+        if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(function() {}); }
     </script>
 </body>
 </html>
