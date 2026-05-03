@@ -5,30 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0a0a0f">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     <title>Prayer Flare - You Don't Have To Fight This Alone</title>
     <link rel="manifest" href="manifest.json">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <script>
-        var APP_VERSION = '3.1.0';
-        var storedVersion = localStorage.getItem('pf_version');
-        if (storedVersion !== APP_VERSION) {
-            localStorage.setItem('pf_version', APP_VERSION);
-            if (storedVersion) {
-                if ('caches' in window) {
-                    caches.keys().then(function(names) {
-                        names.forEach(function(name) { caches.delete(name); });
-                    });
-                }
-                location.reload(true);
-            }
-        }
-    </script>
     
     <style>
         :root {
@@ -45,44 +26,40 @@
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         html, body { height: 100%; overflow-x: hidden; }
         body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg-dark); color: var(--text-primary); line-height: 1.5; }
-        .app-container { min-height: 100vh; max-width: 100vw; overflow-x: hidden; position: relative; }
+        .app-container { min-height: 100vh; max-width: 100vw; overflow-x: hidden; }
         .screen { display: none; min-height: 100vh; padding: 20px; animation: fadeIn 0.3s ease; }
         .screen.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Home Screen */
         .home-content { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: calc(100vh - 40px); text-align: center; padding: 20px 0; }
         .flare-icon { font-size: 64px; margin-bottom: 20px; animation: flicker 3s ease-in-out infinite; }
         @keyframes flicker { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.05); } }
-        .headline { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 2px; line-height: 1.1; margin-bottom: 30px; text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8); }
+        .headline { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 2px; line-height: 1.1; margin-bottom: 30px; }
 
-        .btn-primary { background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%); color: white; border: none; padding: 24px 36px; border-radius: 20px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 10px 40px rgba(255, 107, 53, 0.4); width: 100%; max-width: 340px; text-align: center; line-height: 1.4; }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 50px rgba(255, 107, 53, 0.5); }
-        .btn-primary:active { transform: translateY(0); }
+        .btn-primary { background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%); color: white; border: none; padding: 24px 36px; border-radius: 20px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 10px 40px rgba(255, 107, 53, 0.4); width: 100%; max-width: 340px; text-align: center; }
+        .btn-primary:active { transform: scale(0.98); }
         .btn-primary .btn-title { font-size: 28px; font-weight: 700; display: block; margin-bottom: 6px; letter-spacing: 1px; }
         .btn-primary .btn-sub { font-size: 14px; font-weight: 600; display: block; }
-        @media (min-width: 600px) {
-            .headline { font-size: 48px; }
-            .btn-primary { padding: 28px 48px; max-width: 400px; border-radius: 24px; }
-            .btn-primary .btn-title { font-size: 36px; margin-bottom: 10px; }
-            .btn-primary .btn-sub { font-size: 16px; }
-            .flare-icon { font-size: 80px; }
-            .tagline-badge { font-size: 14px; padding: 10px 20px; }
-        }
 
         .tagline { display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap; justify-content: center; }
         .tagline-badge { background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); padding: 8px 16px; border-radius: 25px; font-size: 13px; color: var(--gold); }
         .tagline-badge.teal { background: rgba(20, 184, 166, 0.1); border-color: rgba(20, 184, 166, 0.3); color: var(--teal); }
+
         .footer { margin-top: 40px; text-align: center; }
         .footer a { color: var(--teal); text-decoration: none; font-size: 14px; }
         .footer-links { margin-top: 20px; font-size: 12px; color: var(--text-secondary); }
         .footer-links a { color: var(--text-secondary); margin: 0 10px; }
         .disclaimer { font-size: 11px; color: var(--text-secondary); margin-top: 15px; max-width: 300px; line-height: 1.4; }
 
+        /* Form Screen */
         .form-content { max-width: 400px; margin: 0 auto; padding-top: 20px; }
         .back-btn { display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); background: none; border: none; font-size: 14px; cursor: pointer; margin-bottom: 20px; }
         .form-header { text-align: center; margin-bottom: 30px; }
         .form-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; margin-bottom: 10px; }
         .form-icon { font-size: 40px; margin-bottom: 15px; }
         .form-subtitle { font-size: 14px; color: var(--gold); letter-spacing: 1px; }
+
         .category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; }
         .category-btn { background: var(--bg-card); border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 12px; padding: 16px 12px; text-align: center; cursor: pointer; transition: all 0.2s ease; color: var(--text-primary); }
         .category-btn:hover { border-color: rgba(255, 215, 0, 0.5); background: rgba(255, 215, 0, 0.05); }
@@ -91,58 +68,99 @@
         .category-icon { font-size: 28px; margin-bottom: 8px; }
         .category-label { font-size: 14px; font-weight: 600; color: var(--text-primary); }
 
+        /* ZIP Popup */
         .zip-popup { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10, 10, 15, 0.95); z-index: 500; justify-content: center; align-items: center; padding: 20px; }
         .zip-popup.active { display: flex; }
         .zip-popup-content { background: var(--bg-card); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 20px; padding: 30px 25px; max-width: 340px; width: 100%; text-align: center; }
-        .zip-popup-title { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--gold); margin-bottom: 15px; letter-spacing: 1px; }
+        .zip-popup-title { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--gold); margin-bottom: 15px; }
         .zip-popup-message { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px; }
         .zip-popup-message strong { color: var(--text-primary); }
         .zip-popup-input { width: 100%; padding: 16px; background: var(--bg-dark); border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 12px; color: var(--text-primary); font-size: 24px; text-align: center; letter-spacing: 8px; margin-bottom: 15px; }
         .zip-popup-input:focus { outline: none; border-color: var(--gold); }
         .zip-popup-input::placeholder { letter-spacing: normal; color: var(--text-secondary); font-size: 16px; }
         .zip-popup-hint { font-size: 12px; color: var(--teal); margin-bottom: 20px; }
-        .zip-popup-btn { width: 100%; background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%); color: white; border: none; padding: 18px; border-radius: 14px; font-size: 18px; font-weight: 700; cursor: pointer; box-shadow: 0 8px 30px rgba(255, 107, 53, 0.3); }
+        .zip-popup-btn { width: 100%; background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%); color: white; border: none; padding: 18px; border-radius: 14px; font-size: 18px; font-weight: 700; cursor: pointer; }
         .zip-popup-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        .rate-limit-warning { background: rgba(255, 107, 53, 0.1); border: 1px solid rgba(255, 107, 53, 0.3); border-radius: 10px; padding: 12px; margin-bottom: 20px; font-size: 12px; color: var(--flare-orange); text-align: center; display: none; }
+        /* Hotlines */
         .hotlines { margin-top: 30px; padding: 20px; background: var(--bg-card); border-radius: 12px; }
-        .hotlines-title { font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: var(--gold); margin-bottom: 15px; text-align: center; letter-spacing: 1px; }
+        .hotlines-title { font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: var(--gold); margin-bottom: 15px; text-align: center; }
         .hotline-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
         .hotline-item:last-child { border-bottom: none; }
         .hotline-name { font-size: 13px; color: var(--text-secondary); }
         .hotline-link { background: rgba(255, 255, 255, 0.1); padding: 8px 16px; border-radius: 20px; color: var(--text-primary); text-decoration: none; font-size: 13px; font-weight: 600; }
 
+        /* Prayer Confirmation Screen */
         .prayer-content { max-width: 400px; margin: 0 auto; padding-top: 20px; text-align: center; }
         .prayer-header { margin-bottom: 25px; }
-        .prayer-title { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--gold); letter-spacing: 2px; line-height: 1.2; }
-        .prayer-image { width: 100%; max-width: 350px; border-radius: 16px; margin-bottom: 25px; }
-        .video-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 16px; background: var(--bg-card); border: 2px solid var(--gold); border-radius: 12px; color: var(--text-primary); text-decoration: none; font-size: 16px; font-weight: 600; margin-bottom: 25px; transition: all 0.3s ease; }
-        .video-btn:hover { background: rgba(255, 215, 0, 0.1); }
+        .prayer-title { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--gold); letter-spacing: 2px; line-height: 1.2; }
+        .prayer-subtitle { font-size: 14px; color: var(--text-secondary); margin-top: 10px; }
+
+        /* Video Container */
+        .video-container { background: var(--bg-card); border-radius: 16px; overflow: hidden; margin-bottom: 25px; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; }
+        .video-container iframe { width: 100%; height: 100%; border: none; }
+        .video-placeholder { text-align: center; padding: 30px; color: var(--text-secondary); }
+        .video-placeholder-icon { font-size: 48px; margin-bottom: 10px; }
+
+        /* Scripture Box */
         .scripture-box { background: var(--bg-card); border-left: 3px solid var(--gold); padding: 20px; border-radius: 0 12px 12px 0; margin-bottom: 20px; text-align: left; }
         .scripture-text { font-style: italic; font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 10px; }
         .scripture-ref { font-size: 12px; color: var(--gold); }
-        .encouragement { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 25px; }
-        .home-link { color: var(--teal); text-decoration: none; font-size: 14px; }
 
+        .encouragement { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 25px; }
+
+        /* Local Resources */
+        .local-resources { background: var(--bg-card); border: 1px solid rgba(20, 184, 166, 0.3); border-radius: 16px; padding: 20px; margin-bottom: 20px; }
+        .local-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--teal); margin-bottom: 15px; text-align: center; }
+        .local-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .local-item:last-child { border-bottom: none; }
+        .local-icon { font-size: 24px; }
+        .local-info { flex: 1; }
+        .local-name { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+        .local-desc { font-size: 12px; color: var(--text-secondary); }
+        .local-link { color: var(--teal); text-decoration: none; font-size: 12px; font-weight: 600; }
+
+        /* CTA Buttons */
+        .cta-buttons { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
+        .cta-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 16px; border-radius: 12px; font-size: 14px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+        .cta-btn.primary { background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%); color: white; }
+        .cta-btn.secondary { background: var(--bg-card); color: var(--gold); border: 1px solid rgba(255, 215, 0, 0.3); }
+        .cta-btn.youtube { background: rgba(255, 0, 0, 0.1); color: #ff4444; border: 1px solid rgba(255, 0, 0, 0.3); }
+
+        .home-link { color: var(--teal); text-decoration: none; font-size: 14px; display: inline-block; margin-top: 20px; }
+
+        /* Need Help NOW Popup */
+        .help-popup { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10, 10, 15, 0.95); z-index: 600; justify-content: center; align-items: center; padding: 20px; }
+        .help-popup.active { display: flex; }
+        .help-popup-content { background: var(--bg-card); border: 2px solid var(--flare-orange); border-radius: 20px; padding: 30px 25px; max-width: 340px; width: 100%; text-align: center; animation: popIn 0.3s ease; }
+        @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .help-popup-icon { font-size: 48px; margin-bottom: 15px; }
+        .help-popup-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--text-primary); margin-bottom: 10px; }
+        .help-popup-text { font-size: 14px; color: var(--text-secondary); margin-bottom: 25px; line-height: 1.6; }
+        .help-popup-btn { width: 100%; padding: 16px; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 12px; border: none; }
+        .help-popup-btn.yes { background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%); color: white; }
+        .help-popup-btn.no { background: transparent; color: var(--text-secondary); border: 1px solid rgba(255, 255, 255, 0.2); }
+
+        /* Loading Overlay */
         .loading-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10, 10, 15, 0.95); z-index: 1000; justify-content: center; align-items: center; flex-direction: column; }
         .loading-overlay.active { display: flex; }
         .loading-text { color: var(--text-primary); font-size: 16px; margin-top: 20px; }
         .loading-spinner { font-size: 48px; animation: pulse 1s ease-in-out infinite; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.7; } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
 
-        .pwa-prompt { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg-card); padding: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); z-index: 100; }
-        .pwa-prompt.active { display: block; }
-        .pwa-content { max-width: 400px; margin: 0 auto; text-align: center; }
-        .pwa-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
-        .pwa-subtitle { font-size: 13px; color: var(--text-secondary); margin-bottom: 15px; }
-        .pwa-buttons { display: flex; gap: 10px; justify-content: center; }
-        .pwa-btn { padding: 10px 20px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; border: none; }
-        .pwa-btn.dismiss { background: transparent; color: var(--text-secondary); }
-        .pwa-btn.install { background: var(--gold); color: var(--bg-dark); }
+        /* Responsive */
+        @media (min-width: 600px) {
+            .headline { font-size: 48px; }
+            .btn-primary { padding: 28px 48px; max-width: 400px; }
+            .btn-primary .btn-title { font-size: 36px; }
+            .btn-primary .btn-sub { font-size: 16px; }
+            .flare-icon { font-size: 80px; }
+        }
     </style>
 </head>
 <body>
     <div class="app-container">
+        <!-- Home Screen -->
         <div id="homeScreen" class="screen active">
             <div class="home-content">
                 <div class="flare-icon">🔥</div>
@@ -163,6 +181,7 @@
             </div>
         </div>
 
+        <!-- Form Screen -->
         <div id="formScreen" class="screen">
             <div class="form-content">
                 <button class="back-btn" id="backToHome">← Back</button>
@@ -178,7 +197,6 @@
                     <button class="category-btn" data-category="depression"><div class="category-icon">🌑</div><div class="category-label">Depression / Giving Up</div></button>
                     <button class="category-btn full-width" data-category="other"><div class="category-icon">🙏</div><div class="category-label">Other / Just Need Prayer</div></button>
                 </div>
-                <div class="rate-limit-warning" id="rateLimitWarning">⚠️ Please wait before sending another flare.</div>
                 <div class="hotlines">
                     <div class="hotlines-title">⚡ EMERGENCY HOTLINES</div>
                     <div class="hotline-item"><span class="hotline-name">Suicide & Crisis Lifeline</span><a href="tel:988" class="hotline-link">📞 988</a></div>
@@ -187,14 +205,54 @@
             </div>
         </div>
 
+        <!-- Prayer Confirmation Screen -->
         <div id="prayerScreen" class="screen">
             <div class="prayer-content">
-                <div class="prayer-header"><div class="form-icon">🔥</div><h2 class="prayer-title">YOUR FLARE WAS RECEIVED!<br>PRAYER IS ON THE WAY!</h2></div>
-                <img src="warrior-praying.jpg" alt="Prayer warrior" class="prayer-image">
-                <a href="video.html" class="video-btn">🙏 CAN WE PRAY WITH YOU?</a>
-                <div class="scripture-box"><p class="scripture-text" id="scriptureText">"Cast all your anxiety on him because he cares for you."</p><span class="scripture-ref" id="scriptureRef">— 1 Peter 5:7</span></div>
-                <p class="encouragement" id="encouragementText">You reached out. That took guts.</p>
+                <div class="prayer-header">
+                    <div class="form-icon">🔥</div>
+                    <h2 class="prayer-title">YOUR FLARE WAS RECEIVED!</h2>
+                    <p class="prayer-subtitle">Real people are praying for you right now.</p>
+                </div>
+
+                <!-- Video Section -->
+                <div class="video-container" id="videoContainer">
+                    <!-- Replace VIDEO_ID with your YouTube video ID -->
+                    <div class="video-placeholder" id="videoPlaceholder">
+                        <div class="video-placeholder-icon">🎬</div>
+                        <p>Video loading...</p>
+                    </div>
+                    <iframe id="videoFrame" style="display:none;" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+
+                <!-- Scripture -->
+                <div class="scripture-box">
+                    <p class="scripture-text" id="scriptureText">"Cast all your anxiety on him because he cares for you."</p>
+                    <span class="scripture-ref" id="scriptureRef">— 1 Peter 5:7</span>
+                </div>
+
+                <p class="encouragement" id="encouragementText">You reached out. That took guts. You're not alone in this.</p>
+
+                <!-- Local Resources (Yuma County) -->
+                <div class="local-resources" id="localResources" style="display:none;">
+                    <div class="local-title">📍 YUMA COUNTY RESOURCES</div>
+                    <div class="local-item">
+                        <span class="local-icon">🏥</span>
+                        <div class="local-info">
+                            <div class="local-name">The Healing House of Yuma</div>
+                            <div class="local-desc">Faith-based recovery support</div>
+                        </div>
+                        <a href="https://thehealinghouseofyuma.com" class="local-link" target="_blank">Visit →</a>
+                    </div>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="cta-buttons">
+                    <a href="hotlines.html" class="cta-btn primary">📞 24/7 LIVE PRAYER HOTLINES</a>
+                    <a href="https://youtube.com/@knowgodbetter" class="cta-btn youtube" target="_blank">📺 YOUTUBE PRAYER COMMUNITY</a>
+                </div>
+
                 <a href="#" class="home-link" id="backToHomeFromPrayer">← Back to Home</a>
+
                 <div class="hotlines">
                     <div class="hotlines-title">⚡ EMERGENCY HOTLINES</div>
                     <div class="hotline-item"><span class="hotline-name">Suicide & Crisis Lifeline</span><a href="tel:988" class="hotline-link">📞 988</a></div>
@@ -203,34 +261,61 @@
             </div>
         </div>
 
-        <div class="loading-overlay" id="loadingOverlay"><div class="loading-spinner">🔥</div><p class="loading-text">Sending your flare...</p></div>
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-spinner">🔥</div>
+            <p class="loading-text">Sending your flare...</p>
+        </div>
 
+        <!-- ZIP Code Popup -->
         <div class="zip-popup" id="zipPopup">
             <div class="zip-popup-content">
                 <div class="zip-popup-title">ALMOST THERE</div>
-                <p class="zip-popup-message"><strong>100% anonymous.</strong> Enter any ZIP code — or make one up. We have prayer partners nationwide.</p>
+                <p class="zip-popup-message">
+                    <strong>100% anonymous.</strong> We're locating prayer partners near you. Enter any ZIP — or make one up. We have partners nationwide.
+                </p>
                 <input type="text" class="zip-popup-input" id="zipInput" placeholder="ZIP" maxlength="5" inputmode="numeric">
                 <p class="zip-popup-hint">🔒 No personal info. Ever.</p>
                 <button class="zip-popup-btn" id="sendFlareBtn" disabled>🔥 SEND FLARE 🔥</button>
             </div>
         </div>
 
-        <div class="pwa-prompt" id="pwaPrompt">
-            <div class="pwa-content">
-                <p class="pwa-title">Add Prayer Flare</p>
-                <p class="pwa-subtitle">Get instant access when you need it most</p>
-                <div class="pwa-buttons"><button class="pwa-btn dismiss" id="pwaDismiss">Not Now</button><button class="pwa-btn install" id="pwaInstall">Add to Home</button></div>
+        <!-- Need Help NOW Popup -->
+        <div class="help-popup" id="helpPopup">
+            <div class="help-popup-content">
+                <div class="help-popup-icon">🆘</div>
+                <h2 class="help-popup-title">NEED TO TALK TO SOMEONE NOW?</h2>
+                <p class="help-popup-text">We have 24-hour prayer partners standing by. Real people. Real prayers. Right now.</p>
+                <button class="help-popup-btn yes" id="helpYes">YES - SHOW ME OPTIONS</button>
+                <button class="help-popup-btn no" id="helpNo">I'M OK - CLOSE</button>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
+        // ============================================
+        // SUPABASE CONFIG - UPDATED
+        // ============================================
         var SUPABASE_URL = 'https://shesaxxugzfdozlmigrk.supabase.co';
         var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNoZXNheHh1Z3pmZG96bG1pZ3JrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ4MzIxMTAsImV4cCI6MjA4MDQwODExMH0.CXQqq8EAQ50w7NxnVvKwOVf5LuRr-x8tnuDajQK_qds';
         var supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+        // YouTube Video ID - REPLACE WITH YOUR VIDEO ID
+        var YOUTUBE_VIDEO_ID = 'YOUR_VIDEO_ID_HERE';
+
+        // Yuma County ZIP codes
+        var YUMA_ZIPS = ['853', '854', '857'];
+
+        // ============================================
+        // STATE
+        // ============================================
         var selectedCategory = null;
+        var userZip = '';
+
+        // ============================================
+        // DOM ELEMENTS
+        // ============================================
         var homeScreen = document.getElementById('homeScreen');
         var formScreen = document.getElementById('formScreen');
         var prayerScreen = document.getElementById('prayerScreen');
@@ -241,9 +326,17 @@
         var zipInput = document.getElementById('zipInput');
         var sendFlareBtn = document.getElementById('sendFlareBtn');
         var loadingOverlay = document.getElementById('loadingOverlay');
-        var rateLimitWarning = document.getElementById('rateLimitWarning');
         var zipPopup = document.getElementById('zipPopup');
+        var helpPopup = document.getElementById('helpPopup');
+        var helpYes = document.getElementById('helpYes');
+        var helpNo = document.getElementById('helpNo');
+        var localResources = document.getElementById('localResources');
+        var videoFrame = document.getElementById('videoFrame');
+        var videoPlaceholder = document.getElementById('videoPlaceholder');
 
+        // ============================================
+        // NAVIGATION
+        // ============================================
         function showScreen(screen) {
             homeScreen.classList.remove('active');
             formScreen.classList.remove('active');
@@ -256,6 +349,9 @@
         backToHome.onclick = function() { resetForm(); showScreen(homeScreen); };
         backToHomeFromPrayer.onclick = function(e) { e.preventDefault(); resetForm(); showScreen(homeScreen); };
 
+        // ============================================
+        // CATEGORY SELECTION
+        // ============================================
         for (var i = 0; i < categoryBtns.length; i++) {
             categoryBtns[i].onclick = function() {
                 for (var j = 0; j < categoryBtns.length; j++) { categoryBtns[j].classList.remove('selected'); }
@@ -273,18 +369,26 @@
 
         function resetForm() {
             selectedCategory = null;
+            userZip = '';
             for (var i = 0; i < categoryBtns.length; i++) { categoryBtns[i].classList.remove('selected'); }
             zipInput.value = '';
             sendFlareBtn.disabled = true;
             zipPopup.classList.remove('active');
+            helpPopup.classList.remove('active');
         }
 
+        // ============================================
+        // RATE LIMITING
+        // ============================================
         function canSubmit() {
             var lastSubmit = localStorage.getItem('pf_last_submit');
             if (!lastSubmit) return true;
             return Date.now() - parseInt(lastSubmit) > 60000;
         }
 
+        // ============================================
+        // SCRIPTURES
+        // ============================================
         var scriptures = {
             anxiety: { text: '"Cast all your anxiety on him because he cares for you."', ref: '1 Peter 5:7', encouragement: 'Your mind is racing, but you paused to reach out. That takes strength.' },
             temptation: { text: '"No temptation has overtaken you except what is common to mankind."', ref: '1 Corinthians 10:13', encouragement: 'The pull is strong. But you reached out instead of giving in.' },
@@ -293,57 +397,101 @@
             other: { text: '"Come to me, all you who are weary and burdened, and I will give you rest."', ref: 'Matthew 11:28', encouragement: 'Whatever you are carrying, you do not have to carry it alone.' }
         };
 
+        // ============================================
+        // CHECK IF YUMA COUNTY
+        // ============================================
+        function isYumaCounty(zip) {
+            var prefix = zip.substring(0, 3);
+            return YUMA_ZIPS.indexOf(prefix) !== -1;
+        }
+
+        // ============================================
+        // LOAD VIDEO
+        // ============================================
+        function loadVideo() {
+            if (YOUTUBE_VIDEO_ID && YOUTUBE_VIDEO_ID !== 'YOUR_VIDEO_ID_HERE') {
+                videoFrame.src = 'https://www.youtube.com/embed/' + YOUTUBE_VIDEO_ID + '?rel=0';
+                videoFrame.style.display = 'block';
+                videoPlaceholder.style.display = 'none';
+            }
+        }
+
+        // ============================================
+        // SHOW HELP POPUP (after 3 seconds)
+        // ============================================
+        function showHelpPopup() {
+            setTimeout(function() {
+                helpPopup.classList.add('active');
+            }, 3000);
+        }
+
+        helpYes.onclick = function() {
+            helpPopup.classList.remove('active');
+            window.location.href = 'hotlines.html';
+        };
+
+        helpNo.onclick = function() {
+            helpPopup.classList.remove('active');
+        };
+
+        // ============================================
+        // SUBMIT FLARE
+        // ============================================
         sendFlareBtn.onclick = function() {
-            console.log('Send button clicked');
-            console.log('Category:', selectedCategory);
-            console.log('ZIP:', zipInput.value);
-            
             if (!canSubmit()) { 
-                console.log('Rate limited');
-                rateLimitWarning.style.display = 'block'; 
+                alert('Please wait a moment before sending another flare.');
                 zipPopup.classList.remove('active'); 
                 return; 
             }
-            if (!selectedCategory || zipInput.value.length !== 5) {
-                console.log('Validation failed');
-                return;
-            }
-            
+            if (!selectedCategory || zipInput.value.length !== 5) return;
+
+            userZip = zipInput.value;
             zipPopup.classList.remove('active');
             loadingOverlay.classList.add('active');
-            
-            console.log('Attempting to insert to Supabase...');
 
             supabaseClient.from('Prayer Flares').insert([{ 
                 category: selectedCategory, 
-                zip_code: zipInput.value
+                zip_code: userZip
             }])
             .then(function(result) {
-                console.log('Supabase result:', result);
-                if (result.error) {
-                    console.error('Supabase error:', result.error);
-                    throw result.error;
-                }
+                if (result.error) throw result.error;
                 localStorage.setItem('pf_last_submit', Date.now().toString());
+                
+                // Update scripture
                 var s = scriptures[selectedCategory] || scriptures.other;
                 document.getElementById('scriptureText').textContent = s.text;
                 document.getElementById('scriptureRef').textContent = '— ' + s.ref;
                 document.getElementById('encouragementText').textContent = s.encouragement;
+                
+                // Show local resources if Yuma County
+                if (isYumaCounty(userZip)) {
+                    localResources.style.display = 'block';
+                } else {
+                    localResources.style.display = 'none';
+                }
+
+                // Load video
+                loadVideo();
+
                 loadingOverlay.classList.remove('active');
                 showScreen(prayerScreen);
+
+                // Show help popup after 3 seconds
+                showHelpPopup();
             })
             .catch(function(err) {
-                console.error('Catch error:', err);
+                console.error('Error:', err);
                 loadingOverlay.classList.remove('active');
-                alert('Error: ' + (err.message || JSON.stringify(err)));
+                alert('Something went wrong. Please try again.');
             });
         };
 
-        var deferredPrompt;
-        window.addEventListener('beforeinstallprompt', function(e) { e.preventDefault(); deferredPrompt = e; setTimeout(function() { if (!localStorage.getItem('pf_pwa_dismissed')) { document.getElementById('pwaPrompt').classList.add('active'); } }, 5000); });
-        document.getElementById('pwaDismiss').onclick = function() { document.getElementById('pwaPrompt').classList.remove('active'); localStorage.setItem('pf_pwa_dismissed', 'true'); };
-        document.getElementById('pwaInstall').onclick = function() { if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt = null; } document.getElementById('pwaPrompt').classList.remove('active'); };
-        if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(function() {}); }
+        // ============================================
+        // SERVICE WORKER
+        // ============================================
+        if ('serviceWorker' in navigator) { 
+            navigator.serviceWorker.register('sw.js').catch(function() {}); 
+        }
     </script>
 </body>
 </html>
