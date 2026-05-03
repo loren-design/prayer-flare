@@ -226,7 +226,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        var SUPABASE_URL = 'https://shesaxxugzfdozlmigrk.supabase.co/rest/v1/';
+        var SUPABASE_URL = 'https://shesaxxugzfdozlmigrk.supabase.co';
         var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNoZXNheHh1Z3pmZG96bG1pZ3JrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ4MzIxMTAsImV4cCI6MjA4MDQwODExMH0.CXQqq8EAQ50w7NxnVvKwOVf5LuRr-x8tnuDajQK_qds';
         var supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -294,15 +294,36 @@
         };
 
         sendFlareBtn.onclick = function() {
-            if (!canSubmit()) { rateLimitWarning.style.display = 'block'; zipPopup.classList.remove('active'); return; }
-            if (!selectedCategory || zipInput.value.length !== 5) return;
+            console.log('Send button clicked');
+            console.log('Category:', selectedCategory);
+            console.log('ZIP:', zipInput.value);
+            
+            if (!canSubmit()) { 
+                console.log('Rate limited');
+                rateLimitWarning.style.display = 'block'; 
+                zipPopup.classList.remove('active'); 
+                return; 
+            }
+            if (!selectedCategory || zipInput.value.length !== 5) {
+                console.log('Validation failed');
+                return;
+            }
             
             zipPopup.classList.remove('active');
             loadingOverlay.classList.add('active');
+            
+            console.log('Attempting to insert to Supabase...');
 
-            supabaseClient.from('Prayer Flares').insert([{ category: selectedCategory, zip_code: zipInput.value, created_at: new Date().toISOString() }])
+            supabaseClient.from('Prayer Flares').insert([{ 
+                category: selectedCategory, 
+                zip_code: zipInput.value
+            }])
             .then(function(result) {
-                if (result.error) throw result.error;
+                console.log('Supabase result:', result);
+                if (result.error) {
+                    console.error('Supabase error:', result.error);
+                    throw result.error;
+                }
                 localStorage.setItem('pf_last_submit', Date.now().toString());
                 var s = scriptures[selectedCategory] || scriptures.other;
                 document.getElementById('scriptureText').textContent = s.text;
@@ -312,9 +333,9 @@
                 showScreen(prayerScreen);
             })
             .catch(function(err) {
-                console.error('Error:', err);
+                console.error('Catch error:', err);
                 loadingOverlay.classList.remove('active');
-                alert('Something went wrong. Please try again.');
+                alert('Error: ' + (err.message || JSON.stringify(err)));
             });
         };
 
