@@ -459,7 +459,6 @@
                 var s = scriptures[selectedCategory] || scriptures.other;
                 document.getElementById('scriptureText').textContent = s.text;
                 document.getElementById('scriptureRef').textContent = '— ' + s.ref;
-                document.getElementById('encouragementText').textContent = s.encouragement;
                 
                 // Show local resources if Yuma County
                 if (isYumaCounty(userZip)) {
