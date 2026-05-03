@@ -33,36 +33,48 @@
         .header-title { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--gold); letter-spacing: 2px; margin-bottom: 10px; }
         .header-subtitle { font-size: 14px; color: var(--text-secondary); }
 
-        /* Emergency Banner */
-        .emergency-banner { background: linear-gradient(135deg, var(--flare-red) 0%, #991b1b 100%); border-radius: 16px; padding: 20px; margin-bottom: 25px; text-align: center; }
-        .emergency-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: white; margin-bottom: 8px; }
-        .emergency-text { font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 15px; }
-        .emergency-btn { display: inline-flex; align-items: center; gap: 10px; background: white; color: var(--flare-red); padding: 14px 28px; border-radius: 30px; text-decoration: none; font-size: 18px; font-weight: 700; }
+        /* Crisis Link at Top */
+        .crisis-link { display: block; background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); border-radius: 12px; padding: 14px; text-align: center; margin-bottom: 25px; text-decoration: none; color: var(--flare-red); font-size: 14px; font-weight: 600; }
+        .crisis-link:hover { background: rgba(220, 38, 38, 0.2); }
+
+        /* Section Title */
+        .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--gold); letter-spacing: 1px; margin-bottom: 20px; text-align: center; }
 
         /* Hotline Cards */
-        .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--teal); letter-spacing: 1px; margin-bottom: 15px; margin-top: 30px; }
-        
         .hotline-card { background: var(--bg-card); border-radius: 16px; padding: 20px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); }
-        .hotline-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-        .hotline-name { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+        .hotline-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+        .hotline-name { font-size: 18px; font-weight: 700; color: var(--text-primary); }
         .hotline-badge { background: rgba(20, 184, 166, 0.2); color: var(--teal); padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+        .hotline-number { font-size: 22px; font-weight: 700; color: var(--gold); margin-bottom: 8px; letter-spacing: 1px; }
         .hotline-desc { font-size: 13px; color: var(--text-secondary); margin-bottom: 15px; line-height: 1.5; }
-        .hotline-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); color: var(--gold); padding: 12px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 600; }
-        .hotline-btn:hover { background: rgba(255, 215, 0, 0.2); }
-
-        /* Text Hotline */
-        .hotline-btn.text { background: rgba(20, 184, 166, 0.1); border-color: rgba(20, 184, 166, 0.3); color: var(--teal); }
+        .hotline-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%); color: white; padding: 14px; border-radius: 12px; text-decoration: none; font-size: 16px; font-weight: 700; }
 
         /* Local Resources */
-        .local-section { background: var(--bg-card); border: 1px solid rgba(20, 184, 166, 0.3); border-radius: 16px; padding: 20px; margin-top: 30px; }
+        .local-section { background: var(--bg-card); border: 1px solid rgba(20, 184, 166, 0.3); border-radius: 16px; padding: 20px; margin-top: 30px; margin-bottom: 30px; }
         .local-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--teal); margin-bottom: 15px; text-align: center; }
-        .local-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .local-item:last-child { border-bottom: none; }
+        .local-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; }
         .local-icon { font-size: 24px; }
         .local-info { flex: 1; }
         .local-name { font-size: 14px; font-weight: 600; }
         .local-desc { font-size: 12px; color: var(--text-secondary); }
         .local-link { color: var(--teal); text-decoration: none; font-size: 12px; font-weight: 600; }
+
+        /* Divider */
+        .divider { height: 1px; background: rgba(255,255,255,0.1); margin: 40px 0; }
+
+        /* Crisis Section at Bottom */
+        .crisis-section { background: linear-gradient(135deg, rgba(220, 38, 38, 0.15) 0%, rgba(153, 27, 27, 0.15) 100%); border: 1px solid rgba(220, 38, 38, 0.3); border-radius: 20px; padding: 25px; margin-top: 30px; }
+        .crisis-header { text-align: center; margin-bottom: 20px; }
+        .crisis-icon { font-size: 40px; margin-bottom: 10px; }
+        .crisis-title { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--flare-red); letter-spacing: 1px; margin-bottom: 8px; }
+        .crisis-subtitle { font-size: 13px; color: var(--text-secondary); }
+
+        .crisis-card { background: var(--bg-card); border-radius: 14px; padding: 18px; margin-bottom: 12px; }
+        .crisis-card:last-child { margin-bottom: 0; }
+        .crisis-card-name { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+        .crisis-card-desc { font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; }
+        .crisis-card-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--flare-red); color: white; padding: 12px; border-radius: 10px; text-decoration: none; font-size: 15px; font-weight: 700; }
+        .crisis-card-btn.text { background: rgba(20, 184, 166, 0.2); color: var(--teal); }
 
         .footer { text-align: center; margin-top: 40px; padding-bottom: 40px; }
         .footer a { color: var(--teal); text-decoration: none; font-size: 14px; }
@@ -74,78 +86,141 @@
         
         <div class="header">
             <div class="header-icon">📞</div>
-            <h1 class="header-title">24/7 PRAYER HOTLINES</h1>
+            <h1 class="header-title">24/7 LIVE PRAYER LINES</h1>
             <p class="header-subtitle">Real people. Real prayers. Right now.</p>
         </div>
 
-        <!-- Emergency Banner -->
-        <div class="emergency-banner">
-            <div class="emergency-title">🆘 IN CRISIS RIGHT NOW?</div>
-            <p class="emergency-text">If you're thinking about hurting yourself, please call immediately.</p>
-            <a href="tel:988" class="emergency-btn">📞 Call 988</a>
-        </div>
+        <!-- Crisis Link at Top -->
+        <a href="#crisis" class="crisis-link">🆘 In immediate crisis? Scroll to emergency resources ↓</a>
 
         <!-- Live Prayer Lines -->
-        <div class="section-title">🔴 LIVE 24/7 PRAYER LINES</div>
-
-        <div class="hotline-card">
-            <div class="hotline-header">
-                <span class="hotline-name">Andrew Wommack Ministries</span>
-                <span class="hotline-badge">24/7 LIVE</span>
-            </div>
-            <p class="hotline-desc">Trained prayer ministers available around the clock. Faith-based, compassionate support.</p>
-            <a href="tel:7196351111" class="hotline-btn">📞 (719) 635-1111</a>
-        </div>
+        <div class="section-title">🔴 CALL NOW - SOMEONE IS WAITING</div>
 
         <div class="hotline-card">
             <div class="hotline-header">
                 <span class="hotline-name">Billy Graham Prayer Line</span>
                 <span class="hotline-badge">24/7 LIVE</span>
             </div>
-            <p class="hotline-desc">Compassionate prayer support from the Billy Graham Evangelistic Association.</p>
-            <a href="tel:18887422425" class="hotline-btn">📞 1-888-742-2425</a>
+            <div class="hotline-number">1-855-255-7729</div>
+            <p class="hotline-desc">Trained prayer partners ready to pray with you right now. Compassionate, faith-based support from the Billy Graham Evangelistic Association.</p>
+            <a href="tel:18552557729" class="hotline-btn">📞 CALL NOW</a>
         </div>
 
         <div class="hotline-card">
             <div class="hotline-header">
-                <span class="hotline-name">Hopeline (K-LOVE)</span>
+                <span class="hotline-name">The 700 Club (CBN)</span>
                 <span class="hotline-badge">24/7 LIVE</span>
             </div>
-            <p class="hotline-desc">Christian-based prayer and encouragement from K-LOVE radio ministry.</p>
-            <a href="tel:18003320700" class="hotline-btn">📞 1-800-332-0700</a>
+            <div class="hotline-number">1-800-700-7000</div>
+            <p class="hotline-desc">Prayer counselors available around the clock, 365 days a year. No matter what you're facing, someone is ready to pray.</p>
+            <a href="tel:18007007000" class="hotline-btn">📞 CALL NOW</a>
         </div>
 
         <div class="hotline-card">
             <div class="hotline-header">
-                <span class="hotline-name">Jewish Voice Prayer</span>
+                <span class="hotline-name">Andrew Wommack Ministries</span>
                 <span class="hotline-badge">24/7 LIVE</span>
             </div>
-            <p class="hotline-desc">Messianic Jewish ministry offering prayer support.</p>
-            <a href="tel:18005486258" class="hotline-btn">📞 1-800-548-6258</a>
+            <div class="hotline-number">(719) 635-1111</div>
+            <p class="hotline-desc">Trained prayer ministers available around the clock. Grace-based, compassionate support grounded in God's Word.</p>
+            <a href="tel:7196351111" class="hotline-btn">📞 CALL NOW</a>
         </div>
-
-        <!-- Text Support -->
-        <div class="section-title">💬 TEXT SUPPORT</div>
 
         <div class="hotline-card">
             <div class="hotline-header">
-                <span class="hotline-name">Crisis Text Line</span>
-                <span class="hotline-badge">24/7 TEXT</span>
-            </div>
-            <p class="hotline-desc">Free, 24/7 support via text message. Trained crisis counselors.</p>
-            <a href="sms:741741&body=HELLO" class="hotline-btn text">💬 Text HELLO to 741741</a>
-        </div>
-
-        <!-- Specialized Support -->
-        <div class="section-title">🎯 SPECIALIZED SUPPORT</div>
-
-        <div class="hotline-card">
-            <div class="hotline-header">
-                <span class="hotline-name">SAMHSA Helpline</span>
+                <span class="hotline-name">Daystar Prayer Line</span>
                 <span class="hotline-badge">24/7 LIVE</span>
             </div>
-            <p class="hotline-desc">Substance abuse and mental health support. Free, confidential, bilingual.</p>
-            <a href="tel:18006624357" class="hotline-btn">📞 1-800-662-4357</a>
+            <div class="hotline-number">1-800-329-0029</div>
+            <p class="hotline-desc">Prayer partners standing by. Also available in Spanish and multiple international languages.</p>
+            <a href="tel:18003290029" class="hotline-btn">📞 CALL NOW</a>
+        </div>
+
+        <div class="hotline-card">
+            <div class="hotline-header">
+                <span class="hotline-name">K-LOVE Hopeline</span>
+                <span class="hotline-badge">24/7 LIVE</span>
+            </div>
+            <div class="hotline-number">1-800-332-0700</div>
+            <p class="hotline-desc">Christian encouragement and prayer support from the K-LOVE radio ministry.</p>
+            <a href="tel:18003320700" class="hotline-btn">📞 CALL NOW</a>
+        </div>
+
+        <div class="hotline-card">
+            <div class="hotline-header">
+                <span class="hotline-name">HIS Radio Prayer Line</span>
+                <span class="hotline-badge">24/7 LIVE</span>
+            </div>
+            <div class="hotline-number">1-866-987-7729</div>
+            <p class="hotline-desc">Call or text anytime. On-air staff prays for requests daily. Listeners and prayer team pray 24/7.</p>
+            <a href="tel:18669877729" class="hotline-btn">📞 CALL NOW</a>
+        </div>
+
+        <div class="hotline-card">
+            <div class="hotline-header">
+                <span class="hotline-name">The JOY FM Prayer Line</span>
+                <span class="hotline-badge">24/7 LIVE</span>
+            </div>
+            <div class="hotline-number">1-877-800-7729</div>
+            <p class="hotline-desc">Someone is available 24/7 to pray for you. Call or text to connect with someone who cares.</p>
+            <a href="tel:18778007729" class="hotline-btn">📞 CALL NOW</a>
+        </div>
+
+        <div class="hotline-card">
+            <div class="hotline-header">
+                <span class="hotline-name">In Touch Ministries</span>
+                <span class="hotline-badge">24/7 LIVE</span>
+            </div>
+            <div class="hotline-number">1-800-789-1473</div>
+            <p class="hotline-desc">Prayer line from Dr. Charles Stanley's ministry. Caring prayer partners available anytime.</p>
+            <a href="tel:18007891473" class="hotline-btn">📞 CALL NOW</a>
+        </div>
+
+        <div class="hotline-card">
+            <div class="hotline-header">
+                <span class="hotline-name">PrayLive</span>
+                <span class="hotline-badge">24/7 LIVE</span>
+            </div>
+            <div class="hotline-number">(443) 524-8990</div>
+            <p class="hotline-desc">Free 24/7 live prayer support. Join believers worldwide experiencing spiritual breakthroughs.</p>
+            <a href="tel:4435248990" class="hotline-btn">📞 CALL NOW</a>
+        </div>
+
+        <!-- Divider -->
+        <div class="divider"></div>
+
+        <!-- Addiction & Mental Health Section -->
+        <div class="section-title">🧠 ADDICTION & MENTAL HEALTH</div>
+        <p style="text-align: center; color: var(--text-secondary); font-size: 13px; margin-bottom: 20px;">Christian ministries specializing in addiction recovery and mental health support</p>
+
+        <div class="hotline-card">
+            <div class="hotline-header">
+                <span class="hotline-name">Lighthouse Network</span>
+                <span class="hotline-badge">24/7 LIVE</span>
+            </div>
+            <div class="hotline-number">1-844-543-3242</div>
+            <p class="hotline-desc">Free Christian helpline for addiction and mental health. Care guides help you find treatment options for drug, alcohol, or psychological struggles. Faith-based guidance through life's storms.</p>
+            <a href="tel:18445433242" class="hotline-btn">📞 CALL NOW</a>
+        </div>
+
+        <div class="hotline-card">
+            <div class="hotline-header">
+                <span class="hotline-name">National Prayer Line</span>
+                <span class="hotline-badge">24/7 LIVE</span>
+            </div>
+            <div class="hotline-number">1-800-477-2937</div>
+            <p class="hotline-desc">Spiritual support and prayer around the clock. 1-800-4-PRAYER.</p>
+            <a href="tel:18004772937" class="hotline-btn">📞 CALL NOW</a>
+        </div>
+
+        <div class="hotline-card">
+            <div class="hotline-header">
+                <span class="hotline-name">Celebrate Recovery Info Line</span>
+                <span class="hotline-badge">INFO</span>
+            </div>
+            <div class="hotline-number">1-888-734-5504</div>
+            <p class="hotline-desc">Find a Christ-centered 12-step recovery program near you. Hurts, habits, and hangups - there's freedom.</p>
+            <a href="tel:18887345504" class="hotline-btn">📞 CALL NOW</a>
         </div>
 
         <!-- Local Resources -->
@@ -158,6 +233,36 @@
                     <div class="local-desc">Faith-based recovery & support</div>
                 </div>
                 <a href="https://thehealinghouseofyuma.com" class="local-link" target="_blank">Visit →</a>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="divider"></div>
+
+        <!-- Crisis Section at Bottom -->
+        <div class="crisis-section" id="crisis">
+            <div class="crisis-header">
+                <div class="crisis-icon">🆘</div>
+                <h2 class="crisis-title">IMMEDIATE CRISIS SUPPORT</h2>
+                <p class="crisis-subtitle">If you're thinking about hurting yourself or in a mental health emergency</p>
+            </div>
+
+            <div class="crisis-card">
+                <div class="crisis-card-name">988 Suicide & Crisis Lifeline</div>
+                <div class="crisis-card-desc">Free, confidential support 24/7 for anyone in emotional distress or suicidal crisis.</div>
+                <a href="tel:988" class="crisis-card-btn">📞 CALL 988</a>
+            </div>
+
+            <div class="crisis-card">
+                <div class="crisis-card-name">Crisis Text Line</div>
+                <div class="crisis-card-desc">Free 24/7 crisis support via text. Trained crisis counselors ready to help.</div>
+                <a href="sms:741741&body=HELLO" class="crisis-card-btn text">💬 TEXT "HELLO" TO 741741</a>
+            </div>
+
+            <div class="crisis-card">
+                <div class="crisis-card-name">SAMHSA National Helpline</div>
+                <div class="crisis-card-desc">Free, confidential, 24/7 treatment referral and information for substance abuse and mental health. Available in English and Spanish.</div>
+                <a href="tel:18006624357" class="crisis-card-btn">📞 CALL 1-800-662-4357</a>
             </div>
         </div>
 
