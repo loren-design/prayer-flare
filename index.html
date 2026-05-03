@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0a0a0f">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <!-- Cache Control -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -15,14 +14,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Version-based cache buster - CHANGE THIS NUMBER TO FORCE REFRESH -->
     <script>
-        const APP_VERSION = '2.5.0';
+        const APP_VERSION = '3.0.0';
         const storedVersion = localStorage.getItem('pf_version');
         if (storedVersion !== APP_VERSION) {
             localStorage.setItem('pf_version', APP_VERSION);
             if (storedVersion) {
-                // Clear caches and reload
                 if ('caches' in window) {
                     caches.keys().then(names => {
                         names.forEach(name => caches.delete(name));
@@ -37,18 +34,12 @@
         :root {
             --bg-dark: #0a0a0f;
             --bg-card: #141419;
-            --bg-elevated: #1a1a22;
-            --text-primary: #ffffff;
-            --text-secondary: #e8d5c4;
-            --text-muted: #c4a882;
-            --flare-orange: #ff6b35;
-            --flare-red: #ff4444;
-            --flare-glow: rgba(255, 107, 53, 0.4);
-            --accent-teal: #14b8a6;
-            --success-green: #34d399;
-            --warning-yellow: #fbbf24;
-            --border-subtle: rgba(255, 255, 255, 0.08);
             --gold: #ffd700;
+            --flare-orange: #ff6b35;
+            --flare-red: #dc2626;
+            --teal: #14b8a6;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
         }
 
         * {
@@ -59,79 +50,29 @@
         }
 
         html, body {
-            min-height: 100vh;
+            height: 100%;
+            overflow-x: hidden;
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-dark);
             color: var(--text-primary);
-            overflow-x: hidden;
+            line-height: 1.5;
         }
 
-        /* Background */
-        .bg-image {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            background-image: 
-                linear-gradient(to bottom, rgba(10, 10, 15, 0.75) 0%, rgba(10, 10, 15, 0.9) 50%, rgba(10, 10, 15, 0.98) 100%),
-                url('https://images.unsplash.com/photo-1507692049790-de58290a4334?w=1920&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-
-        .bg-glow {
-            position: fixed;
-            top: -30%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120vw;
-            height: 80vh;
-            background: radial-gradient(ellipse at center, var(--flare-glow) 0%, transparent 60%);
-            pointer-events: none;
-            opacity: 0.4;
-            z-index: 1;
-        }
-
-        /* Layout */
         .app-container {
-            position: relative;
-            z-index: 2;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 20px;
+            max-width: 100vw;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        .content-wrapper {
-            width: 100%;
-            max-width: 480px;
-            margin: 0 auto;
-            padding: 20px 0;
-        }
-
-        @media (min-width: 768px) {
-            .content-wrapper {
-                background: rgba(20, 20, 25, 0.8);
-                backdrop-filter: blur(20px);
-                border-radius: 24px;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                padding: 40px;
-                margin-top: 20px;
-                box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
-            }
-        }
-
-        /* Screens */
         .screen {
             display: none;
-            animation: fadeIn 0.4s ease;
+            min-height: 100vh;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
         }
 
         .screen.active {
@@ -139,3185 +80,901 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        /* ============================================
-           HOME SCREEN
-           ============================================ */
         .home-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 40px);
             text-align: center;
-            padding: 40px 0;
+            padding: 20px 0;
         }
 
         .flare-icon {
-            font-size: 72px;
-            margin-bottom: 28px;
-            animation: pulse 2.5s ease-in-out infinite;
-            filter: drop-shadow(0 0 40px var(--flare-glow));
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: flicker 3s ease-in-out infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+        @keyframes flicker {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
         }
 
         .headline {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(36px, 10vw, 48px);
-            letter-spacing: 3px;
+            font-size: 36px;
+            letter-spacing: 2px;
             line-height: 1.1;
-            margin-bottom: 16px;
-            text-transform: uppercase;
-            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+            margin-bottom: 30px;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
         }
-
-        .subhead {
-            font-size: 16px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            max-width: 300px;
-            margin: 0 auto 40px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-        }
-
-        /* ========== SCROLL TEXT BOX - FRESH REBUILD ========== */
-        .scroll-text-box {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 0 auto 32px;
-            padding: 14px 20px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid #ffd700;
-            border-radius: 14px;
-            max-width: 360px;
-        }
-
-        .gold-cross {
-            font-size: 52px;
-            font-weight: bold;
-            color: #ffd700;
-            line-height: 1;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-        }
-
-        .scroll-text-area {
-            flex: 1;
-        }
-
-        .scroll-text {
-            font-size: 15px;
-            font-weight: 700;
-            color: #ffffff;
-            text-shadow: 
-                -1px -1px 0 #000,
-                1px -1px 0 #000,
-                -1px 1px 0 #000,
-                1px 1px 0 #000,
-                0 0 8px rgba(0,0,0,0.8);
-            letter-spacing: 0.3px;
-            line-height: 1.4;
-        }
-
-        .blink-cursor {
-            color: #ffd700;
-            font-weight: 400;
-            animation: blinkAnim 0.7s step-end infinite;
-        }
-
-        .blink-cursor.hide {
-            display: none;
-        }
-
-        @keyframes blinkAnim {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-        /* ========== END SCROLL TEXT BOX ========== */
 
         .btn-primary {
             background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
             color: white;
-            border: 3px solid rgba(255, 255, 255, 0.85);
-            padding: 24px 52px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 26px;
-            letter-spacing: 3px;
-            border-radius: 50px;
+            border: none;
+            padding: 24px 36px;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: 700;
             cursor: pointer;
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            box-shadow: 0 8px 40px var(--flare-glow), 0 0 0 6px rgba(255, 255, 255, 0.08);
             transition: all 0.3s ease;
-            text-transform: uppercase;
-            min-width: 320px;
+            box-shadow: 0 10px 40px rgba(255, 107, 53, 0.4);
+            width: 100%;
+            max-width: 340px;
+            text-align: center;
+            line-height: 1.4;
         }
 
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 50px var(--flare-glow), 0 0 0 8px rgba(255, 255, 255, 0.12);
-            border-color: #ffffff;
+            box-shadow: 0 15px 50px rgba(255, 107, 53, 0.5);
         }
 
-        .btn-main-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 26px;
-            letter-spacing: 3px;
+        .btn-primary:active {
+            transform: translateY(0);
         }
 
-        .btn-sub {
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
+        .btn-primary .btn-title {
+            font-size: 28px;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 6px;
             letter-spacing: 1px;
-            opacity: 0.95;
-            font-weight: 500;
         }
 
-        .home-divider {
-            margin: 24px 0;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            color: var(--text-muted);
+        .btn-primary .btn-sub {
             font-size: 14px;
-        }
-
-        .home-divider::before,
-        .home-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .btn-secondary-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: var(--text-secondary);
-            padding: 16px 32px;
-            border-radius: 16px;
-            font-size: 16px;
             font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s;
+            display: block;
         }
 
-        .btn-secondary-link:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.25);
-            color: var(--text-primary);
-            transform: translateY(-2px);
+        /* Desktop styles */
+        @media (min-width: 600px) {
+            .headline {
+                font-size: 48px;
+            }
+
+            .btn-primary {
+                padding: 28px 48px;
+                max-width: 400px;
+                border-radius: 24px;
+            }
+
+            .btn-primary .btn-title {
+                font-size: 36px;
+                margin-bottom: 10px;
+            }
+
+            .btn-primary .btn-sub {
+                font-size: 16px;
+            }
+
+            .flare-icon {
+                font-size: 80px;
+            }
+
+            .tagline-badge {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
         }
 
         .tagline {
-            margin-top: 36px;
             display: flex;
-            gap: 12px;
+            gap: 15px;
+            margin-top: 25px;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .tagline-badge {
-            background: rgba(255, 107, 53, 0.15);
-            border: 1px solid rgba(255, 107, 53, 0.3);
-            color: #ff8c5a;
-            padding: 10px 18px;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            padding: 8px 16px;
             border-radius: 25px;
             font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            color: var(--gold);
         }
 
         .tagline-badge.teal {
-            background: rgba(20, 184, 166, 0.15);
+            background: rgba(20, 184, 166, 0.1);
             border-color: rgba(20, 184, 166, 0.3);
-            color: #5eead4;
+            color: var(--teal);
         }
 
-        /* ============================================
-           LIVE PRAYER MAP - LIVING NETWORK
-           ============================================ */
-        .live-map-section {
-            margin-top: 32px;
-            padding: 20px;
-            background: linear-gradient(135deg, rgba(10, 10, 15, 0.8) 0%, rgba(20, 15, 25, 0.8) 100%);
-            border: 1px solid rgba(255, 215, 0, 0.15);
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        .map-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
-            letter-spacing: 3px;
-            color: var(--gold);
+        .footer {
+            margin-top: 40px;
             text-align: center;
-            margin-bottom: 16px;
         }
 
-        .map-container {
-            position: relative;
-            width: 100%;
-            height: 200px;
-            overflow: hidden;
-            border-radius: 12px;
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(10, 5, 15, 0.6) 100%);
-        }
-
-        .usa-map {
-            width: 100%;
-            height: 100%;
-        }
-
-        .map-outline {
-            fill: rgba(255, 255, 255, 0.03);
-            stroke: rgba(255, 215, 0, 0.15);
-            stroke-width: 0.5;
-        }
-
-        /* Constellation Grid (Safety Net) */
-        .constellation-line {
-            stroke: rgba(255, 215, 0, 0.1);
-            stroke-width: 1;
-            fill: none;
-        }
-
-        /* Watchman Orbs - Golden Heartbeats */
-        .watchman-orb {
-            fill: var(--gold);
-            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
-        }
-
-        /* Each orb pulses at different speeds */
-        .orb-1 { animation: heartbeat1 2.1s ease-in-out infinite; }
-        .orb-2 { animation: heartbeat2 2.4s ease-in-out infinite; }
-        .orb-3 { animation: heartbeat3 1.9s ease-in-out infinite; }
-        .orb-4 { animation: heartbeat4 2.7s ease-in-out infinite; }
-        .orb-5 { animation: heartbeat5 2.2s ease-in-out infinite; }
-        .orb-6 { animation: heartbeat6 2.5s ease-in-out infinite; }
-        .orb-7 { animation: heartbeat7 2.0s ease-in-out infinite; }
-        .orb-8 { animation: heartbeat8 2.3s ease-in-out infinite; }
-
-        @keyframes heartbeat1 {
-            0%, 100% { opacity: 0.5; r: 5; filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.5)); }
-            50% { opacity: 1; r: 7; filter: drop-shadow(0 0 15px rgba(255, 215, 0, 1)); }
-        }
-        @keyframes heartbeat2 {
-            0%, 100% { opacity: 0.4; r: 5; filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.4)); }
-            50% { opacity: 1; r: 8; filter: drop-shadow(0 0 18px rgba(255, 215, 0, 1)); }
-        }
-        @keyframes heartbeat3 {
-            0%, 100% { opacity: 0.6; r: 4; filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.6)); }
-            50% { opacity: 1; r: 6; filter: drop-shadow(0 0 12px rgba(255, 215, 0, 1)); }
-        }
-        @keyframes heartbeat4 {
-            0%, 100% { opacity: 0.45; r: 5; filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.45)); }
-            50% { opacity: 1; r: 7; filter: drop-shadow(0 0 14px rgba(255, 215, 0, 1)); }
-        }
-        @keyframes heartbeat5 {
-            0%, 100% { opacity: 0.55; r: 4; filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.55)); }
-            50% { opacity: 1; r: 7; filter: drop-shadow(0 0 16px rgba(255, 215, 0, 1)); }
-        }
-        @keyframes heartbeat6 {
-            0%, 100% { opacity: 0.5; r: 5; filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.5)); }
-            50% { opacity: 1; r: 8; filter: drop-shadow(0 0 20px rgba(255, 215, 0, 1)); }
-        }
-        @keyframes heartbeat7 {
-            0%, 100% { opacity: 0.4; r: 4; filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.4)); }
-            50% { opacity: 1; r: 6; filter: drop-shadow(0 0 12px rgba(255, 215, 0, 1)); }
-        }
-        @keyframes heartbeat8 {
-            0%, 100% { opacity: 0.5; r: 5; filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5)); }
-            50% { opacity: 1; r: 7; filter: drop-shadow(0 0 15px rgba(255, 215, 0, 1)); }
-        }
-
-        /* Flare Ripple Animation (3x larger, water ripple) */
-        .flare-ripple {
-            fill: none;
-            stroke: #ffffff;
-            stroke-width: 2;
-            animation: rippleWave 2s ease-out forwards;
-        }
-
-        .flare-ripple-inner {
-            fill: #ffffff;
-            animation: rippleCore 2s ease-out forwards;
-        }
-
-        @keyframes rippleWave {
-            0% {
-                r: 10;
-                opacity: 1;
-                stroke: #ffffff;
-                stroke-width: 3;
-            }
-            50% {
-                r: 35;
-                opacity: 0.6;
-                stroke: #ffaa00;
-                stroke-width: 2;
-            }
-            100% {
-                r: 50;
-                opacity: 0;
-                stroke: #ff6b35;
-                stroke-width: 1;
-            }
-        }
-
-        @keyframes rippleCore {
-            0% {
-                r: 8;
-                opacity: 1;
-                fill: #ffffff;
-                filter: drop-shadow(0 0 20px #ffffff);
-            }
-            30% {
-                r: 12;
-                opacity: 1;
-                fill: #ffdd00;
-                filter: drop-shadow(0 0 30px #ffdd00);
-            }
-            100% {
-                r: 6;
-                opacity: 0.7;
-                fill: #ff6b35;
-                filter: drop-shadow(0 0 10px #ff6b35);
-            }
-        }
-
-        /* Ember persistence after flare */
-        .ember-glow {
-            animation: emberPersist 3s ease-in-out infinite;
-        }
-
-        @keyframes emberPersist {
-            0%, 100% { 
-                opacity: 0.5; 
-                filter: drop-shadow(0 0 6px rgba(255, 107, 53, 0.6));
-            }
-            50% { 
-                opacity: 0.8; 
-                filter: drop-shadow(0 0 12px rgba(255, 140, 50, 0.9));
-            }
-        }
-
-        /* Text Overlay - Typewriter Animation */
-        .map-text-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-        }
-
-        .map-text-overlay.visible {
-            opacity: 1;
-        }
-
-        .overlay-text {
-            font-family: 'Inter', sans-serif;
+        .footer a {
+            color: var(--teal);
+            text-decoration: none;
             font-size: 14px;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.9);
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
-            letter-spacing: 2px;
-            white-space: nowrap;
-            overflow: hidden;
-            border-right: 2px solid var(--gold);
-            animation: typewriter 3s steps(35) forwards, blink 0.7s step-end infinite;
         }
 
-        @keyframes typewriter {
-            from { width: 0; }
-            to { width: 100%; }
+        .footer-links {
+            margin-top: 20px;
+            font-size: 12px;
+            color: var(--text-secondary);
         }
 
-        @keyframes blink {
-            50% { border-color: transparent; }
+        .footer-links a {
+            color: var(--text-secondary);
+            margin: 0 10px;
         }
 
-        /* Glassmorphism Counter */
-        .watchmen-counter-glass {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            display: flex;
+        .disclaimer {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 15px;
+            max-width: 300px;
+            line-height: 1.4;
+        }
+
+        /* Form Screen */
+        .form-content {
+            max-width: 400px;
+            margin: 0 auto;
+            padding-top: 20px;
+        }
+
+        .back-btn {
+            display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 14px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .counter-dot-pulse {
-            width: 8px;
-            height: 8px;
-            background: #22c55e;
-            border-radius: 50%;
-            animation: dotPulse 1.5s ease-in-out infinite;
-            box-shadow: 0 0 8px #22c55e;
-        }
-
-        @keyframes dotPulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.3); opacity: 0.7; }
-        }
-
-        .counter-label {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .watchmen-counter-glass strong {
-            color: var(--gold);
-            font-size: 13px;
-        }
-
-        /* ============================================
-           FORM SCREEN
-           ============================================ */
-        .back-btn {
+            color: var(--text-secondary);
             background: none;
             border: none;
-            color: var(--text-secondary);
-            font-size: 15px;
+            font-size: 14px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 0;
             margin-bottom: 20px;
         }
 
-        .back-btn:hover {
-            color: var(--text-primary);
-        }
-
-        /* Form Flame Icon */
-        .form-flame {
-            font-size: 56px;
+        .form-header {
             text-align: center;
-            margin-bottom: 16px;
-            filter: drop-shadow(0 0 25px rgba(255, 107, 53, 0.6));
-            animation: pulse-glow 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse-glow {
-            0%, 100% { filter: drop-shadow(0 0 25px rgba(255, 107, 53, 0.6)); }
-            50% { filter: drop-shadow(0 0 40px rgba(255, 107, 53, 0.9)); }
-        }
-
-        .form-title-top {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 28px;
-            letter-spacing: 3px;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            text-align: center;
-            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8);
-            line-height: 1.3;
-            text-shadow: none;
-            color: var(--text-primary);
-        }
-
-        .form-subtitle {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 20px;
-            letter-spacing: 2px;
-            color: var(--warning-yellow);
-            text-align: center;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+            margin-bottom: 30px;
         }
 
         .form-title {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 28px;
             letter-spacing: 2px;
-            margin-bottom: 24px;
-            text-transform: uppercase;
-            text-align: center;
-            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8);
-            line-height: 1.3;
-            text-shadow: none;
-            color: var(--flare-orange);
+            margin-bottom: 10px;
         }
 
-        /* Compact Options Grid - 2 Column */
-        .options-grid-compact {
+        .form-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .form-subtitle {
+            font-size: 14px;
+            color: var(--gold);
+            letter-spacing: 1px;
+        }
+
+        .category-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr 1fr;
             gap: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 25px;
         }
 
-        .option-btn-compact {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.12);
-            border-radius: 16px;
+        .category-btn {
+            background: var(--bg-card);
+            border: 2px solid transparent;
+            border-radius: 12px;
             padding: 16px 12px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            cursor: pointer;
             text-align: center;
-            transition: all 0.25s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        .option-btn-compact:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+        .category-btn:hover {
+            border-color: rgba(255, 215, 0, 0.3);
         }
 
-        .option-btn-compact.selected {
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.25) 0%, rgba(255, 107, 53, 0.1) 100%);
-            border-color: rgba(255, 107, 53, 0.5);
-            color: #ff8c5a;
-            box-shadow: 0 6px 25px rgba(255, 107, 53, 0.2);
+        .category-btn.selected {
+            border-color: var(--gold);
+            background: rgba(255, 215, 0, 0.1);
         }
 
-        .option-btn-compact .option-icon {
-            font-size: 24px;
-        }
-
-        .option-btn-compact .option-label {
-            line-height: 1.3;
-            text-shadow: none;
-        }
-
-        .option-btn-compact.other-compact {
+        .category-btn.full-width {
             grid-column: span 2;
         }
 
-        /* Compact ZIP Section */
-        .zip-section-compact {
-            background: rgba(20, 184, 166, 0.08);
-            border: 1px solid rgba(20, 184, 166, 0.2);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 12px;
-            text-align: center;
+        .category-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
         }
 
-        .zip-helper {
+        .category-label {
             font-size: 13px;
-            color: var(--accent-teal);
-            margin-top: 8px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
+            font-weight: 500;
         }
 
-        /* Zip Section */
         .zip-section {
-            background: rgba(20, 184, 166, 0.08);
-            border: 1px solid rgba(20, 184, 166, 0.2);
-            border-radius: 16px;
-            padding: 20px;
-            margin: 24px 0;
-            text-align: center;
+            margin-bottom: 25px;
         }
 
         .zip-label {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
-            letter-spacing: 2px;
-            color: #5eead4;
-            display: block;
-            margin-bottom: 6px;
-        }
-
-        .zip-note {
-            font-size: 14px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 14px;
-            text-shadow: 
-                -1px -1px 0 #000,
-                1px -1px 0 #000,
-                -1px 1px 0 #000,
-                1px 1px 0 #000,
-                0 0 8px rgba(0,0,0,0.8);
-            line-height: 1.4;
-        }
-
-        .zip-hint {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-top: 8px;
-            margin-bottom: 0;
-        }
-
-        .location-card {
-            background: linear-gradient(135deg, rgba(20, 184, 166, 0.12) 0%, rgba(20, 184, 166, 0.04) 100%);
-            border: 1px solid rgba(20, 184, 166, 0.25);
-            border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 28px;
-        }
-
-        .location-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-
-        .location-icon {
-            font-size: 22px;
-        }
-
-        .location-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 20px;
-            letter-spacing: 2px;
-            color: #5eead4;
-            text-transform: uppercase;
-        }
-
-        .location-required {
-            background: var(--flare-orange);
-            color: white;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 12px;
-            letter-spacing: 1px;
-        }
-
-        .location-anonymous {
-            background: rgba(20, 184, 166, 0.3);
-            color: #5eead4;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 12px;
-            letter-spacing: 1px;
-            margin-left: auto;
-        }
-
-        .anonymous-statement {
-            display: block;
-            color: #5eead4;
-            font-size: 13px;
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-        }
-
-        .location-text {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 16px;
-        }
-
-        .location-highlight {
-            color: #5eead4;
-            font-weight: 600;
+            font-size: 12px;
+            color: var(--teal);
+            margin-bottom: 10px;
+            text-align: center;
         }
 
         .zip-input {
             width: 100%;
-            background: rgba(10, 10, 15, 0.6);
-            border: 2px solid rgba(20, 184, 166, 0.3);
-            border-radius: 14px;
-            padding: 18px;
-            font-size: 20px;
-            font-family: 'Inter', sans-serif;
+            padding: 16px;
+            background: var(--bg-card);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
             color: var(--text-primary);
+            font-size: 18px;
             text-align: center;
-            outline: none;
-            transition: all 0.3s;
-            letter-spacing: 2px;
+            letter-spacing: 4px;
         }
 
         .zip-input:focus {
-            border-color: #5eead4;
-            box-shadow: 0 0 25px rgba(20, 184, 166, 0.3);
+            outline: none;
+            border-color: var(--teal);
         }
 
         .zip-input::placeholder {
-            color: var(--text-muted);
-            letter-spacing: 0.5px;
-            font-size: 12px;
-        }
-
-        .zip-error {
-            color: var(--flare-red);
-            font-size: 12px;
-            margin-top: 8px;
-            text-align: center;
-            display: none;
-        }
-
-        .zip-error.show {
-            display: block;
-        }
-
-        /* PF Code Card */
-        .pf-card {
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.12) 0%, rgba(255, 107, 53, 0.04) 100%);
-            border: 1px solid rgba(255, 107, 53, 0.25);
-            border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 28px;
-        }
-
-        .pf-card .location-title {
-            color: var(--flare-orange);
-        }
-
-        .pf-highlight {
-            color: var(--flare-orange);
-            font-weight: 600;
-        }
-
-        .pf-input-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .pf-prefix-form {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 28px;
-            letter-spacing: 2px;
-            color: var(--flare-orange);
-        }
-
-        .pf-input-form {
-            width: 140px;
-            background: rgba(10, 10, 15, 0.6);
-            border: 2px solid rgba(255, 107, 53, 0.3);
-            border-radius: 14px;
-            padding: 16px;
-            font-size: 28px;
-            font-family: 'Bebas Neue', sans-serif;
-            letter-spacing: 8px;
-            color: var(--text-primary);
-            text-align: center;
-            outline: none;
-            transition: all 0.3s;
-        }
-
-        .pf-input-form:focus {
-            border-color: var(--flare-orange);
-            box-shadow: 0 0 25px var(--flare-glow);
-        }
-
-        .pf-input-form::placeholder {
-            color: var(--text-muted);
-            letter-spacing: 6px;
-        }
-
-        .pf-error {
-            color: var(--flare-red);
-            font-size: 12px;
-            margin-top: 10px;
-            text-align: center;
-            display: none;
-        }
-
-        .pf-error.show {
-            display: block;
-        }
-
-        .pf-privacy-note {
-            font-size: 12px;
-            color: var(--text-muted);
-            text-align: center;
-            margin-bottom: 16px;
-            font-style: italic;
-        }
-
-        /* Email Card */
-        .email-card {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(99, 102, 241, 0.04) 100%);
-            border: 1px solid rgba(99, 102, 241, 0.25);
-            border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 28px;
-        }
-
-        .email-card .location-title {
-            color: #a5b4fc;
-        }
-
-        .location-optional {
-            background: rgba(99, 102, 241, 0.3);
-            color: #a5b4fc;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 12px;
-            letter-spacing: 1px;
-            margin-left: auto;
-        }
-
-        .email-input {
-            width: 100%;
-            background: rgba(10, 10, 15, 0.6);
-            border: 2px solid rgba(99, 102, 241, 0.3);
-            border-radius: 14px;
-            padding: 16px 18px;
-            font-size: 16px;
-            color: var(--text-primary);
-            outline: none;
-            transition: all 0.3s;
-        }
-
-        .email-input:focus {
-            border-color: #a5b4fc;
-            box-shadow: 0 0 25px rgba(99, 102, 241, 0.3);
-        }
-
-        .email-input::placeholder {
-            color: var(--text-muted);
-        }
-
-        .email-privacy-note {
-            font-size: 11px;
-            color: var(--text-muted);
-            text-align: center;
-            margin-top: 12px;
-            font-style: italic;
-        }
-
-        .section-label {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 14px;
-            letter-spacing: 2px;
-            color: var(--text-muted);
-            margin-bottom: 16px;
-            text-transform: uppercase;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .option-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 18px 10px;
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.25s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .option-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .option-btn.selected {
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.25) 0%, rgba(255, 107, 53, 0.1) 100%);
-            border-color: rgba(255, 107, 53, 0.5);
-            color: #ff8c5a;
-            box-shadow: 0 6px 25px rgba(255, 107, 53, 0.2);
-        }
-
-        .option-icon {
-            font-size: 28px;
-        }
-
-        .option-label {
-            line-height: 1.3;
-            text-shadow: none;
-        }
-
-        .other-btn {
-            grid-column: span 3;
-            flex-direction: row;
-            justify-content: center;
-            padding: 14px 20px;
-            gap: 12px;
-        }
-
-        .other-btn .option-icon {
-            font-size: 22px;
-        }
-
-        .other-input-container {
-            margin-top: -8px;
-            margin-bottom: 12px;
-        }
-
-        .other-input {
-            width: 100%;
-            background: rgba(10, 10, 15, 0.6);
-            border: 2px solid rgba(255, 107, 53, 0.3);
-            border-radius: 14px;
-            padding: 16px;
-            font-size: 15px;
-            color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
-            resize: none;
-            outline: none;
-            transition: all 0.3s;
-        }
-
-        .other-input:focus {
-            border-color: var(--flare-orange);
-            box-shadow: 0 0 20px rgba(255, 107, 53, 0.2);
-        }
-
-        .other-input::placeholder {
-            color: var(--text-muted);
-        }
-
-        .rate-limit-msg {
-            background: rgba(255, 68, 68, 0.1);
-            border: 1px solid rgba(255, 68, 68, 0.3);
-            border-radius: 12px;
-            padding: 14px;
-            margin: 20px 0;
-            display: none;
-        }
-
-        .rate-limit-msg.show {
-            display: block;
-        }
-
-        .rate-limit-text {
-            font-size: 13px;
-            color: var(--flare-red);
-            text-align: center;
-        }
-
-        .btn-submit {
-            width: 100%;
-            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
-            color: white;
-            border: 3px solid rgba(255, 255, 255, 0.7);
-            padding: 24px 20px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 28px;
-            letter-spacing: 3px;
-            border-radius: 16px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            box-shadow: 0 8px 35px var(--flare-glow);
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            margin-top: 24px;
-        }
-
-        .btn-main-text {
-            font-size: 28px;
-            font-weight: bold;
-            letter-spacing: 3px;
-        }
-
-        .btn-privacy-text {
-            font-family: 'Inter', sans-serif;
-            font-size: 13px;
-            text-transform: none;
-            letter-spacing: 0.5px;
-            color: white;
-            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-        }
-
-        .btn-submit:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
-        .btn-submit:not(:disabled):hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 45px var(--flare-glow);
-        }
-
-        /* ============================================
-           PRAYER SCREEN - ENHANCED
-           ============================================ */
-        .prayer-header {
-            text-align: center;
-            margin-bottom: 24px;
-            position: relative;
-        }
-
-        .prayer-header-glow {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200px;
-            height: 100px;
-            background: radial-gradient(ellipse at center, rgba(255, 107, 53, 0.3) 0%, transparent 70%);
-            pointer-events: none;
-            animation: headerPulse 3s ease-in-out infinite;
-        }
-
-        @keyframes headerPulse {
-            0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
-            50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
-        }
-
-        .prayer-header-icon {
-            font-size: 48px;
-            margin-bottom: 12px;
-            filter: drop-shadow(0 0 25px var(--flare-glow));
-            position: relative;
-            z-index: 2;
-        }
-
-        .prayer-header-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 32px;
-            letter-spacing: 4px;
-            color: var(--flare-orange);
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.9);
-            position: relative;
-            z-index: 2;
-        }
-
-        .confirmation-title {
-            color: var(--flare-red);
-            font-size: 28px;
-            font-weight: 900;
-            letter-spacing: 3px;
-            line-height: 1.3;
-            text-shadow: none;
-        }
-
-        .prayer-header-subtitle {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
-        }
-
-        /* Flare Received Badge */
-        .flare-received-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(135deg, rgba(20, 184, 166, 0.15) 0%, rgba(20, 184, 166, 0.05) 100%);
-            border: 1px solid rgba(20, 184, 166, 0.3);
-            padding: 12px 20px;
-            border-radius: 30px;
-            margin-top: 16px;
-        }
-
-        .flare-badge-dot {
-            width: 10px;
-            height: 10px;
-            background: var(--teal);
-            border-radius: 50%;
-            animation: badgePulse 2s ease-in-out infinite;
-        }
-
-        @keyframes badgePulse {
-            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.4); }
-            50% { opacity: 0.8; box-shadow: 0 0 0 8px rgba(20, 184, 166, 0); }
-        }
-
-        .flare-badge-text {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--teal);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        /* Journey Steps */
-        .journey-steps {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin: 24px 0;
-        }
-
-        .journey-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            opacity: 0.4;
-            transition: all 0.3s;
-        }
-
-        .journey-step.active {
-            opacity: 1;
-        }
-
-        .journey-step.completed {
-            opacity: 0.7;
-        }
-
-        .journey-icon {
-            font-size: 20px;
-        }
-
-        .journey-label {
-            font-size: 9px;
-            font-family: 'Bebas Neue', sans-serif;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-        }
-
-        .journey-step.active .journey-label {
-            color: var(--flare-orange);
-        }
-
-        .journey-line {
-            width: 24px;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.1);
-            margin-top: 10px;
-        }
-
-        /* Grace Box - Enhanced */
-        .grace-box {
-            background: linear-gradient(180deg, rgba(255, 215, 0, 0.08) 0%, rgba(255, 215, 0, 0.02) 100%);
-            border: 1px solid rgba(255, 215, 0, 0.15);
-            border-radius: 24px;
-            padding: 32px 24px;
-            margin-bottom: 24px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .grace-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 150px;
-            height: 150px;
-            background: radial-gradient(circle at center, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .grace-cross {
-            font-size: 28px;
-            color: var(--gold);
-            margin-bottom: 16px;
-            text-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
-            position: relative;
-            z-index: 2;
-        }
-
-        .grace-lead {
-            font-size: 18px;
-            color: var(--text-primary);
-            font-weight: 600;
-            margin-bottom: 20px;
-            line-height: 1.6;
-            position: relative;
-            z-index: 2;
-        }
-
-        .grace-text {
-            font-size: 15px;
-            color: var(--text-secondary);
-            line-height: 1.85;
-            margin-bottom: 16px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
-            position: relative;
-            z-index: 2;
-        }
-
-        .grace-text:last-of-type {
-            margin-bottom: 24px;
-        }
-
-        .grace-text strong {
-            color: var(--gold);
-        }
-
-        .grace-highlight {
-            background: rgba(255, 215, 0, 0.1);
-            border-left: 3px solid var(--gold);
-            padding: 14px 18px;
-            margin: 20px 0;
-            text-align: left;
-            border-radius: 0 12px 12px 0;
-        }
-
-        .grace-highlight p {
-            font-size: 15px;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin: 0;
-            font-style: italic;
-        }
-
-        .grace-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(135deg, var(--gold) 0%, #e8a910 100%);
-            color: #000;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
-            letter-spacing: 3px;
-            font-weight: 700;
-            text-decoration: none;
-            padding: 18px 36px;
-            border-radius: 30px;
-            transition: all 0.3s;
-            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3);
-            position: relative;
-            z-index: 2;
-        }
-
-        .grace-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(255, 215, 0, 0.4);
-        }
-
-        /* Context Line */
-        .context-line {
-            text-align: center;
-            padding: 20px;
-            margin-bottom: 20px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 16px;
-        }
-
-        .context-icon {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        .context-line p {
-            font-size: 15px;
-            color: var(--text-secondary);
-            font-style: italic;
-            line-height: 1.7;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
-            max-width: 320px;
-            margin: 0 auto;
-        }
-
-        /* Prayer Intro */
-        .prayer-intro-box {
-            text-align: center;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .prayer-intro-text {
-            font-size: 16px;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            text-shadow: 0 2px 15px rgba(0,0,0,0.9);
-        }
-
-        /* Prayer Box - Enhanced */
-        .prayer-box {
-            background: linear-gradient(180deg, rgba(255, 107, 53, 0.10) 0%, rgba(255, 68, 68, 0.03) 100%);
-            border: 1px solid rgba(255, 107, 53, 0.15);
-            border-radius: 24px;
-            padding: 32px 24px;
-            margin-bottom: 24px;
-            position: relative;
-        }
-
-        .prayer-box::before {
-            content: '✙';
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--bg-dark);
-            padding: 4px 16px;
-            font-size: 20px;
-            color: var(--flare-orange);
-        }
-
-        .prayer-instruction {
-            font-size: 12px;
-            color: var(--text-muted);
-            text-align: center;
-            margin-bottom: 24px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .prayer-line {
-            font-size: 18px;
-            color: var(--text-primary);
-            text-align: center;
-            margin-bottom: 16px;
-            line-height: 1.6;
-            font-weight: 500;
-        }
-
-        .prayer-line.quote {
-            font-style: italic;
-            color: var(--gold);
-            font-size: 20px;
-            padding: 10px 0;
-        }
-
-        .prayer-pause {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            font-size: 11px;
-            color: var(--text-muted);
-            margin: 24px 0;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
-        .prayer-pause::before,
-        .prayer-pause::after {
-            content: '';
-            width: 40px;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .prayer-context {
-            font-size: 14px;
-            color: var(--text-secondary);
-            text-align: center;
-            margin: 10px 0;
-            font-style: italic;
-        }
-
-        /* Scripture - Enhanced */
-        .scripture-box {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(255, 215, 0, 0.02) 100%);
-            border-left: 4px solid var(--gold);
-            padding: 24px;
-            border-radius: 0 20px 20px 0;
-            margin-bottom: 24px;
-            position: relative;
-        }
-
-        .scripture-label {
-            position: absolute;
-            top: -10px;
-            left: 20px;
-            background: var(--bg-dark);
-            padding: 2px 12px;
-            font-size: 10px;
-            font-family: 'Bebas Neue', sans-serif;
-            letter-spacing: 2px;
-            color: var(--gold);
-        }
-
-        .scripture-text {
-            font-style: italic;
-            color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 14px;
-            font-size: 16px;
-        }
-
-        .scripture-ref {
-            font-size: 14px;
-            color: var(--gold);
-            font-weight: 600;
-        }
-
-        .scripture-extra {
-            margin-top: 14px;
-            font-size: 14px;
-            color: var(--text-secondary);
-            font-style: italic;
-            text-align: center;
-        }
-
-        /* Redirect Box - Enhanced */
-        .redirect-box {
-            background: linear-gradient(135deg, rgba(20, 184, 166, 0.12) 0%, rgba(20, 184, 166, 0.04) 100%);
-            border: 1px solid rgba(20, 184, 166, 0.2);
-            border-radius: 24px;
-            padding: 28px 24px;
-            margin-bottom: 24px;
-            text-align: center;
-        }
-
-        .redirect-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 22px;
-            letter-spacing: 2px;
-            color: var(--teal);
-            margin-bottom: 12px;
-        }
-
-        .redirect-text {
-            font-size: 15px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .redirect-items {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .redirect-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(20, 184, 166, 0.1);
-            padding: 14px 18px;
-            border-radius: 12px;
-            text-align: left;
-        }
-
-        .redirect-icon {
-            font-size: 24px;
-        }
-
-        .redirect-item span:last-child {
-            font-size: 14px;
+            letter-spacing: normal;
             color: var(--text-secondary);
         }
 
-        /* Action Buttons - Enhanced */
-        .prayer-actions {
-            display: flex;
-            gap: 12px;
-            margin: 28px 0;
-        }
-
-        .action-btn {
-            flex: 1;
-            padding: 18px 16px;
-            border-radius: 16px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 16px;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: none;
-        }
-
-        .action-btn.primary {
-            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
-            color: white;
-            box-shadow: 0 6px 25px var(--flare-glow);
-        }
-
-        .action-btn.primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 35px var(--flare-glow);
-        }
-
-        .action-btn.primary.completed {
-            background: linear-gradient(135deg, var(--teal) 0%, #0d9488 100%);
-            box-shadow: 0 6px 25px rgba(20, 184, 166, 0.3);
-        }
-
-        .action-btn.secondary {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: var(--text-secondary);
-        }
-
-        .action-btn.secondary:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.25);
-        }
-            transform: translateY(-2px);
-            box-shadow: 0 10px 35px rgba(255, 215, 0, 0.35);
-        }
-
-        /* Context Line */
-        .context-line {
-            text-align: center;
-            padding: 16px 20px;
-            margin-bottom: 24px;
-        }
-
-        .context-line p {
-            font-size: 15px;
-            color: var(--text-muted);
-            font-style: italic;
-            line-height: 1.6;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
-        }
-
-        /* Wall Direct Access Box */
-        .wall-direct-box {
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.12) 0%, rgba(255, 107, 53, 0.04) 100%);
-            border: 1px solid rgba(255, 107, 53, 0.25);
-            border-radius: 20px;
-            padding: 24px;
-            margin: 28px 0 16px;
-            text-align: center;
-        }
-
-        .wall-direct-icon {
-            font-size: 36px;
-            margin-bottom: 12px;
-        }
-
-        .wall-direct-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 22px;
-            letter-spacing: 2px;
-            color: var(--flare-orange);
-            margin-bottom: 10px;
-        }
-
-        .wall-direct-text {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 16px;
-        }
-
-        .wall-direct-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
-            color: white;
-            text-decoration: none;
-            padding: 14px 28px;
-            border-radius: 30px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 16px;
-            letter-spacing: 2px;
-            transition: all 0.3s;
-            box-shadow: 0 6px 25px var(--flare-glow);
-        }
-
-        .wall-direct-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 35px var(--flare-glow);
-        }
-
-        /* Save Wall Box (smaller, secondary) */
-        .save-wall-box {
-            background: rgba(20, 20, 25, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 18px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .save-wall-label {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-        }
-
-        .save-wall-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .save-wall-input {
-            flex: 1;
-            background: rgba(10, 10, 15, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+        .rate-limit-warning {
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.3);
             border-radius: 10px;
-            padding: 12px 14px;
-            font-size: 14px;
-            color: var(--text-primary);
-            outline: none;
-        }
-
-        .save-wall-input:focus {
-            border-color: var(--flare-orange);
-        }
-
-        .save-wall-input::placeholder {
-            color: var(--text-muted);
-        }
-
-        .save-wall-btn {
-            background: var(--flare-orange);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 10px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 14px;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .save-wall-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .save-wall-note {
-            font-size: 11px;
-            color: var(--text-muted);
-            font-style: italic;
-        }
-
-        .save-wall-success {
-            background: rgba(20, 184, 166, 0.2);
-            border: 1px solid rgba(20, 184, 166, 0.4);
-            color: #5eead4;
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 10px;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        /* Crisis Note */
-        .crisis-note {
-            font-size: 13px;
-            color: var(--text-muted);
-            text-align: center;
-            font-style: italic;
-            margin: 16px 0;
-            padding: 0 20px;
-        }
-
-        /* Warrior Image */
-        .warrior-image-box {
-            margin: 24px 0;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-        }
-
-        .warrior-image {
-            width: 100%;
-            display: block;
-        }
-
-        /* Pray With Button */
-        .pray-with-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            width: 100%;
-            background: linear-gradient(135deg, var(--gold) 0%, #e8a910 100%);
-            color: #000;
-            text-decoration: none;
-            padding: 20px 24px;
-            border-radius: 16px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 22px;
-            letter-spacing: 3px;
-            font-weight: 700;
-            margin: 24px 0;
-            box-shadow: 0 8px 35px rgba(255, 215, 0, 0.3);
-            transition: all 0.3s;
-        }
-
-        .pray-with-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 45px rgba(255, 215, 0, 0.4);
-        }
-
-        /* Action Buttons */
-        .prayer-actions {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .action-btn {
-            flex: 1;
-            padding: 16px 18px;
-            border-radius: 14px;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.25s;
-            text-align: center;
-        }
-
-        .action-btn.primary {
-            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
-            color: white;
-            border: none;
-            box-shadow: 0 6px 25px rgba(255, 107, 53, 0.3);
-        }
-
-        .action-btn.primary:hover {
-            transform: translateY(-2px);
-        }
-
-        .action-btn.secondary {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-primary);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        .action-btn.secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--flare-orange);
-        }
-
-        /* Physical Redirect */
-        .redirect-box {
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 107, 53, 0.04) 100%);
-            border: 1px solid rgba(255, 107, 53, 0.2);
-            border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 24px;
-            text-align: center;
-        }
-
-        .redirect-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 24px;
-            letter-spacing: 2px;
-            color: var(--flare-orange);
-            margin-bottom: 14px;
-        }
-
-        .redirect-text {
-            font-size: 15px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 18px;
-        }
-
-        .redirect-items {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .redirect-item {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
-            padding: 14px 18px;
-            font-size: 14px;
-            color: var(--text-primary);
-            text-align: left;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .redirect-icon {
-            font-size: 22px;
-        }
-
-        /* Home Link */
-        .home-link {
-            text-align: center;
-        }
-
-        .home-link button {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 14px;
-            cursor: pointer;
             padding: 12px;
-        }
-
-        .home-link button:hover {
-            color: var(--text-primary);
-        }
-
-        /* ============================================
-           EMERGENCY HOTLINES
-           ============================================ */
-        .emergency-section {
-            background: rgba(20, 20, 25, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 20px;
-            margin-top: 32px;
-        }
-
-        .emergency-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 14px;
-            letter-spacing: 2px;
-            color: var(--warning-yellow);
+            margin-bottom: 20px;
+            font-size: 12px;
+            color: var(--flare-orange);
             text-align: center;
-            margin-bottom: 14px;
+            display: none;
         }
 
-        .emergency-item {
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .submit-sub {
+            display: block;
+            font-size: 11px;
+            font-weight: 400;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        .hotlines {
+            margin-top: 30px;
+            padding: 20px;
+            background: var(--bg-card);
+            border-radius: 12px;
+        }
+
+        .hotlines-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 16px;
+            color: var(--gold);
+            margin-bottom: 15px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .hotline-item {
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
             padding: 10px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .emergency-item:last-child {
+        .hotline-item:last-child {
             border-bottom: none;
         }
 
-        .emergency-name {
+        .hotline-name {
             font-size: 13px;
             color: var(--text-secondary);
         }
 
-        .emergency-link {
+        .hotline-link {
             background: rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 8px 14px;
+            padding: 8px 16px;
             border-radius: 20px;
+            color: var(--text-primary);
+            text-decoration: none;
             font-size: 13px;
             font-weight: 600;
-            text-decoration: none;
         }
 
-        .emergency-link:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        /* Footer */
-        .footer {
+        /* Prayer Screen */
+        .prayer-content {
+            max-width: 400px;
+            margin: 0 auto;
+            padding-top: 20px;
             text-align: center;
-            padding: 20px;
-            margin-top: 20px;
         }
 
-        .footer-link {
-            color: var(--flare-orange);
+        .prayer-header {
+            margin-bottom: 25px;
+        }
+
+        .prayer-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            color: var(--gold);
+            letter-spacing: 2px;
+            line-height: 1.2;
+        }
+
+        .prayer-image {
+            width: 100%;
+            max-width: 350px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+        }
+
+        .video-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 16px;
+            background: var(--bg-card);
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .video-btn:hover {
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .scripture-box {
+            background: var(--bg-card);
+            border-left: 3px solid var(--gold);
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .scripture-text {
+            font-style: italic;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .scripture-ref {
+            font-size: 12px;
+            color: var(--gold);
+        }
+
+        .encouragement {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .home-link {
+            color: var(--teal);
             text-decoration: none;
             font-size: 14px;
         }
 
-        .footer-disclaimer {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-top: 16px;
-            line-height: 1.5;
-            max-width: 280px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .footer-links {
-            margin-top: 12px;
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            font-size: 12px;
-        }
-
-        .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-        }
-
-        .footer-links a:hover {
-            color: var(--text-secondary);
-        }
-
-        .footer-links span {
-            color: var(--text-muted);
-            opacity: 0.5;
-        }
-
-        /* Loading & Popup */
-        .loading {
+        /* Loading Overlay */
+        .loading-overlay {
             display: none;
             position: fixed;
-            inset: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background: rgba(10, 10, 15, 0.95);
-            z-index: 100;
+            z-index: 1000;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            gap: 16px;
         }
 
-        .loading.active {
+        .loading-overlay.active {
             display: flex;
         }
 
-        .spinner {
-            width: 48px;
-            height: 48px;
-            border: 3px solid rgba(255,255,255,0.1);
-            border-top-color: var(--flare-orange);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
         .loading-text {
-            color: var(--text-secondary);
-            font-size: 14px;
+            color: var(--text-primary);
+            font-size: 16px;
+            margin-top: 20px;
         }
 
-        /* Install Prompt */
-        .install-prompt {
+        .loading-spinner {
+            font-size: 48px;
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        /* PWA Prompt */
+        .pwa-prompt {
             display: none;
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            z-index: 200;
-            padding: 16px;
-            animation: slideUp 0.4s ease;
+            background: var(--bg-card);
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 100;
         }
 
-        .install-prompt.show {
+        .pwa-prompt.active {
             display: block;
         }
 
-        @keyframes slideUp {
-            from { transform: translateY(100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .install-content {
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 107, 53, 0.3);
-            border-radius: 20px;
-            padding: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 16px;
-            max-width: 480px;
+        .pwa-content {
+            max-width: 400px;
             margin: 0 auto;
-            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+            text-align: center;
         }
 
-        .install-icon {
-            font-size: 40px;
+        .pwa-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
         }
 
-        .install-text {
-            flex: 1;
-            min-width: 150px;
-        }
-
-        .install-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 20px;
-            letter-spacing: 2px;
-            color: var(--flare-orange);
-        }
-
-        .install-subtitle {
+        .pwa-subtitle {
             font-size: 13px;
             color: var(--text-secondary);
+            margin-bottom: 15px;
         }
 
-        .install-actions {
+        .pwa-buttons {
             display: flex;
             gap: 10px;
-            width: 100%;
+            justify-content: center;
         }
 
-        .install-btn {
-            flex: 1;
-            padding: 12px 16px;
-            border-radius: 12px;
+        .pwa-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s;
+            border: none;
         }
 
-        .install-btn.dismiss {
+        .pwa-btn.dismiss {
             background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.15);
             color: var(--text-secondary);
         }
 
-        .install-btn.primary {
-            background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%);
-            border: none;
-            color: white;
-        }
-
-        .install-btn.primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px var(--flare-glow);
+        .pwa-btn.install {
+            background: var(--gold);
+            color: var(--bg-dark);
         }
     </style>
 </head>
 <body>
-    <div class="bg-image"></div>
-    <div class="bg-glow"></div>
-
     <div class="app-container">
-        <div class="content-wrapper">
-
-            <!-- ============================================
-                 HOME SCREEN
-                 ============================================ -->
-            <div id="homeScreen" class="screen active">
-                <div class="home-content">
-                    <div class="flare-icon">🔥</div>
-                    <h1 class="headline">You don't have to<br>fight this alone</h1>
-                    
-                    <!-- Scrolling Text Box - REBUILT -->
-                    <div class="scroll-text-box">
-                        <span class="gold-cross">†</span>
-                        <div class="scroll-text-area">
-                            <span class="scroll-text" id="scrollText"></span>
-                            <span class="blink-cursor">|</span>
-                        </div>
-                    </div>
-                    
-                    <button class="btn-primary" id="startBtn">
-                        <span class="btn-main-row">🔥 NEED PRAYER? 🔥</span>
-                        <span class="btn-sub">Click Here to Send Up a Flare</span>
-                    </button>
-
-                    <div class="tagline">
-                        <span class="tagline-badge">🔒 Anonymous</span>
-                        <span class="tagline-badge teal">📍 Local</span>
-                    </div>
-
-                    <footer class="footer">
-                        <a href="watchman.html" class="footer-link">Watchman Enter Here</a>
-                        <p class="footer-disclaimer">Prayer Flare is a prayer support community, not a substitute for professional mental health care.</p>
-                        <div class="footer-links">
-                            <a href="about.html">About</a>
-                            <span>•</span>
-                            <a href="privacy.html">Privacy</a>
-                        </div>
-                    </footer>
-                </div>
-            </div>
-
-            <!-- ============================================
-                 FORM SCREEN
-                 ============================================ -->
-            <div id="formScreen" class="screen">
-                <button class="back-btn" id="backBtn">← Back</button>
+        <!-- Home Screen -->
+        <div id="homeScreen" class="screen active">
+            <div class="home-content">
+                <div class="flare-icon">🔥</div>
+                <h1 class="headline">You don't have to<br>fight this alone</h1>
                 
-                <h2 class="form-title-top">WE WANT TO PRAY FOR YOU</h2>
-                <div class="form-flame">🔥</div>
-                <p class="form-subtitle">WHAT'S HAPPENING RIGHT NOW?</p>
-
-                <div class="options-grid-compact" id="optionsGrid">
-                    <button class="option-btn-compact" data-value="Anxiety / Panic">
-                        <span class="option-icon">😰</span>
-                        <span class="option-label">Anxiety / Panic</span>
-                    </button>
-                    <button class="option-btn-compact" data-value="Temptation">
-                        <span class="option-icon">🎯</span>
-                        <span class="option-label">Temptation</span>
-                    </button>
-                    <button class="option-btn-compact" data-value="Addiction craving">
-                        <span class="option-icon">⛓️</span>
-                        <span class="option-label">Addiction Craving</span>
-                    </button>
-                    <button class="option-btn-compact" data-value="Depression / Giving up">
-                        <span class="option-icon">🌑</span>
-                        <span class="option-label">Depression / Giving Up</span>
-                    </button>
-                    <button class="option-btn-compact other-compact" data-value="Just need prayer">
-                        <span class="option-icon">🙏</span>
-                        <span class="option-label">Other / Just Need Prayer</span>
-                    </button>
-                </div>
-
-                <div class="zip-section-compact">
-                    <input type="text" class="zip-input" id="zipInput" placeholder="Enter Your ZIP Code" maxlength="5" inputmode="numeric">
-                    <p class="zip-helper">Get Connected with Prayer Partners Near You</p>
-                    <p class="zip-error" id="zipError">Please enter your 5-digit zip code</p>
-                </div>
-
-                <div class="rate-limit-msg" id="rateLimitMsg">
-                    <p class="rate-limit-text">⚠️ Please wait before sending another flare. We want every prayer request to get attention.</p>
-                </div>
-
-                <button class="btn-submit" id="submitBtn" disabled>
-                    <span class="btn-main-text">🔥 SEND FLARE 🔥</span>
-                    <span class="btn-privacy-text">What you say here stays here</span>
+                <button class="btn-primary" id="startBtn">
+                    <span class="btn-title">NEED PRAYER?</span>
+                    <span class="btn-sub">🔥 CLICK HERE TO SEND A FLARE 🔥</span>
                 </button>
 
-                <div class="emergency-section">
-                    <h3 class="emergency-title">⚡ EMERGENCY HOTLINES</h3>
-                    <div class="emergency-item">
-                        <span class="emergency-name">Suicide & Crisis Lifeline</span>
-                        <a href="tel:988" class="emergency-link">📞 988</a>
+                <div class="tagline">
+                    <span class="tagline-badge">🔒 Anonymous</span>
+                    <span class="tagline-badge teal">📍 Local</span>
+                </div>
+
+                <footer class="footer">
+                    <a href="watchman.html">Watchman Enter Here</a>
+                    <p class="disclaimer">Prayer Flare is a prayer support community, not a substitute for professional mental health care.</p>
+                    <div class="footer-links">
+                        <a href="about.html">About</a>
+                        <span>•</span>
+                        <a href="privacy.html">Privacy</a>
                     </div>
-                    <div class="emergency-item">
-                        <span class="emergency-name">Crisis Text Line</span>
-                        <a href="sms:741741&body=HELLO" class="emergency-link">💬 741741</a>
+                </footer>
+            </div>
+        </div>
+
+        <!-- Form Screen -->
+        <div id="formScreen" class="screen">
+            <div class="form-content">
+                <button class="back-btn" id="backToHome">← Back</button>
+                
+                <div class="form-header">
+                    <h2 class="form-title">WE WANT TO PRAY FOR YOU</h2>
+                    <div class="form-icon">🔥</div>
+                    <p class="form-subtitle">WHAT'S HAPPENING RIGHT NOW?</p>
+                </div>
+
+                <div class="category-grid">
+                    <button class="category-btn" data-category="anxiety">
+                        <div class="category-icon">😰</div>
+                        <div class="category-label">Anxiety / Panic</div>
+                    </button>
+                    <button class="category-btn" data-category="temptation">
+                        <div class="category-icon">🎯</div>
+                        <div class="category-label">Temptation</div>
+                    </button>
+                    <button class="category-btn" data-category="addiction">
+                        <div class="category-icon">⛓️</div>
+                        <div class="category-label">Addiction Craving</div>
+                    </button>
+                    <button class="category-btn" data-category="depression">
+                        <div class="category-icon">🌑</div>
+                        <div class="category-label">Depression / Giving Up</div>
+                    </button>
+                    <button class="category-btn full-width" data-category="other">
+                        <div class="category-icon">🙏</div>
+                        <div class="category-label">Other / Just Need Prayer</div>
+                    </button>
+                </div>
+
+                <div class="zip-section">
+                    <p class="zip-label">Get Connected with Prayer Partners Near You</p>
+                    <input type="text" class="zip-input" id="zipInput" placeholder="Enter Your ZIP Code" maxlength="5" inputmode="numeric" pattern="[0-9]*">
+                </div>
+
+                <div class="rate-limit-warning" id="rateLimitWarning">
+                    ⚠️ Please wait before sending another flare. We want every prayer request to get attention.
+                </div>
+
+                <button class="submit-btn" id="submitBtn" disabled>
+                    🔥 SEND FLARE 🔥
+                    <span class="submit-sub">What you say here stays here</span>
+                </button>
+
+                <div class="hotlines">
+                    <div class="hotlines-title">⚡ EMERGENCY HOTLINES</div>
+                    <div class="hotline-item">
+                        <span class="hotline-name">Suicide & Crisis Lifeline</span>
+                        <a href="tel:988" class="hotline-link">📞 988</a>
+                    </div>
+                    <div class="hotline-item">
+                        <span class="hotline-name">Crisis Text Line</span>
+                        <a href="sms:741741&body=HELLO" class="hotline-link">💬 741741</a>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- ============================================
-                 PRAYER SCREEN - SIMPLIFIED
-                 ============================================ -->
-            <div id="prayerScreen" class="screen">
+        <!-- Prayer Screen -->
+        <div id="prayerScreen" class="screen">
+            <div class="prayer-content">
                 <div class="prayer-header">
-                    <div class="prayer-header-glow"></div>
-                    <div class="prayer-header-icon">🔥</div>
-                    <h2 class="prayer-header-title confirmation-title">YOUR FLARE WAS RECEIVED!<br>PRAYER IS ON THE WAY!</h2>
+                    <div class="form-icon">🔥</div>
+                    <h2 class="prayer-title">YOUR FLARE WAS RECEIVED!<br>PRAYER IS ON THE WAY!</h2>
                 </div>
 
-                <div class="warrior-image-box">
-                    <img src="warrior-praying.jpg" alt="Prayer warrior interceding for you" class="warrior-image">
-                </div>
+                <img src="warrior-praying.jpg" alt="Prayer warrior interceding for you" class="prayer-image">
 
-                <a href="video.html" class="pray-with-btn" id="prayWithBtn">
-                    <span>🙏</span>
-                    <span>CAN WE PRAY WITH YOU?</span>
+                <a href="video.html" class="video-btn">
+                    🙏 CAN WE PRAY WITH YOU?
                 </a>
 
                 <div class="scripture-box">
-                    <p class="scripture-text">"No temptation has overtaken you except what is common to mankind. And God is faithful; he will not let you be tempted beyond what you can bear. But when you are tempted, he will also provide a way out so that you can endure it."</p>
-                    <p class="scripture-ref">— 1 Corinthians 10:13</p>
+                    <p class="scripture-text" id="scriptureText">"No temptation has overtaken you except what is common to mankind. And God is faithful; he will not let you be tempted beyond what you can bear. But when you are tempted, he will also provide a way out so that you can endure it."</p>
+                    <span class="scripture-ref" id="scriptureRef">— 1 Corinthians 10:13</span>
                 </div>
 
-                <div class="context-line" id="contextLine">
-                    <p>The pull is strong. But you sent up a flare instead of giving in. That took guts. God sees that.</p>
-                </div>
+                <p class="encouragement" id="encouragementText">The pull is strong. But you reached out instead of giving in. That took guts.</p>
 
-                <p class="crisis-note" id="crisisNote" style="display: none;">If you feel you may hurt yourself or others, please reach out to the emergency resources below.</p>
+                <a href="#" class="home-link" id="backToHomeFromPrayer">← Back to Home</a>
 
-                <div class="home-link">
-                    <button id="homeBtn">← Back to Home</button>
-                </div>
-
-                <div class="emergency-section">
-                    <h3 class="emergency-title">⚡ EMERGENCY HOTLINES</h3>
-                    <div class="emergency-item">
-                        <span class="emergency-name">Suicide & Crisis Lifeline</span>
-                        <a href="tel:988" class="emergency-link">📞 988</a>
+                <div class="hotlines">
+                    <div class="hotlines-title">⚡ EMERGENCY HOTLINES</div>
+                    <div class="hotline-item">
+                        <span class="hotline-name">Suicide & Crisis Lifeline</span>
+                        <a href="tel:988" class="hotline-link">📞 988</a>
                     </div>
-                    <div class="emergency-item">
-                        <span class="emergency-name">Crisis Text Line</span>
-                        <a href="sms:741741&body=HELLO" class="emergency-link">💬 741741</a>
+                    <div class="hotline-item">
+                        <span class="hotline-name">Crisis Text Line</span>
+                        <a href="sms:741741&body=HELLO" class="hotline-link">💬 741741</a>
                     </div>
                 </div>
             </div>
-
         </div>
-    </div>
 
-    <!-- Loading -->
-    <div id="loading" class="loading">
-        <div class="spinner"></div>
-        <p class="loading-text">Sending your flare...</p>
-    </div>
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-spinner">🔥</div>
+            <p class="loading-text">Sending your flare...</p>
+        </div>
 
-    <!-- Install Prompt -->
-    <div id="installPrompt" class="install-prompt">
-        <div class="install-content">
-            <div class="install-icon">🔥</div>
-            <div class="install-text">
-                <h3 class="install-title">Add Prayer Flare</h3>
-                <p class="install-subtitle">Get instant access when you need it most</p>
-            </div>
-            <div class="install-actions">
-                <button class="install-btn dismiss" id="installDismiss">Not Now</button>
-                <button class="install-btn primary" id="installAccept">Add to Home</button>
+        <!-- PWA Install Prompt -->
+        <div class="pwa-prompt" id="pwaPrompt">
+            <div class="pwa-content">
+                <div class="pwa-icon">🔥</div>
+                <p class="pwa-title">Add Prayer Flare</p>
+                <p class="pwa-subtitle">Get instant access when you need it most</p>
+                <div class="pwa-buttons">
+                    <button class="pwa-btn dismiss" id="pwaDismiss">Not Now</button>
+                    <button class="pwa-btn install" id="pwaInstall">Add to Home</button>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            
-            // ============================================
-            // SUPABASE CONFIG
-            // ============================================
-            const SUPABASE_URL = 'https://shesaxxugzfdozlmigrk.supabase.co';
-            const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNoZXNheHh1Z3pmZG96bG1pZ3JrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ4MzIxMTAsImV4cCI6MjA4MDQwODExMH0.CXQqq8EAQ50w7NxnVvKwOVf5LuRr-x8tnuDajQK_qds';
-            
-            const RATE_LIMIT_MAX = 5;
-            const RATE_LIMIT_WINDOW = 3600000; // 1 hour
+        // ============================================
+        // SUPABASE CONFIG
+        // ============================================
+        const SUPABASE_URL = 'https://iqctlmcgsevcpqbsmpvd.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlxY3RsbWNnc2V2Y3BxYnNtcHZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxODQ3NDYsImV4cCI6MjA1NTc2MDc0Nn0.dpVRTF7R7Ca-yDPWfBRruxYjxGCy7f0ku6DnXaOUJbA';
+        
+        const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-            let db = null;
-            try {
-                db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-                console.log('✅ Supabase connected');
-            } catch (e) {
-                console.error('Supabase error:', e);
-            }
+        // ============================================
+        // STATE
+        // ============================================
+        let selectedCategory = null;
 
-            // ============================================
-            // PRAYER CONTENT - 3 PRAYERS PER CATEGORY
-            // ============================================
-            const prayerSets = {
-                "Anxiety / Panic": [
-                    {
-                        intro: "Your mind is racing. Your chest is tight. But God is not panicking. He's right here. Let's breathe with Him.",
-                        lines: [
-                            { text: "Breathe in slowly...", pause: true },
-                            { text: '"God, You are here."', quote: true },
-                            { text: "Breathe out slowly...", pause: true },
-                            { text: '"I give You this moment."', quote: true },
-                            { text: "Repeat as many times as you need.", context: true }
-                        ],
-                        scripture: "Cast all your anxiety on him because he cares for you.",
-                        reference: "1 Peter 5:7"
-                    },
-                    {
-                        intro: "You're still here. That takes strength. Let's go deeper.",
-                        lines: [
-                            { text: '"God, my thoughts won\'t stop."', quote: true },
-                            { text: "(He's not overwhelmed by them)", context: true },
-                            { text: '"Take every thought captive."', quote: true },
-                            { text: "(Picture Him catching each one)", context: true },
-                            { text: '"Replace them with Your peace."', quote: true }
-                        ],
-                        scripture: "You will keep in perfect peace those whose minds are steadfast, because they trust in you.",
-                        reference: "Isaiah 26:3"
-                    },
-                    {
-                        intro: "Three prayers in. You're fighting. God sees every breath you're taking.",
-                        lines: [
-                            { text: '"Father, I can\'t control this."', quote: true },
-                            { text: '"But You are in control."', quote: true },
-                            { text: '"I choose to rest in that."', quote: true },
-                            { text: "(Even if your body doesn't feel it yet)", context: true },
-                            { text: '"Your peace is bigger than my panic."', quote: true }
-                        ],
-                        scripture: "Peace I leave with you; my peace I give you. Do not let your hearts be troubled and do not be afraid.",
-                        reference: "John 14:27"
-                    }
-                ],
-                "Temptation": [
-                    {
-                        intro: "The pull is strong. But you sent up a flare instead of giving in. That took guts. God sees that.",
-                        lines: [
-                            { text: '"Jesus, I want to give in."', quote: true },
-                            { text: "(be honest — He already knows)", context: true },
-                            { text: '"But I\'m calling on You instead."', quote: true },
-                            { text: '"Give me the next 5 minutes."', quote: true }
-                        ],
-                        scripture: "No temptation has overtaken you except what is common to mankind.",
-                        reference: "1 Corinthians 10:13"
-                    },
-                    {
-                        intro: "Five minutes down. Let's get five more.",
-                        lines: [
-                            { text: '"God, I don\'t want to want this."', quote: true },
-                            { text: "(that's a prayer in itself)", context: true },
-                            { text: '"Change my desires."', quote: true },
-                            { text: '"Fill that empty space."', quote: true }
-                        ],
-                        scripture: "Delight yourself in the LORD, and he will give you the desires of your heart.",
-                        reference: "Psalm 37:4"
-                    },
-                    {
-                        intro: "You're still here. The temptation may not be gone, but you haven't given in. That's victory.",
-                        lines: [
-                            { text: '"I choose obedience over comfort."', quote: true },
-                            { text: '"I choose freedom over chains."', quote: true },
-                            { text: '"I choose the way out You promised."', quote: true },
-                            { text: "(He always provides one)", context: true }
-                        ],
-                        scripture: "But when you are tempted, he will also provide a way out so that you can endure it.",
-                        reference: "1 Corinthians 10:13b"
-                    }
-                ],
-                "Addiction craving": [
-                    {
-                        intro: "The craving is screaming. But you reached out instead of reaching for it. That's not nothing — that's everything.",
-                        lines: [
-                            { text: '"Jesus, I can\'t do this."', quote: true },
-                            { text: "(pause)", pause: true },
-                            { text: '"But You can."', quote: true },
-                            { text: "(pause)", pause: true },
-                            { text: '"I need You RIGHT NOW."', quote: true }
-                        ],
-                        scripture: "The LORD is close to the brokenhearted and saves those who are crushed in spirit.",
-                        reference: "Psalm 34:18"
-                    },
-                    {
-                        intro: "Still fighting. That's what Watchman do. Let's keep going.",
-                        lines: [
-                            { text: '"God, this craving feels bigger than me."', quote: true },
-                            { text: "(It's not bigger than Him)", context: true },
-                            { text: '"I\'m choosing You over this."', quote: true },
-                            { text: '"Give me strength for just this moment."', quote: true }
-                        ],
-                        scripture: "No temptation has overtaken you except what is common to mankind. And God is faithful.",
-                        reference: "1 Corinthians 10:13"
-                    },
-                    {
-                        intro: "You've made it through two prayers. The craving may still be there, but so is God. And so are you.",
-                        lines: [
-                            { text: '"I am not defined by this craving."', quote: true },
-                            { text: '"I am a child of God."', quote: true },
-                            { text: '"This does not own me."', quote: true },
-                            { text: '"I walk in freedom NOW."', quote: true }
-                        ],
-                        scripture: "So if the Son sets you free, you will be free indeed.",
-                        reference: "John 8:36"
-                    }
-                ],
-                "Depression / Giving up": [
-                    {
-                        intro: "You're exhausted. Maybe you've been fighting for a long time. God doesn't need you to fight right now. He just needs you to be honest.",
-                        lines: [
-                            { text: '"God, I have nothing left."', quote: true },
-                            { text: "(that's okay — keep going)", context: true },
-                            { text: '"I don\'t feel You."', quote: true },
-                            { text: "(He can handle that)", context: true },
-                            { text: '"Don\'t let go of me."', quote: true }
-                        ],
-                        scripture: "He will not crush the weakest reed or put out a flickering candle.",
-                        reference: "Isaiah 42:3",
-                        extra: "You're the flickering candle. He's protecting your flame.",
-                        showSafety: true
-                    },
-                    {
-                        intro: "You're still here. That matters more than you know.",
-                        lines: [
-                            { text: '"God, I don\'t know why I should keep going."', quote: true },
-                            { text: "(but something made you send this flare)", context: true },
-                            { text: '"Give me one reason for today."', quote: true },
-                            { text: '"Just today. Not forever."', quote: true }
-                        ],
-                        scripture: "The LORD your God is with you, the Mighty Warrior who saves. He will take great delight in you.",
-                        reference: "Zephaniah 3:17",
-                        showSafety: true
-                    },
-                    {
-                        intro: "Three prayers. You've done the hardest thing — you've stayed. Let that sink in.",
-                        lines: [
-                            { text: '"God, I\'m choosing to believe You\'re here."', quote: true },
-                            { text: '"Even though I feel nothing."', quote: true },
-                            { text: '"That\'s faith, right?"', quote: true },
-                            { text: "(Yes. That's exactly what faith is.)", context: true },
-                            { text: '"Help my unbelief."', quote: true }
-                        ],
-                        scripture: "I do believe; help me overcome my unbelief!",
-                        reference: "Mark 9:24",
-                        showSafety: true
-                    }
-                ],
-                "Anger / Rage": [
-                    {
-                        intro: "You're angry. Maybe you have every right to be. But you stopped long enough to send this flare. That's not weakness — that's wisdom.",
-                        lines: [
-                            { text: '"God, I\'m so angry I can\'t think straight."', quote: true },
-                            { text: "(He's not scared of your anger)", context: true },
-                            { text: '"Take this from me before I explode."', quote: true }
-                        ],
-                        scripture: "In your anger do not sin.",
-                        reference: "Ephesians 4:26"
-                    },
-                    {
-                        intro: "The anger might still be hot. But you're here, not acting on it. That's strength.",
-                        lines: [
-                            { text: '"God, I don\'t want to hurt anyone."', quote: true },
-                            { text: '"Including myself."', quote: true },
-                            { text: '"Show me what\'s underneath this rage."', quote: true },
-                            { text: "(There's usually pain under anger)", context: true }
-                        ],
-                        scripture: "A gentle answer turns away wrath.",
-                        reference: "Proverbs 15:1"
-                    },
-                    {
-                        intro: "You've prayed three times instead of reacting. Do you realize how significant that is?",
-                        lines: [
-                            { text: '"God, I release this to You."', quote: true },
-                            { text: '"Vengeance is Yours, not mine."', quote: true },
-                            { text: '"Give me Your peace in exchange for my rage."', quote: true }
-                        ],
-                        scripture: "Do not take revenge, my dear friends, but leave room for God's wrath.",
-                        reference: "Romans 12:19"
-                    }
-                ],
-                "Grief / Loss": [
-                    {
-                        intro: "The weight is heavy. The absence is loud. God isn't asking you to be okay right now. He's just asking you to let Him sit with you.",
-                        lines: [
-                            { text: '"God, this hurts more than I can say."', quote: true },
-                            { text: "(let the tears come if they need to)", context: true },
-                            { text: '"Don\'t leave me alone in this."', quote: true }
-                        ],
-                        scripture: "Blessed are those who mourn, for they will be comforted.",
-                        reference: "Matthew 5:4"
-                    },
-                    {
-                        intro: "Grief has no timeline. You don't have to be 'over it.' You just have to get through this moment.",
-                        lines: [
-                            { text: '"God, I miss them."', quote: true },
-                            { text: '"I don\'t understand why."', quote: true },
-                            { text: '"But I need You to carry what I can\'t."', quote: true }
-                        ],
-                        scripture: "The LORD is close to the brokenhearted.",
-                        reference: "Psalm 34:18"
-                    },
-                    {
-                        intro: "You've let yourself feel it. That's not weakness — that's honoring what was lost.",
-                        lines: [
-                            { text: '"God, hold my grief."', quote: true },
-                            { text: '"Hold my memories."', quote: true },
-                            { text: '"Hold me."', quote: true },
-                            { text: "(He is. Right now.)", context: true }
-                        ],
-                        scripture: "He heals the brokenhearted and binds up their wounds.",
-                        reference: "Psalm 147:3",
-                        extra: "Grief is not a lack of faith. It's the proof that you loved."
-                    }
-                ],
-                "Fear": [
-                    {
-                        intro: "Fear is loud right now. But God's voice is steady. Let's tune into Him.",
-                        lines: [
-                            { text: '"God, I\'m afraid."', quote: true },
-                            { text: "(name it — that takes power from it)", context: true },
-                            { text: '"Be bigger than this fear."', quote: true }
-                        ],
-                        scripture: "For God has not given us a spirit of fear, but of power and of love and of a sound mind.",
-                        reference: "2 Timothy 1:7"
-                    },
-                    {
-                        intro: "The fear may still be there. But so is the One who created the universe.",
-                        lines: [
-                            { text: '"God, I don\'t know what\'s going to happen."', quote: true },
-                            { text: '"But You do."', quote: true },
-                            { text: '"I choose to trust You with what I can\'t control."', quote: true }
-                        ],
-                        scripture: "When I am afraid, I put my trust in you.",
-                        reference: "Psalm 56:3"
-                    },
-                    {
-                        intro: "Three prayers against the fear. You're building something here — it's called faith.",
-                        lines: [
-                            { text: '"I will not be ruled by fear."', quote: true },
-                            { text: '"I am held by a God who never fails."', quote: true },
-                            { text: '"Fear has no authority here."', quote: true }
-                        ],
-                        scripture: "So do not fear, for I am with you; do not be dismayed, for I am your God.",
-                        reference: "Isaiah 41:10"
-                    }
-                ],
-                "Spiritual Attack": [
-                    {
-                        intro: "You're under attack. You know it. The enemy wants you isolated and hopeless. But you called for backup. Smart move.",
-                        lines: [
-                            { text: "Say this OUT LOUD:", context: true },
-                            { text: '"In the name of Jesus, I resist you."', quote: true },
-                            { text: '"You have no authority here."', quote: true }
-                        ],
-                        scripture: "Submit yourselves therefore to God. Resist the devil, and he will flee from you.",
-                        reference: "James 4:7"
-                    },
-                    {
-                        intro: "Still under fire? Good thing you serve a God who's already won the war.",
-                        lines: [
-                            { text: '"I am covered by the blood of Jesus."', quote: true },
-                            { text: '"Every lie you speak is powerless."', quote: true },
-                            { text: '"The truth is: I am God\'s child."', quote: true },
-                            { text: '"And you cannot have me."', quote: true }
-                        ],
-                        scripture: "The one who is in you is greater than the one who is in the world.",
-                        reference: "1 John 4:4"
-                    },
-                    {
-                        intro: "Three times you've declared truth. That's spiritual warfare. Keep going if you need to.",
-                        lines: [
-                            { text: '"I put on the full armor of God."', quote: true },
-                            { text: '"Truth. Righteousness. Peace. Faith. Salvation. The Word."', quote: true },
-                            { text: '"I stand firm."', quote: true },
-                            { text: '"The Lord rebuke you. NOW GO."', quote: true }
-                        ],
-                        scripture: "Put on the full armor of God, so that you can take your stand against the devil's schemes.",
-                        reference: "Ephesians 6:11",
-                        extra: "He HAS to flee. It's not optional. Keep resisting."
-                    }
-                ],
-                "Just need prayer": [
-                    {
-                        intro: "You don't have to explain it. God knows what you need before you ask.",
-                        lines: [
-                            { text: '"God, I\'m here."', quote: true },
-                            { text: "(that's enough)", context: true },
-                            { text: '"Just meet me where I am."', quote: true }
-                        ],
-                        scripture: "The Spirit helps us in our weakness. We do not know what we ought to pray for, but the Spirit himself intercedes for us.",
-                        reference: "Romans 8:26"
-                    },
-                    {
-                        intro: "Sometimes presence is better than words. God is present. So are you.",
-                        lines: [
-                            { text: '"God, I don\'t have words."', quote: true },
-                            { text: '"Let Your Spirit pray for me."', quote: true },
-                            { text: '"You know my heart."', quote: true }
-                        ],
-                        scripture: "Before a word is on my tongue you, LORD, know it completely.",
-                        reference: "Psalm 139:4"
-                    },
-                    {
-                        intro: "Three prayers of simply being present. That IS prayer. You're doing it right.",
-                        lines: [
-                            { text: '"Thank You for being here."', quote: true },
-                            { text: '"Thank You for never leaving."', quote: true },
-                            { text: '"I rest in Your presence."', quote: true }
-                        ],
-                        scripture: "Be still, and know that I am God.",
-                        reference: "Psalm 46:10"
-                    }
-                ],
-                "Other": [
-                    {
-                        intro: "Whatever you're facing right now, God sees it. He's not confused. He's not overwhelmed. And He's right here.",
-                        lines: [
-                            { text: '"God, You know what I\'m dealing with."', quote: true },
-                            { text: "(even if you can't name it)", context: true },
-                            { text: '"I\'m bringing it to You."', quote: true }
-                        ],
-                        scripture: "Trust in the LORD with all your heart and lean not on your own understanding.",
-                        reference: "Proverbs 3:5-6"
-                    },
-                    {
-                        intro: "You reached out. That's not weakness — that's wisdom.",
-                        lines: [
-                            { text: '"God, I need Your help."', quote: true },
-                            { text: '"I can\'t figure this out on my own."', quote: true },
-                            { text: '"Show me what to do next."', quote: true }
-                        ],
-                        scripture: "If any of you lacks wisdom, you should ask God, who gives generously to all.",
-                        reference: "James 1:5"
-                    },
-                    {
-                        intro: "Three prayers in. Whatever this is, you're not facing it alone anymore.",
-                        lines: [
-                            { text: '"God, I surrender this to You."', quote: true },
-                            { text: '"All of it — even the parts I\'m holding back."', quote: true },
-                            { text: '"Have Your way."', quote: true }
-                        ],
-                        scripture: "Come to me, all you who are weary and burdened, and I will give you rest.",
-                        reference: "Matthew 11:28"
-                    }
-                ]
-            };
+        // ============================================
+        // DOM ELEMENTS
+        // ============================================
+        const homeScreen = document.getElementById('homeScreen');
+        const formScreen = document.getElementById('formScreen');
+        const prayerScreen = document.getElementById('prayerScreen');
+        const startBtn = document.getElementById('startBtn');
+        const backToHome = document.getElementById('backToHome');
+        const backToHomeFromPrayer = document.getElementById('backToHomeFromPrayer');
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const zipInput = document.getElementById('zipInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const rateLimitWarning = document.getElementById('rateLimitWarning');
 
-            // Physical redirect (step 4)
-            const physicalRedirect = {
-                title: "Time to Move",
-                text: "You've done the spiritual work. Now let's get your body involved. Even small physical changes can interrupt the cycle.",
-                items: [
-                    { icon: "🚿", text: "Splash cold water on your face" },
-                    { icon: "🚶", text: "Step outside for 2 minutes" },
-                    { icon: "💧", text: "Get a glass of water and drink it slowly" },
-                    { icon: "📝", text: "Write down 3 things you're grateful for" },
-                    { icon: "📱", text: "Text someone you trust — just say hi" },
-                    { icon: "🎵", text: "Put on worship music and just sit" }
-                ],
-                closing: "You've done good work here. Come back anytime. Watchman are still praying."
-            };
+        // ============================================
+        // NAVIGATION
+        // ============================================
+        function showScreen(screen) {
+            homeScreen.classList.remove('active');
+            formScreen.classList.remove('active');
+            prayerScreen.classList.remove('active');
+            screen.classList.add('active');
+            window.scrollTo(0, 0);
+        }
 
-            // ============================================
-            // STATE
-            // ============================================
-            let selectedCategory = null;
-            let currentPrayerId = null;
-            let currentAccessToken = null;
-            let currentStep = 1;
-            let showCrisisResources = false;
+        startBtn.addEventListener('click', () => showScreen(formScreen));
+        backToHome.addEventListener('click', () => {
+            resetForm();
+            showScreen(homeScreen);
+        });
+        backToHomeFromPrayer.addEventListener('click', (e) => {
+            e.preventDefault();
+            resetForm();
+            showScreen(homeScreen);
+        });
 
-            // Crisis trigger words
-            const triggerWords = [
-                'suicide', 'suicidal', 'kill myself', 'kill me', 'end it', 'end my life',
-                'don\'t want to live', 'dont want to live', 'want to die', 'wanna die',
-                'self-harm', 'self harm', 'hurt myself', 'cutting', 'hopeless',
-                'no reason to live', 'better off dead', 'can\'t go on', 'cant go on',
-                'give up', 'giving up', 'end it all', 'not worth living'
-            ];
-
-            function checkForTriggerWords(text) {
-                const lowerText = text.toLowerCase();
-                return triggerWords.some(word => lowerText.includes(word));
-            }
-
-            // ============================================
-            // DOM ELEMENTS
-            // ============================================
-            const homeScreen = document.getElementById('homeScreen');
-            const formScreen = document.getElementById('formScreen');
-            const prayerScreen = document.getElementById('prayerScreen');
-            const loading = document.getElementById('loading');
-            const zipInput = document.getElementById('zipInput');
-            const submitBtn = document.getElementById('submitBtn');
-            const prayerContent = document.getElementById('prayerContent');
-
-            // ============================================
-            // NAVIGATION
-            // ============================================
-            function showScreen(screen) {
-                homeScreen.classList.remove('active');
-                formScreen.classList.remove('active');
-                prayerScreen.classList.remove('active');
-                screen.classList.add('active');
-                window.scrollTo(0, 0);
-            }
-
-            document.getElementById('startBtn').addEventListener('click', () => showScreen(formScreen));
-            document.getElementById('backBtn').addEventListener('click', () => {
-                resetForm();
-                showScreen(homeScreen);
-            });
-            document.getElementById('homeBtn').addEventListener('click', () => {
-                resetForm();
-                showScreen(homeScreen);
-            });
-
-            // ============================================
-            // CATEGORY SELECTION
-            // ============================================
-            document.querySelectorAll('.option-btn, .option-btn-compact').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.option-btn, .option-btn-compact').forEach(b => b.classList.remove('selected'));
-                    this.classList.add('selected');
-                    selectedCategory = this.dataset.value;
-                    
-                    // Check if Depression selected - will show crisis resources
-                    showCrisisResources = (selectedCategory === 'Depression / Giving up');
-                    
-                    validateForm();
-                });
-            });
-
-            // ============================================
-            // ZIP INPUT
-            // ============================================
-            zipInput.addEventListener('input', function() {
-                this.value = this.value.replace(/\D/g, '').slice(0, 5);
+        // ============================================
+        // CATEGORY SELECTION
+        // ============================================
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedCategory = btn.dataset.category;
                 validateForm();
             });
+        });
 
-            // ============================================
-            // FORM VALIDATION (Simplified - just zip + category)
-            // ============================================
-            function validateForm() {
-                const zipValid = zipInput.value.length === 5;
-                const categoryValid = selectedCategory !== null;
-                const rateLimitOk = checkRateLimitSilent();
-                
-                document.getElementById('zipError').classList.toggle('show', zipInput.value.length > 0 && !zipValid);
-                submitBtn.disabled = !(zipValid && categoryValid && rateLimitOk);
+        // ============================================
+        // ZIP INPUT
+        // ============================================
+        zipInput.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 5);
+            validateForm();
+        });
+
+        // ============================================
+        // FORM VALIDATION
+        // ============================================
+        function validateForm() {
+            const isValid = selectedCategory && zipInput.value.length === 5;
+            submitBtn.disabled = !isValid;
+        }
+
+        function resetForm() {
+            selectedCategory = null;
+            categoryBtns.forEach(b => b.classList.remove('selected'));
+            zipInput.value = '';
+            submitBtn.disabled = true;
+        }
+
+        // ============================================
+        // RATE LIMITING
+        // ============================================
+        function canSubmit() {
+            const lastSubmit = localStorage.getItem('pf_last_submit');
+            if (!lastSubmit) return true;
+            const elapsed = Date.now() - parseInt(lastSubmit);
+            return elapsed > 60000; // 1 minute cooldown
+        }
+
+        function recordSubmit() {
+            localStorage.setItem('pf_last_submit', Date.now().toString());
+        }
+
+        // ============================================
+        // SCRIPTURES BY CATEGORY
+        // ============================================
+        const scriptures = {
+            anxiety: {
+                text: '"Cast all your anxiety on him because he cares for you."',
+                ref: '1 Peter 5:7',
+                encouragement: 'Your mind is racing, but you paused to reach out. That takes strength.'
+            },
+            temptation: {
+                text: '"No temptation has overtaken you except what is common to mankind. And God is faithful; he will not let you be tempted beyond what you can bear."',
+                ref: '1 Corinthians 10:13',
+                encouragement: 'The pull is strong. But you reached out instead of giving in. That took guts.'
+            },
+            addiction: {
+                text: '"I can do all things through Christ who strengthens me."',
+                ref: 'Philippians 4:13',
+                encouragement: 'Every minute you hold on is a victory. You are stronger than you know.'
+            },
+            depression: {
+                text: '"The Lord is close to the brokenhearted and saves those who are crushed in spirit."',
+                ref: 'Psalm 34:18',
+                encouragement: 'The darkness feels heavy, but you reached out. That light is still in you.'
+            },
+            other: {
+                text: '"Come to me, all you who are weary and burdened, and I will give you rest."',
+                ref: 'Matthew 11:28',
+                encouragement: 'Whatever you are carrying, you do not have to carry it alone.'
+            }
+        };
+
+        // ============================================
+        // SUBMIT FLARE
+        // ============================================
+        submitBtn.addEventListener('click', async () => {
+            if (!canSubmit()) {
+                rateLimitWarning.style.display = 'block';
+                return;
             }
 
-            // Silent rate limit check (doesn't prompt)
-            function checkRateLimitSilent() {
-                const history = JSON.parse(localStorage.getItem('flareHistory') || '[]');
-                const now = Date.now();
-                const recent = history.filter(t => now - t < RATE_LIMIT_WINDOW);
-                return recent.length < RATE_LIMIT_MAX;
-            }
+            loadingOverlay.classList.add('active');
 
-            function resetForm() {
-                zipInput.value = '';
-                selectedCategory = null;
-                currentStep = 1;
-                showCrisisResources = false;
-                document.querySelectorAll('.option-btn, .option-btn-compact').forEach(b => b.classList.remove('selected'));
-                submitBtn.disabled = true;
-                document.getElementById('zipError').classList.remove('show');
-            }
-
-            // ============================================
-            // RATE LIMITING
-            // ============================================
-            const ADMIN_CODE = '4013';
-
-            function checkRateLimit() {
-                const history = JSON.parse(localStorage.getItem('flareHistory') || '[]');
-                const now = Date.now();
-                const recent = history.filter(t => now - t < RATE_LIMIT_WINDOW);
-                localStorage.setItem('flareHistory', JSON.stringify(recent));
-                
-                const limited = recent.length >= RATE_LIMIT_MAX;
-                
-                if (limited) {
-                    // Show admin bypass prompt
-                    const code = prompt('Rate limit reached.\n\nIf you are a Watchman or Admin testing, please enter your code:');
-                    if (code === ADMIN_CODE) {
-                        // Clear history and allow
-                        localStorage.setItem('flareHistory', '[]');
-                        document.getElementById('rateLimitMsg').classList.remove('show');
-                        return true;
-                    } else if (code !== null) {
-                        alert('Invalid code. Please wait before sending another flare.');
-                    }
-                    document.getElementById('rateLimitMsg').classList.add('show');
-                    return false;
-                }
-                
-                document.getElementById('rateLimitMsg').classList.remove('show');
-                return true;
-            }
-
-            function recordFlare() {
-                const history = JSON.parse(localStorage.getItem('flareHistory') || '[]');
-                history.push(Date.now());
-                localStorage.setItem('flareHistory', JSON.stringify(history));
-            }
-
-            // ============================================
-            // SEND FLARE
-            // ============================================
-            submitBtn.addEventListener('click', sendFlare);
-
-            async function sendFlare() {
-                console.log('🔥 Send Flare clicked');
-                console.log('Category:', selectedCategory);
-                console.log('Zip:', zipInput.value);
-                
-                if (!selectedCategory || zipInput.value.length !== 5) {
-                    console.log('❌ Missing category or zip');
-                    return;
-                }
-                if (!checkRateLimit()) {
-                    console.log('❌ Rate limited');
-                    return;
-                }
-
-                loading.classList.add('active');
-                submitBtn.disabled = true;
-
-                // Auto-generate PF code
-                currentPrayerId = 'PF-' + Math.floor(1000 + Math.random() * 9000);
-                currentAccessToken = generateToken();
-
-                try {
-                    if (db) {
-                        // Save flare
-                        await db.from('Prayer Flares').insert([{
-                            prayer_id: currentPrayerId,
-                            zip_code: zipInput.value,
-                            category: selectedCategory,
-                            status: 'active',
-                            prayer_count: 0
-                        }]);
-                        console.log('✅ Flare saved:', currentPrayerId);
-
-                        // Create wall
-                        const { data: wallData } = await db.from('Prayer Walls').insert([{
-                            prayer_id: currentPrayerId,
-                            access_token: currentAccessToken
-                        }]).select();
-
-                        if (wallData?.[0]) {
-                            await postInitialPrayer(wallData[0].id);
-                        }
-                    } else {
-                        console.log('⚠️ No database - continuing anyway');
-                    }
-
-                    recordFlare();
-                    
-                    // Set dynamic context line based on category
-                    const contextLines = {
-                        'Anxiety / Panic': "Your heart is racing. But you're not running. You're standing.",
-                        'Temptation': "The pull is strong. But you reached out instead of giving in.",
-                        'Addiction craving': "The craving is screaming. But you reached out instead of reaching for it.",
-                        'Depression / Giving up': "It feels like the end. But you're still here. That matters.",
-                        'Anger / Rage': "The fire is burning. But you paused before it consumed you.",
-                        'Grief / Loss': "The pain is heavy. But you didn't carry it alone.",
-                        'Fear': "Fear is loud right now. But you didn't let it silence you.",
-                        'Spiritual Attack': "The enemy is real. But so is your God.",
-                        'Just need prayer': "You don't need a reason. You just need prayer. We get it."
-                    };
-                    const catKey = selectedCategory;
-                    const contextEl = document.getElementById('contextLine');
-                    if (contextEl) {
-                        const pEl = contextEl.querySelector('p');
-                        if (pEl) {
-                            pEl.textContent = contextLines[catKey] || "The pull is strong. But you sent up a flare instead of giving in. That took guts. God sees that.";
-                        }
-                    }
-                    
-                    // Show crisis note if needed
-                    if (showCrisisResources || selectedCategory === 'Depression / Giving up') {
-                        document.getElementById('crisisNote').style.display = 'block';
-                    } else {
-                        document.getElementById('crisisNote').style.display = 'none';
-                    }
-                    
-                    showScreen(prayerScreen);
-
-                } catch (err) {
-                    console.error('Error details:', err);
-                    console.error('Error message:', err.message);
-                    alert('Something went wrong: ' + (err.message || 'Unknown error'));
-                }
-
-                loading.classList.remove('active');
-            }
-
-            // ============================================
-            // INITIAL AI PRAYER
-            // ============================================
-            async function postInitialPrayer(wallId) {
-                const prayers = {
-                    'Anxiety / Panic': { text: "Heavenly Father, we lift up this soul battling anxiety. Calm their heart, quiet their thoughts. You are their refuge. In Jesus' name, Amen.", scripture: "Isaiah 41:10" },
-                    'Temptation': { text: "Lord Jesus, provide a way of escape. Strengthen their resolve. They are Yours. In Your mighty name, Amen.", scripture: "1 Corinthians 10:13" },
-                    'Addiction craving': { text: "Father God, break the power of this craving in Jesus' name. You are stronger than any chain. Give them strength. Amen.", scripture: "Psalm 34:17-18" },
-                    'Depression / Giving up': { text: "Loving Father, we speak LIFE over them. Their story is not over. You are close to the brokenhearted. Hold them. Amen.", scripture: "Psalm 34:18" },
-                    'Anger / Rage': { text: "Lord, cool the fire within. Replace rage with Your peace. Bring calm to the storm. In Jesus' name, Amen.", scripture: "James 1:19-20" },
-                    'Grief / Loss': { text: "Compassionate Father, hold this grieving heart. Comfort them in ways only You can. In Jesus' name, Amen.", scripture: "Matthew 5:4" },
-                    'Fear': { text: "Mighty God, we rebuke fear! You have not given them a spirit of fear. Replace it with faith. Amen.", scripture: "2 Timothy 1:7" },
-                    'Spiritual Attack': { text: "Lord Jesus, we plead Your blood over them. Satan has NO authority here. Victory belongs to Jesus! Amen.", scripture: "Ephesians 6:12" },
-                    'Just need prayer': { text: "Father, You know what they face. Meet them where they are. Surround them with Your love. Amen.", scripture: "Romans 8:26" },
-                    'Other': { text: "Lord, whatever they face, You see. Meet them in their need. They are not alone. Amen.", scripture: "Psalm 46:1" }
-                };
-
-                const p = prayers[selectedCategory] || prayers['Other'];
-
-                try {
-                    await db.from('Prayers').insert([{
-                        wall_id: wallId,
-                        prayer_id: currentPrayerId,
-                        watchman_name: 'The Watchman Team',
-                        prayer_text: p.text,
-                        scripture_reference: p.scripture,
-                        is_ai_generated: true
+            try {
+                const { error } = await db
+                    .from('Prayer Flares')
+                    .insert([{
+                        category: selectedCategory,
+                        zip_code: zipInput.value,
+                        created_at: new Date().toISOString()
                     }]);
-                    console.log('✅ Initial prayer posted');
-                } catch (err) {
-                    console.error('Prayer error:', err);
-                }
+
+                if (error) throw error;
+
+                recordSubmit();
+
+                // Update scripture based on category
+                const scripture = scriptures[selectedCategory] || scriptures.other;
+                document.getElementById('scriptureText').textContent = scripture.text;
+                document.getElementById('scriptureRef').textContent = '— ' + scripture.ref;
+                document.getElementById('encouragementText').textContent = scripture.encouragement;
+
+                loadingOverlay.classList.remove('active');
+                showScreen(prayerScreen);
+
+            } catch (err) {
+                console.error('Error:', err);
+                loadingOverlay.classList.remove('active');
+                alert('Something went wrong. Please try again.');
             }
+        });
 
-            // ============================================
-            // RENDER PRAYER
-            // ============================================
-            function renderPrayer() {
-                let html = '';
-                
-                const catKey = selectedCategory?.startsWith('Other:') ? 'Other' : selectedCategory;
-                const prayers = prayerSets[catKey] || prayerSets['Just need prayer'];
+        // ============================================
+        // PWA INSTALL
+        // ============================================
+        let deferredPrompt;
 
-                if (currentStep <= 3) {
-                    const prayer = prayers[currentStep - 1] || prayers[0];
-
-                    // Intro
-                    html += `<div class="prayer-intro-box"><p class="prayer-intro-text">${prayer.intro}</p></div>`;
-
-                    // Prayer box
-                    html += '<div class="prayer-box">';
-                    html += '<p class="prayer-instruction">Say these out loud or in your heart:</p>';
-                    
-                    prayer.lines.forEach(line => {
-                        if (line.pause) {
-                            html += `<p class="prayer-pause">${line.text}</p>`;
-                        } else if (line.quote) {
-                            html += `<p class="prayer-line quote">${line.text}</p>`;
-                        } else if (line.context) {
-                            html += `<p class="prayer-context">${line.text}</p>`;
-                        }
-                    });
-                    html += '</div>';
-
-                    // Scripture
-                    html += '<div class="scripture-box">';
-                    html += `<p class="scripture-text">"${prayer.scripture}"</p>`;
-                    html += `<p class="scripture-ref">— ${prayer.reference}</p>`;
-                    if (prayer.extra) {
-                        html += `<p class="scripture-extra">${prayer.extra}</p>`;
-                    }
-                    html += '</div>';
-
-                    // Reset buttons
-                    document.getElementById('prayedBtn').textContent = '✓ I Prayed This';
-                    document.getElementById('prayedBtn').style.background = '';
-                    document.getElementById('moreBtn').style.display = 'block';
-
-                } else {
-                    // Step 4: Physical redirect
-                    html += '<div class="redirect-box">';
-                    html += `<h3 class="redirect-title">${physicalRedirect.title}</h3>`;
-                    html += `<p class="redirect-text">${physicalRedirect.text}</p>`;
-                    html += '<div class="redirect-items">';
-                    physicalRedirect.items.forEach(item => {
-                        html += `<div class="redirect-item"><span class="redirect-icon">${item.icon}</span><span>${item.text}</span></div>`;
-                    });
-                    html += '</div></div>';
-
-                    html += `<div class="prayer-intro-box"><p class="prayer-intro-text">${physicalRedirect.closing}</p></div>`;
-
-                    document.getElementById('prayedBtn').textContent = '✓ I Did Something';
-                    document.getElementById('moreBtn').style.display = 'none';
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show prompt after 5 seconds
+            setTimeout(() => {
+                if (!localStorage.getItem('pf_pwa_dismissed')) {
+                    document.getElementById('pwaPrompt').classList.add('active');
                 }
+            }, 5000);
+        });
 
-                prayerContent.innerHTML = html;
-            }
+        document.getElementById('pwaDismiss').addEventListener('click', () => {
+            document.getElementById('pwaPrompt').classList.remove('active');
+            localStorage.setItem('pf_pwa_dismissed', 'true');
+        });
 
-            // ============================================
-            // HELPERS
-            // ============================================
-            function generateToken() {
-                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-                let token = '';
-                for (let i = 0; i < 32; i++) {
-                    token += chars.charAt(Math.floor(Math.random() * chars.length));
-                }
-                return token;
-            }
-
-            console.log('✅ Prayer Flare V9 - Simplified');
-
-            // ============================================
-            // PWA INSTALL PROMPT
-            // ============================================
-            let deferredPrompt = null;
-            const installPrompt = document.getElementById('installPrompt');
-            const installDismiss = document.getElementById('installDismiss');
-            const installAccept = document.getElementById('installAccept');
-
-            // Check if already installed or dismissed
-            const isInstalled = window.matchMedia('(display-mode: standalone)').matches;
-            const wasDismissed = localStorage.getItem('installDismissed');
-
-            // Capture the install prompt event
-            window.addEventListener('beforeinstallprompt', (e) => {
-                e.preventDefault();
-                deferredPrompt = e;
-                
-                // Show prompt after 3 seconds if not dismissed before
-                if (!isInstalled && !wasDismissed) {
-                    setTimeout(() => {
-                        installPrompt.classList.add('show');
-                    }, 3000);
-                }
-            });
-
-            // Dismiss button
-            installDismiss.addEventListener('click', () => {
-                installPrompt.classList.remove('show');
-                localStorage.setItem('installDismissed', 'true');
-            });
-
-            // Accept/Install button
-            installAccept.addEventListener('click', async () => {
-                if (!deferredPrompt) {
-                    // Fallback for iOS/Safari
-                    alert('To install: tap the Share button, then "Add to Home Screen"');
-                    installPrompt.classList.remove('show');
-                    return;
-                }
-                
+        document.getElementById('pwaInstall').addEventListener('click', async () => {
+            if (deferredPrompt) {
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
-                
-                if (outcome === 'accepted') {
-                    console.log('✅ App installed');
-                }
-                
                 deferredPrompt = null;
-                installPrompt.classList.remove('show');
-            });
-
-            // Hide prompt if app gets installed
-            window.addEventListener('appinstalled', () => {
-                installPrompt.classList.remove('show');
-                deferredPrompt = null;
-                console.log('✅ App installed');
-            });
-
-            // ============================================
-            // LIVE PRAYER MAP - LIVING NETWORK
-            // ============================================
-            const flarePulses = document.getElementById('flarePulses');
-            const watchmenCount = document.getElementById('watchmenCount');
-            const mapTextOverlay = document.getElementById('mapTextOverlay');
-            const liveMapSection = document.getElementById('liveMapSection');
-
-            // Zip code to map coordinates (simplified regions)
-            function getMapCoords(zip) {
-                const firstDigit = zip.charAt(0);
-                const coords = {
-                    '0': { x: 820, y: 180 },  // Northeast (MA, CT, etc)
-                    '1': { x: 800, y: 200 },  // Northeast (NY, PA)
-                    '2': { x: 750, y: 260 },  // Mid-Atlantic (DC, VA)
-                    '3': { x: 700, y: 360 },  // Southeast (FL, GA)
-                    '4': { x: 620, y: 260 },  // Midwest (OH, IN)
-                    '5': { x: 520, y: 220 },  // Upper Midwest (MN, WI)
-                    '6': { x: 480, y: 300 },  // Central (MO, KS)
-                    '7': { x: 400, y: 380 },  // South Central (TX, OK)
-                    '8': { x: 280, y: 300 },  // Mountain (CO, AZ)
-                    '9': { x: 150, y: 280 }   // West Coast (CA, WA)
-                };
-                return coords[firstDigit] || { x: 480, y: 280 };
             }
-
-            // Add flare ripple to map (3x larger, water ripple effect)
-            function addFlareRipple(zip) {
-                const coords = getMapCoords(zip);
-                
-                // Outer ripple ring
-                const ripple = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                ripple.setAttribute('cx', coords.x);
-                ripple.setAttribute('cy', coords.y);
-                ripple.setAttribute('r', '10');
-                ripple.setAttribute('class', 'flare-ripple');
-                flarePulses.appendChild(ripple);
-
-                // Second ripple (delayed)
-                setTimeout(() => {
-                    const ripple2 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                    ripple2.setAttribute('cx', coords.x);
-                    ripple2.setAttribute('cy', coords.y);
-                    ripple2.setAttribute('r', '10');
-                    ripple2.setAttribute('class', 'flare-ripple');
-                    flarePulses.appendChild(ripple2);
-                    setTimeout(() => ripple2.remove(), 2000);
-                }, 300);
-
-                // Inner core
-                const core = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                core.setAttribute('cx', coords.x);
-                core.setAttribute('cy', coords.y);
-                core.setAttribute('r', '8');
-                core.setAttribute('class', 'flare-ripple-inner');
-                flarePulses.appendChild(core);
-
-                // Remove ripple after animation
-                setTimeout(() => ripple.remove(), 2000);
-
-                // Transform core to ember
-                setTimeout(() => {
-                    core.classList.remove('flare-ripple-inner');
-                    core.classList.add('ember-glow');
-                    core.setAttribute('r', '5');
-                }, 2000);
-
-                // Remove ember after 45 seconds
-                setTimeout(() => {
-                    core.remove();
-                }, 45000);
-            }
-
-            // Text overlay animation on scroll
-            function initTextOverlay() {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            setTimeout(() => {
-                                mapTextOverlay.classList.add('visible');
-                            }, 500);
-                        }
-                    });
-                }, { threshold: 0.5 });
-
-                if (liveMapSection) {
-                    observer.observe(liveMapSection);
-                }
-            }
-
-            // Subscribe to realtime updates
-            function subscribeToFlares() {
-                if (!db) {
-                    console.log('⚠️ No database for realtime');
-                    return;
-                }
-
-                db.channel('public:Prayer Flares')
-                    .on('postgres_changes', 
-                        { event: 'INSERT', schema: 'public', table: 'Prayer Flares' },
-                        (payload) => {
-                            console.log('🔥 New flare received:', payload.new);
-                            addFlareRipple(payload.new.zip_code);
-                        }
-                    )
-                    .subscribe((status) => {
-                        console.log('📡 Realtime status:', status);
-                    });
-            }
-
-            // Watchmen count
-            async function updateWatchmenCount() {
-                if (!db) {
-                    watchmenCount.textContent = '8';
-                    return;
-                }
-
-                try {
-                    const { count } = await db
-                        .from('Watchmen')
-                        .select('*', { count: 'exact', head: true });
-                    
-                    watchmenCount.textContent = count > 0 ? count : '8';
-                } catch (err) {
-                    watchmenCount.textContent = '8';
-                }
-            }
-
-            // Initialize Living Network
-            initTextOverlay();
-            subscribeToFlares();
-            updateWatchmenCount();
-
-            // ============================================
-            // TYPING TEXT ANIMATION
-            // ========== SCROLL TEXT - FRESH REBUILD ==========
-            const scrollTextEl = document.getElementById('scrollText');
-            const blinkCursor = document.querySelector('.blink-cursor');
-            const messageToShow = "A Prayer Partner Is Standing By Ready To Pray For YOU!";
-            let idx = 0;
-
-            function showNextChar() {
-                if (idx < messageToShow.length) {
-                    scrollTextEl.textContent += messageToShow.charAt(idx);
-                    idx++;
-                    setTimeout(showNextChar, 50 + Math.random() * 30);
-                } else {
-                    setTimeout(() => {
-                        blinkCursor.classList.add('hide');
-                    }, 1200);
-                }
-            }
-
-            setTimeout(showNextChar, 600);
-            // ========== END SCROLL TEXT ==========
+            document.getElementById('pwaPrompt').classList.remove('active');
         });
+
+        // ============================================
+        // SERVICE WORKER
+        // ============================================
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        }
     </script>
 </body>
 </html>
