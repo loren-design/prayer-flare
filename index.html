@@ -278,16 +278,6 @@
             </div>
         </div>
 
-        <!-- Need Help NOW Popup -->
-        <div class="help-popup" id="helpPopup">
-            <div class="help-popup-content">
-                <div class="help-popup-icon">🆘</div>
-                <h2 class="help-popup-title">NEED TO TALK TO SOMEONE NOW?</h2>
-                <p class="help-popup-text">We have 24-hour prayer partners standing by. Real people. Real prayers. Right now.</p>
-                <button class="help-popup-btn yes" id="helpYes">YES - SHOW ME OPTIONS</button>
-                <button class="help-popup-btn no" id="helpNo">I'M OK - CLOSE</button>
-            </div>
-        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -325,9 +315,6 @@
         var sendFlareBtn = document.getElementById('sendFlareBtn');
         var loadingOverlay = document.getElementById('loadingOverlay');
         var zipPopup = document.getElementById('zipPopup');
-        var helpPopup = document.getElementById('helpPopup');
-        var helpYes = document.getElementById('helpYes');
-        var helpNo = document.getElementById('helpNo');
         var localResources = document.getElementById('localResources');
         var videoFrame = document.getElementById('videoFrame');
         var videoPlaceholder = document.getElementById('videoPlaceholder');
@@ -415,24 +402,6 @@
         }
 
         // ============================================
-        // SHOW HELP POPUP (after 3 seconds)
-        // ============================================
-        function showHelpPopup() {
-            setTimeout(function() {
-                helpPopup.classList.add('active');
-            }, 3000);
-        }
-
-        helpYes.onclick = function() {
-            helpPopup.classList.remove('active');
-            window.location.href = 'hotlines.html';
-        };
-
-        helpNo.onclick = function() {
-            helpPopup.classList.remove('active');
-        };
-
-        // ============================================
         // SUBMIT FLARE
         // ============================================
         sendFlareBtn.onclick = function() {
@@ -472,9 +441,6 @@
 
                 loadingOverlay.classList.remove('active');
                 showScreen(prayerScreen);
-
-                // Show help popup after 3 seconds
-                showHelpPopup();
             })
             .catch(function(err) {
                 console.error('Error:', err);
