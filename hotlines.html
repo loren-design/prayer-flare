@@ -28,17 +28,24 @@
         
         .back-btn { display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); background: none; border: none; font-size: 14px; cursor: pointer; margin-bottom: 20px; text-decoration: none; }
         
-        .header { text-align: center; margin-bottom: 30px; }
+        .header { text-align: center; margin-bottom: 20px; }
         .header-icon { font-size: 48px; margin-bottom: 15px; }
         .header-title { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--gold); letter-spacing: 2px; margin-bottom: 10px; }
         .header-subtitle { font-size: 14px; color: var(--text-secondary); }
 
-        /* Crisis Link at Top */
-        .crisis-link { display: block; background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); border-radius: 12px; padding: 14px; text-align: center; margin-bottom: 25px; text-decoration: none; color: var(--flare-red); font-size: 14px; font-weight: 600; }
-        .crisis-link:hover { background: rgba(220, 38, 38, 0.2); }
+        /* Crisis Link at Top - simple red text */
+        .crisis-link { display: block; text-align: center; margin-bottom: 20px; color: var(--flare-red); font-size: 14px; font-weight: 600; text-decoration: none; }
+        .crisis-link:hover { text-decoration: underline; }
+
+        /* Navigation Buttons */
+        .nav-buttons { display: flex; gap: 10px; margin-bottom: 25px; }
+        .nav-btn { flex: 1; padding: 14px 10px; border-radius: 12px; text-align: center; text-decoration: none; font-size: 12px; font-weight: 600; line-height: 1.3; }
+        .nav-btn.mental { background: rgba(20, 184, 166, 0.15); border: 1px solid rgba(20, 184, 166, 0.4); color: var(--teal); }
+        .nav-btn.prayer { background: rgba(255, 215, 0, 0.15); border: 1px solid rgba(255, 215, 0, 0.4); color: var(--gold); }
 
         /* Section Title */
-        .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--gold); letter-spacing: 1px; margin-bottom: 20px; text-align: center; }
+        .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--gold); letter-spacing: 1px; margin-bottom: 15px; text-align: center; }
+        .section-subtitle { text-align: center; color: var(--text-secondary); font-size: 13px; margin-bottom: 20px; }
 
         /* Hotline Cards */
         .hotline-card { background: var(--bg-card); border-radius: 16px; padding: 20px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); }
@@ -60,7 +67,7 @@
         .local-link { color: var(--teal); text-decoration: none; font-size: 12px; font-weight: 600; }
 
         /* Divider */
-        .divider { height: 1px; background: rgba(255,255,255,0.1); margin: 40px 0; }
+        .divider { height: 1px; background: rgba(255,255,255,0.1); margin: 30px 0; }
 
         /* Crisis Section at Bottom */
         .crisis-section { background: linear-gradient(135deg, rgba(220, 38, 38, 0.15) 0%, rgba(153, 27, 27, 0.15) 100%); border: 1px solid rgba(220, 38, 38, 0.3); border-radius: 20px; padding: 25px; margin-top: 30px; }
@@ -86,141 +93,152 @@
         
         <div class="header">
             <div class="header-icon">📞</div>
-            <h1 class="header-title">24/7 LIVE PRAYER LINES</h1>
+            <h1 class="header-title">SOMEONE IS WAITING TO PRAY</h1>
             <p class="header-subtitle">Real people. Real prayers. Right now.</p>
         </div>
 
-        <!-- Crisis Link at Top -->
-        <a href="#crisis" class="crisis-link">🆘 In immediate crisis? Scroll to emergency resources ↓</a>
+        <!-- Crisis Link at Top - simple red text -->
+        <a href="#crisis" class="crisis-link">🆘 In immediate crisis? ↓</a>
 
-        <!-- Live Prayer Lines -->
-        <div class="section-title">🔴 CALL NOW - SOMEONE IS WAITING</div>
-
-        <div class="hotline-card">
-            <div class="hotline-header">
-                <span class="hotline-name">Billy Graham Prayer Line</span>
-                <span class="hotline-badge">24/7 LIVE</span>
-            </div>
-            <div class="hotline-number">1-855-255-7729</div>
-            <p class="hotline-desc">Trained prayer partners ready to pray with you right now. Compassionate, faith-based support from the Billy Graham Evangelistic Association.</p>
-            <a href="tel:18552557729" class="hotline-btn">📞 CALL NOW</a>
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <a href="#mental-health" class="nav-btn mental">🧠 Addiction &<br>Mental Health</a>
+            <a href="#prayer-lines" class="nav-btn prayer">📞 24/7 Live<br>Prayer Lines</a>
         </div>
 
-        <div class="hotline-card">
-            <div class="hotline-header">
-                <span class="hotline-name">The 700 Club (CBN)</span>
-                <span class="hotline-badge">24/7 LIVE</span>
-            </div>
-            <div class="hotline-number">1-800-700-7000</div>
-            <p class="hotline-desc">Prayer counselors available around the clock, 365 days a year. No matter what you're facing, someone is ready to pray.</p>
-            <a href="tel:18007007000" class="hotline-btn">📞 CALL NOW</a>
-        </div>
+        <!-- Addiction & Mental Health Section FIRST -->
+        <div id="mental-health">
+            <div class="section-title">🧠 CHRISTIAN ADDICTION & MENTAL HEALTH</div>
+            <p class="section-subtitle">Faith-based support for recovery and mental health struggles</p>
 
-        <div class="hotline-card">
-            <div class="hotline-header">
-                <span class="hotline-name">Andrew Wommack Ministries</span>
-                <span class="hotline-badge">24/7 LIVE</span>
+            <div class="hotline-card">
+                <div class="hotline-header">
+                    <span class="hotline-name">Lighthouse Network</span>
+                    <span class="hotline-badge">24/7 LIVE</span>
+                </div>
+                <div class="hotline-number">1-844-543-3242</div>
+                <p class="hotline-desc">Free Christian helpline for addiction and mental health. Care guides help you find treatment options for drug, alcohol, or psychological struggles. Faith-based guidance through life's storms.</p>
+                <a href="tel:18445433242" class="hotline-btn">📞 CALL NOW</a>
             </div>
-            <div class="hotline-number">(719) 635-1111</div>
-            <p class="hotline-desc">Trained prayer ministers available around the clock. Grace-based, compassionate support grounded in God's Word.</p>
-            <a href="tel:7196351111" class="hotline-btn">📞 CALL NOW</a>
-        </div>
 
-        <div class="hotline-card">
-            <div class="hotline-header">
-                <span class="hotline-name">Daystar Prayer Line</span>
-                <span class="hotline-badge">24/7 LIVE</span>
+            <div class="hotline-card">
+                <div class="hotline-header">
+                    <span class="hotline-name">National Prayer Line</span>
+                    <span class="hotline-badge">24/7 LIVE</span>
+                </div>
+                <div class="hotline-number">1-800-477-2937</div>
+                <p class="hotline-desc">Spiritual support and prayer around the clock. 1-800-4-PRAYER.</p>
+                <a href="tel:18004772937" class="hotline-btn">📞 CALL NOW</a>
             </div>
-            <div class="hotline-number">1-800-329-0029</div>
-            <p class="hotline-desc">Prayer partners standing by. Also available in Spanish and multiple international languages.</p>
-            <a href="tel:18003290029" class="hotline-btn">📞 CALL NOW</a>
-        </div>
 
-        <div class="hotline-card">
-            <div class="hotline-header">
-                <span class="hotline-name">K-LOVE Hopeline</span>
-                <span class="hotline-badge">24/7 LIVE</span>
+            <div class="hotline-card">
+                <div class="hotline-header">
+                    <span class="hotline-name">Celebrate Recovery Info Line</span>
+                    <span class="hotline-badge">INFO</span>
+                </div>
+                <div class="hotline-number">1-888-734-5504</div>
+                <p class="hotline-desc">Find a Christ-centered 12-step recovery program near you. Hurts, habits, and hangups - there's freedom.</p>
+                <a href="tel:18887345504" class="hotline-btn">📞 CALL NOW</a>
             </div>
-            <div class="hotline-number">1-800-332-0700</div>
-            <p class="hotline-desc">Christian encouragement and prayer support from the K-LOVE radio ministry.</p>
-            <a href="tel:18003320700" class="hotline-btn">📞 CALL NOW</a>
-        </div>
-
-        <div class="hotline-card">
-            <div class="hotline-header">
-                <span class="hotline-name">HIS Radio Prayer Line</span>
-                <span class="hotline-badge">24/7 LIVE</span>
-            </div>
-            <div class="hotline-number">1-866-987-7729</div>
-            <p class="hotline-desc">Call or text anytime. On-air staff prays for requests daily. Listeners and prayer team pray 24/7.</p>
-            <a href="tel:18669877729" class="hotline-btn">📞 CALL NOW</a>
-        </div>
-
-        <div class="hotline-card">
-            <div class="hotline-header">
-                <span class="hotline-name">The JOY FM Prayer Line</span>
-                <span class="hotline-badge">24/7 LIVE</span>
-            </div>
-            <div class="hotline-number">1-877-800-7729</div>
-            <p class="hotline-desc">Someone is available 24/7 to pray for you. Call or text to connect with someone who cares.</p>
-            <a href="tel:18778007729" class="hotline-btn">📞 CALL NOW</a>
-        </div>
-
-        <div class="hotline-card">
-            <div class="hotline-header">
-                <span class="hotline-name">In Touch Ministries</span>
-                <span class="hotline-badge">24/7 LIVE</span>
-            </div>
-            <div class="hotline-number">1-800-789-1473</div>
-            <p class="hotline-desc">Prayer line from Dr. Charles Stanley's ministry. Caring prayer partners available anytime.</p>
-            <a href="tel:18007891473" class="hotline-btn">📞 CALL NOW</a>
-        </div>
-
-        <div class="hotline-card">
-            <div class="hotline-header">
-                <span class="hotline-name">PrayLive</span>
-                <span class="hotline-badge">24/7 LIVE</span>
-            </div>
-            <div class="hotline-number">(443) 524-8990</div>
-            <p class="hotline-desc">Free 24/7 live prayer support. Join believers worldwide experiencing spiritual breakthroughs.</p>
-            <a href="tel:4435248990" class="hotline-btn">📞 CALL NOW</a>
         </div>
 
         <!-- Divider -->
         <div class="divider"></div>
 
-        <!-- Addiction & Mental Health Section -->
-        <div class="section-title">🧠 ADDICTION & MENTAL HEALTH</div>
-        <p style="text-align: center; color: var(--text-secondary); font-size: 13px; margin-bottom: 20px;">Christian ministries specializing in addiction recovery and mental health support</p>
+        <!-- Live Prayer Lines SECOND -->
+        <div id="prayer-lines">
+            <div class="section-title">📞 24/7 LIVE PRAYER LINES</div>
+            <p class="section-subtitle">Someone is waiting to pray with you right now</p>
 
-        <div class="hotline-card">
-            <div class="hotline-header">
-                <span class="hotline-name">Lighthouse Network</span>
-                <span class="hotline-badge">24/7 LIVE</span>
+            <div class="hotline-card">
+                <div class="hotline-header">
+                    <span class="hotline-name">Billy Graham Prayer Line</span>
+                    <span class="hotline-badge">24/7 LIVE</span>
+                </div>
+                <div class="hotline-number">1-855-255-7729</div>
+                <p class="hotline-desc">Trained prayer partners ready to pray with you right now. Compassionate, faith-based support from the Billy Graham Evangelistic Association.</p>
+                <a href="tel:18552557729" class="hotline-btn">📞 CALL NOW</a>
             </div>
-            <div class="hotline-number">1-844-543-3242</div>
-            <p class="hotline-desc">Free Christian helpline for addiction and mental health. Care guides help you find treatment options for drug, alcohol, or psychological struggles. Faith-based guidance through life's storms.</p>
-            <a href="tel:18445433242" class="hotline-btn">📞 CALL NOW</a>
-        </div>
 
-        <div class="hotline-card">
-            <div class="hotline-header">
-                <span class="hotline-name">National Prayer Line</span>
-                <span class="hotline-badge">24/7 LIVE</span>
+            <div class="hotline-card">
+                <div class="hotline-header">
+                    <span class="hotline-name">The 700 Club (CBN)</span>
+                    <span class="hotline-badge">24/7 LIVE</span>
+                </div>
+                <div class="hotline-number">1-800-700-7000</div>
+                <p class="hotline-desc">Prayer counselors available around the clock, 365 days a year. No matter what you're facing, someone is ready to pray.</p>
+                <a href="tel:18007007000" class="hotline-btn">📞 CALL NOW</a>
             </div>
-            <div class="hotline-number">1-800-477-2937</div>
-            <p class="hotline-desc">Spiritual support and prayer around the clock. 1-800-4-PRAYER.</p>
-            <a href="tel:18004772937" class="hotline-btn">📞 CALL NOW</a>
-        </div>
 
-        <div class="hotline-card">
-            <div class="hotline-header">
-                <span class="hotline-name">Celebrate Recovery Info Line</span>
-                <span class="hotline-badge">INFO</span>
+            <div class="hotline-card">
+                <div class="hotline-header">
+                    <span class="hotline-name">Andrew Wommack Ministries</span>
+                    <span class="hotline-badge">24/7 LIVE</span>
+                </div>
+                <div class="hotline-number">(719) 635-1111</div>
+                <p class="hotline-desc">Trained prayer ministers available around the clock. Grace-based, compassionate support grounded in God's Word.</p>
+                <a href="tel:7196351111" class="hotline-btn">📞 CALL NOW</a>
             </div>
-            <div class="hotline-number">1-888-734-5504</div>
-            <p class="hotline-desc">Find a Christ-centered 12-step recovery program near you. Hurts, habits, and hangups - there's freedom.</p>
-            <a href="tel:18887345504" class="hotline-btn">📞 CALL NOW</a>
+
+            <div class="hotline-card">
+                <div class="hotline-header">
+                    <span class="hotline-name">Daystar Prayer Line</span>
+                    <span class="hotline-badge">24/7 LIVE</span>
+                </div>
+                <div class="hotline-number">1-800-329-0029</div>
+                <p class="hotline-desc">Prayer partners standing by. Also available in Spanish and multiple international languages.</p>
+                <a href="tel:18003290029" class="hotline-btn">📞 CALL NOW</a>
+            </div>
+
+            <div class="hotline-card">
+                <div class="hotline-header">
+                    <span class="hotline-name">K-LOVE Hopeline</span>
+                    <span class="hotline-badge">24/7 LIVE</span>
+                </div>
+                <div class="hotline-number">1-800-332-0700</div>
+                <p class="hotline-desc">Christian encouragement and prayer support from the K-LOVE radio ministry.</p>
+                <a href="tel:18003320700" class="hotline-btn">📞 CALL NOW</a>
+            </div>
+
+            <div class="hotline-card">
+                <div class="hotline-header">
+                    <span class="hotline-name">HIS Radio Prayer Line</span>
+                    <span class="hotline-badge">24/7 LIVE</span>
+                </div>
+                <div class="hotline-number">1-866-987-7729</div>
+                <p class="hotline-desc">Call or text anytime. On-air staff prays for requests daily. Listeners and prayer team pray 24/7.</p>
+                <a href="tel:18669877729" class="hotline-btn">📞 CALL NOW</a>
+            </div>
+
+            <div class="hotline-card">
+                <div class="hotline-header">
+                    <span class="hotline-name">The JOY FM Prayer Line</span>
+                    <span class="hotline-badge">24/7 LIVE</span>
+                </div>
+                <div class="hotline-number">1-877-800-7729</div>
+                <p class="hotline-desc">Someone is available 24/7 to pray for you. Call or text to connect with someone who cares.</p>
+                <a href="tel:18778007729" class="hotline-btn">📞 CALL NOW</a>
+            </div>
+
+            <div class="hotline-card">
+                <div class="hotline-header">
+                    <span class="hotline-name">In Touch Ministries</span>
+                    <span class="hotline-badge">24/7 LIVE</span>
+                </div>
+                <div class="hotline-number">1-800-789-1473</div>
+                <p class="hotline-desc">Prayer line from Dr. Charles Stanley's ministry. Caring prayer partners available anytime.</p>
+                <a href="tel:18007891473" class="hotline-btn">📞 CALL NOW</a>
+            </div>
+
+            <div class="hotline-card">
+                <div class="hotline-header">
+                    <span class="hotline-name">PrayLive</span>
+                    <span class="hotline-badge">24/7 LIVE</span>
+                </div>
+                <div class="hotline-number">(443) 524-8990</div>
+                <p class="hotline-desc">Free 24/7 live prayer support. Join believers worldwide experiencing spiritual breakthroughs.</p>
+                <a href="tel:4435248990" class="hotline-btn">📞 CALL NOW</a>
+            </div>
         </div>
 
         <!-- Local Resources -->
