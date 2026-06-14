@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>The Wall — Prayer Flare</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --text-primary: #ffffff;
+            --text-secondary: #d4c4b0;
+            --text-muted: #8a8090;
+            --flare-orange: #ff6b35;
+            --flare-red: #ff4444;
+            --flare-glow: rgba(255, 107, 53, 0.4);
+            --gold: #ffd700;
+            --teal: #14b8a6;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* ===== LOGIN SCREEN ===== */
+        .login-wrap {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .login-card {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-subtle);
+            border-radius: 18px;
+            padding: 40px 28px;
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+        }
+        .login-flame { font-size: 44px; margin-bottom: 8px; filter: drop-shadow(0 0 30px var(--flare-glow)); }
+        .login-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 34px;
+            letter-spacing: 3px;
+            color: var(--text-primary);
+        }
+        .login-sub { color: var(--text-muted); font-size: 13px; margin: 6px 0 26px; }
+        .field { text-align: left; margin-bottom: 16px; }
+        .field-label {
+            color: var(--text-secondary);
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .field-input {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            padding: 13px 14px;
+            color: var(--text-primary);
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+        }
+        .field-input:focus { outline: none; border-color: var(--flare-orange); }
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--flare-orange), var(--flare-red));
+            color: white;
+            border: none;
+            border-radius: 26px;
+            padding: 15px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--flare-glow); }
+        .login-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+        .login-error {
+            color: var(--flare-red);
+            font-size: 13px;
+            margin-top: 16px;
+            min-height: 18px;
+        }
+        .login-back {
+            display: inline-block;
+            margin-top: 22px;
+            color: var(--text-muted);
+            font-size: 13px;
+            text-decoration: none;
+        }
+        .login-back:hover { color: var(--flare-orange); }
+
+        /* ===== WALL SCREEN ===== */
+        #wallScreen { display: none; }
+        .wall-wrap { max-width: 620px; margin: 0 auto; padding: 24px 18px 60px; }
+        .wall-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 0 2px;
+        }
+        .wall-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            letter-spacing: 2px;
+            color: var(--gold);
+        }
+        .logout-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--text-muted);
+            border-radius: 16px;
+            padding: 6px 14px;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+        .logout-btn:hover { color: var(--text-primary); border-color: rgba(255,255,255,0.3); }
+        .wall-count { color: var(--text-muted); font-size: 13px; margin: 2px 0 20px; }
+
+        .flare-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-left: 3px solid var(--flare-orange);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 11px;
+        }
+        .flare-card.prayed { border-left-color: var(--teal); opacity: 0.7; }
+        .flare-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .flare-cat { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+        .flare-time { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+        .flare-meta { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+        .badge-new { color: var(--flare-orange); font-weight: 600; }
+        .badge-prayed { color: var(--teal); font-weight: 600; }
+
+        .wall-empty, .wall-loading {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 60px 20px;
+            font-size: 15px;
+        }
+        .wall-empty .big { font-size: 40px; margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+
+    <!-- ===== LOGIN ===== -->
+    <div class="login-wrap" id="loginScreen">
+        <div class="login-card">
+            <div class="login-flame">🔥</div>
+            <div class="login-title">WATCHMAN LOGIN</div>
+            <div class="login-sub">Vetted Healing House volunteers only</div>
+
+            <div class="field">
+                <label class="field-label" for="email">Email</label>
+                <input class="field-input" type="email" id="email" placeholder="you@email.com" autocomplete="username">
+            </div>
+            <div class="field">
+                <label class="field-label" for="password">Password</label>
+                <input class="field-input" type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+            </div>
+
+            <button class="login-btn" id="loginBtn">ENTER THE WALL →</button>
+            <div class="login-error" id="loginError"></div>
+
+            <a class="login-back" href="index.html">← Back to Prayer Flare</a>
+        </div>
+    </div>
+
+    <!-- ===== WALL ===== -->
+    <div id="wallScreen">
+        <div class="wall-wrap">
+            <div class="wall-header">
+                <div class="wall-title">🔥 The Wall</div>
+                <button class="logout-btn" id="logoutBtn">Log out</button>
+            </div>
+            <div class="wall-count" id="wallCount">Loading…</div>
+            <div id="flareList">
+                <div class="wall-loading">🔥 Loading flares…</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://shesaxxugzfdozlmigrk.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNoZXNheHh1Z3pmZG96bG1pZ3JrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ4MzIxMTAsImV4cCI6MjA4MDQwODExMH0.CXQqq8EAQ50w7NxnVvKwOVf5LuRr-x8tnuDajQK_qds';
+        const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        const CATEGORIES = {
+            anxiety:    { icon: '😰', label: 'Anxiety / Panic' },
+            temptation: { icon: '🎯', label: 'Temptation' },
+            addiction:  { icon: '⛓️', label: 'Addiction Craving' },
+            depression: { icon: '🌑', label: 'Depression / Giving Up' },
+            other:      { icon: '🙏', label: 'Other / Just Need Prayer' }
+        };
+
+        const loginScreen = document.getElementById('loginScreen');
+        const wallScreen  = document.getElementById('wallScreen');
+        const loginBtn    = document.getElementById('loginBtn');
+        const loginError  = document.getElementById('loginError');
+        const emailEl     = document.getElementById('email');
+        const passwordEl  = document.getElementById('password');
+
+        function timeAgo(ts) {
+            const then = new Date(ts).getTime();
+            const mins = Math.floor((Date.now() - then) / 60000);
+            if (isNaN(mins)) return '';
+            if (mins < 1) return 'just now';
+            if (mins < 60) return mins + ' min ago';
+            const hrs = Math.floor(mins / 60);
+            if (hrs < 24) return hrs + (hrs === 1 ? ' hr ago' : ' hrs ago');
+            const days = Math.floor(hrs / 24);
+            return days + (days === 1 ? ' day ago' : ' days ago');
+        }
+
+        function escapeHtml(s) {
+            return String(s == null ? '' : s).replace(/[&<>"']/g, c => (
+                { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]
+            ));
+        }
+
+        async function showWall() {
+            loginScreen.style.display = 'none';
+            wallScreen.style.display = 'block';
+            await loadFlares();
+        }
+
+        function showLogin() {
+            wallScreen.style.display = 'none';
+            loginScreen.style.display = 'flex';
+        }
+
+        async function loadFlares() {
+            const list = document.getElementById('flareList');
+            const count = document.getElementById('wallCount');
+            list.innerHTML = '<div class="wall-loading">🔥 Loading flares…</div>';
+
+            const { data, error } = await db
+                .from('Prayer Flares')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                list.innerHTML = '<div class="wall-empty"><div class="big">⚠️</div>Could not load the wall. ' + escapeHtml(error.message) + '</div>';
+                count.textContent = '';
+                return;
+            }
+
+            if (!data || data.length === 0) {
+                count.textContent = 'No flares yet.';
+                list.innerHTML = '<div class="wall-empty"><div class="big">🕊️</div>The wall is quiet right now. When someone lights a flare, it will appear here.</div>';
+                return;
+            }
+
+            const waiting = data.filter(f => f.status !== 'prayed').length;
+            count.textContent = waiting + (waiting === 1 ? ' flare' : ' flares') + ' waiting for prayer';
+
+            list.innerHTML = data.map(f => {
+                const cat = CATEGORIES[f.category] || { icon: '🔥', label: f.category || 'Prayer Need' };
+                const prayed = f.status === 'prayed';
+                const badge = prayed
+                    ? '<span class="badge-prayed">✓ PRAYED</span>'
+                    : '<span class="badge-new">NEW</span>';
+                const zip = f.zip_code ? '📍 ' + escapeHtml(f.zip_code) + ' · ' : '';
+                return (
+                    '<div class="flare-card' + (prayed ? ' prayed' : '') + '">' +
+                        '<div class="flare-top">' +
+                            '<div class="flare-cat">' + cat.icon + ' ' + escapeHtml(cat.label) + '</div>' +
+                            '<div class="flare-time">' + timeAgo(f.created_at) + '</div>' +
+                        '</div>' +
+                        '<div class="flare-meta">' + zip + badge + '</div>' +
+                    '</div>'
+                );
+            }).join('');
+        }
+
+        async function doLogin() {
+            const email = emailEl.value.trim();
+            const password = passwordEl.value;
+            loginError.textContent = '';
+            if (!email || !password) {
+                loginError.textContent = 'Enter your email and password.';
+                return;
+            }
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'CHECKING…';
+
+            const { error } = await db.auth.signInWithPassword({ email, password });
+
+            loginBtn.disabled = false;
+            loginBtn.textContent = 'ENTER THE WALL →';
+
+            if (error) {
+                loginError.textContent = 'That login didn\u2019t work. Check the email and password.';
+                return;
+            }
+            await showWall();
+        }
+
+        loginBtn.addEventListener('click', doLogin);
+        passwordEl.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+        emailEl.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await db.auth.signOut();
+            emailEl.value = '';
+            passwordEl.value = '';
+            showLogin();
+        });
+
+        (async function init() {
+            const { data } = await db.auth.getSession();
+            if (data && data.session) {
+                await showWall();
+            } else {
+                showLogin();
+            }
+        })();
+    </script>
+</body>
+</html>
