@@ -184,6 +184,29 @@
             box-shadow: 0 12px 45px var(--flare-glow);
         }
 
+        .step1-login {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: -16px auto 30px;
+            padding: 12px 28px;
+            border-radius: 26px;
+            background: rgba(20, 184, 166, 0.08);
+            border: 1px solid rgba(20, 184, 166, 0.45);
+            color: var(--teal);
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.25s;
+        }
+
+        .step1-login:hover {
+            background: var(--teal);
+            color: #04231f;
+            transform: translateY(-2px);
+        }
+
         .step1-scripture {
             font-style: italic;
             color: var(--gold-soft);
@@ -480,6 +503,8 @@
             <h1 class="step1-title">BECOME A WATCHMAN</h1>
 
             <button class="step1-cta" onclick="goToStep(2)">🔥 APPLY NOW 🔥</button>
+
+            <a href="watchman-wall.html" class="step1-login">🔓 Already a Watchman? Enter the Wall →</a>
 
             <p class="step1-scripture">"I have posted watchmen on your walls, Jerusalem; they will never be silent day or night."</p>
             <p class="step1-scripture-ref">— Isaiah 62:6</p>
