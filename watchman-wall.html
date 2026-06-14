@@ -11,169 +11,140 @@
     <style>
         :root {
             --bg-dark: #0a0a0f;
-            --bg-card: #12121a;
+            --bg-card: #14141d;
+            --bg-elevated: #1a1a26;
             --text-primary: #ffffff;
             --text-secondary: #d4c4b0;
             --text-muted: #8a8090;
             --flare-orange: #ff6b35;
             --flare-red: #ff4444;
-            --flare-glow: rgba(255, 107, 53, 0.4);
+            --flare-glow: rgba(255, 107, 53, 0.35);
             --gold: #ffd700;
             --teal: #14b8a6;
-            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-subtle: rgba(255, 255, 255, 0.07);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', -apple-system, sans-serif;
-            background: var(--bg-dark);
+            background:
+                radial-gradient(1200px 500px at 50% -200px, rgba(255,107,53,0.10), transparent 70%),
+                var(--bg-dark);
             color: var(--text-primary);
             min-height: 100vh;
-            line-height: 1.6;
+            line-height: 1.55;
         }
 
-        /* ===== LOGIN SCREEN ===== */
-        .login-wrap {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-        }
+        /* ===== LOGIN ===== */
+        .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
         .login-card {
             background: var(--bg-dark);
             border: 1px solid var(--border-subtle);
             border-radius: 18px;
             padding: 40px 28px;
-            width: 100%;
-            max-width: 380px;
-            text-align: center;
+            width: 100%; max-width: 380px; text-align: center;
         }
         .login-flame { font-size: 44px; margin-bottom: 8px; filter: drop-shadow(0 0 30px var(--flare-glow)); }
-        .login-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 34px;
-            letter-spacing: 3px;
-            color: var(--text-primary);
-        }
+        .login-title { font-family: 'Bebas Neue', sans-serif; font-size: 34px; letter-spacing: 3px; }
         .login-sub { color: var(--text-muted); font-size: 13px; margin: 6px 0 26px; }
         .field { text-align: left; margin-bottom: 16px; }
-        .field-label {
-            color: var(--text-secondary);
-            font-size: 11px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-            display: block;
-        }
+        .field-label { color: var(--text-secondary); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; display: block; }
         .field-input {
-            width: 100%;
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 10px;
-            padding: 13px 14px;
-            color: var(--text-primary);
-            font-size: 15px;
-            font-family: 'Inter', sans-serif;
+            width: 100%; background: var(--bg-card); border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px; padding: 13px 14px; color: var(--text-primary); font-size: 15px; font-family: 'Inter', sans-serif;
         }
         .field-input:focus { outline: none; border-color: var(--flare-orange); }
         .login-btn {
-            width: 100%;
-            background: linear-gradient(135deg, var(--flare-orange), var(--flare-red));
-            color: white;
-            border: none;
-            border-radius: 26px;
-            padding: 15px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 20px;
-            letter-spacing: 2px;
-            cursor: pointer;
-            margin-top: 8px;
-            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%; background: linear-gradient(135deg, var(--flare-orange), var(--flare-red)); color: #fff; border: none;
+            border-radius: 26px; padding: 15px; font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 2px;
+            cursor: pointer; margin-top: 8px; transition: transform 0.2s, box-shadow 0.2s;
         }
         .login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--flare-glow); }
         .login-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
-        .login-error {
-            color: var(--flare-red);
-            font-size: 13px;
-            margin-top: 16px;
-            min-height: 18px;
-        }
-        .login-back {
-            display: inline-block;
-            margin-top: 22px;
-            color: var(--text-muted);
-            font-size: 13px;
-            text-decoration: none;
-        }
+        .login-error { color: var(--flare-red); font-size: 13px; margin-top: 16px; min-height: 18px; }
+        .login-back { display: inline-block; margin-top: 22px; color: var(--text-muted); font-size: 13px; text-decoration: none; }
         .login-back:hover { color: var(--flare-orange); }
 
-        /* ===== WALL SCREEN ===== */
+        /* ===== WALL ===== */
         #wallScreen { display: none; }
-        .wall-wrap { max-width: 620px; margin: 0 auto; padding: 24px 18px 60px; }
-        .wall-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 6px 0 2px;
-        }
-        .wall-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 28px;
-            letter-spacing: 2px;
-            color: var(--gold);
-        }
+        .wall-wrap { max-width: 640px; margin: 0 auto; padding: 22px 16px 70px; }
+        .wall-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+        .wall-title { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 2px; color: var(--gold); }
         .logout-btn {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: var(--text-muted);
-            border-radius: 16px;
-            padding: 6px 14px;
-            font-size: 12px;
-            cursor: pointer;
-            font-family: 'Inter', sans-serif;
+            background: transparent; border: 1px solid rgba(255,255,255,0.12); color: var(--text-muted);
+            border-radius: 16px; padding: 7px 15px; font-size: 12px; cursor: pointer; font-family: 'Inter', sans-serif;
         }
         .logout-btn:hover { color: var(--text-primary); border-color: rgba(255,255,255,0.3); }
-        .wall-count { color: var(--text-muted); font-size: 13px; margin: 2px 0 20px; }
+
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+        .stat { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 14px 10px; text-align: center; }
+        .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 30px; line-height: 1; letter-spacing: 1px; }
+        .stat-num.wait { color: var(--flare-orange); }
+        .stat-num.pray { color: var(--teal); }
+        .stat-num.tot  { color: var(--gold); }
+        .stat-label { color: var(--text-muted); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+
+        .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+        .chip {
+            background: var(--bg-card); border: 1px solid var(--border-subtle); color: var(--text-secondary);
+            border-radius: 18px; padding: 7px 14px; font-size: 12.5px; cursor: pointer; transition: all 0.2s; user-select: none;
+        }
+        .chip:hover { border-color: rgba(255,255,255,0.25); }
+        .chip.active { background: rgba(255,107,53,0.15); border-color: var(--flare-orange); color: #fff; }
+
+        .section-label {
+            font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted);
+            margin: 26px 0 12px; display: flex; align-items: center; gap: 10px;
+        }
+        .section-label::after { content: ""; flex: 1; height: 1px; background: var(--border-subtle); }
 
         .flare-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-left: 3px solid var(--flare-orange);
-            border-radius: 12px;
-            padding: 14px 16px;
-            margin-bottom: 11px;
+            background: var(--bg-card); border: 1px solid var(--border-subtle);
+            border-left: 3px solid var(--accent, var(--flare-orange));
+            border-radius: 14px; padding: 15px 16px; margin-bottom: 11px;
+            transition: opacity 0.4s, transform 0.25s, border-color 0.25s;
         }
-        .flare-card.prayed { border-left-color: var(--teal); opacity: 0.7; }
-        .flare-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
+        .flare-card:hover { border-color: rgba(255,255,255,0.16); }
+        .flare-card.prayed { border-left-color: var(--teal); opacity: 0.6; }
+        .flare-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        .flare-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+        .flare-emoji {
+            font-size: 22px; width: 42px; height: 42px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            background: var(--bg-elevated); border-radius: 11px;
         }
         .flare-cat { font-size: 15px; font-weight: 600; color: var(--text-primary); }
-        .flare-time { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
-        .flare-meta { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+        .flare-meta { font-size: 12.5px; color: var(--text-muted); margin-top: 2px; }
         .badge-new { color: var(--flare-orange); font-weight: 600; }
         .badge-prayed { color: var(--teal); font-weight: 600; }
-
-        .wall-empty, .wall-loading {
-            text-align: center;
-            color: var(--text-muted);
-            padding: 60px 20px;
-            font-size: 15px;
+        .pray-btn {
+            flex-shrink: 0; background: rgba(20,184,166,0.12); border: 1px solid rgba(20,184,166,0.5); color: var(--teal);
+            border-radius: 20px; padding: 9px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
+            font-family: 'Inter', sans-serif; white-space: nowrap; transition: all 0.2s;
         }
+        .pray-btn:hover { background: var(--teal); color: #04231f; }
+        .pray-btn:disabled { opacity: 0.5; cursor: default; }
+        .prayed-mark { flex-shrink: 0; color: var(--teal); font-size: 13px; font-weight: 600; white-space: nowrap; }
+
+        .wall-empty, .wall-loading { text-align: center; color: var(--text-muted); padding: 60px 20px; font-size: 15px; }
         .wall-empty .big { font-size: 40px; margin-bottom: 12px; }
+        .show-more {
+            display: block; margin: 4px auto 0; background: transparent; border: 1px solid var(--border-subtle);
+            color: var(--text-muted); border-radius: 18px; padding: 8px 18px; font-size: 12.5px; cursor: pointer; font-family: 'Inter', sans-serif;
+        }
+        .show-more:hover { color: var(--text-primary); }
+        @media (max-width: 440px) {
+            .pray-btn { padding: 8px 12px; font-size: 12px; }
+            .flare-cat { font-size: 14px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- ===== LOGIN ===== -->
     <div class="login-wrap" id="loginScreen">
         <div class="login-card">
             <div class="login-flame">🔥</div>
             <div class="login-title">WATCHMAN LOGIN</div>
             <div class="login-sub">Vetted Healing House volunteers only</div>
-
             <div class="field">
                 <label class="field-label" for="email">Email</label>
                 <input class="field-input" type="email" id="email" placeholder="you@email.com" autocomplete="username">
@@ -182,23 +153,28 @@
                 <label class="field-label" for="password">Password</label>
                 <input class="field-input" type="password" id="password" placeholder="••••••••" autocomplete="current-password">
             </div>
-
             <button class="login-btn" id="loginBtn">ENTER THE WALL →</button>
             <div class="login-error" id="loginError"></div>
-
             <a class="login-back" href="index.html">← Back to Prayer Flare</a>
         </div>
     </div>
 
-    <!-- ===== WALL ===== -->
     <div id="wallScreen">
         <div class="wall-wrap">
             <div class="wall-header">
                 <div class="wall-title">🔥 The Wall</div>
                 <button class="logout-btn" id="logoutBtn">Log out</button>
             </div>
-            <div class="wall-count" id="wallCount">Loading…</div>
-            <div id="flareList">
+
+            <div class="stats">
+                <div class="stat"><div class="stat-num wait" id="statWait">—</div><div class="stat-label">Waiting</div></div>
+                <div class="stat"><div class="stat-num pray" id="statPrayed">—</div><div class="stat-label">Prayed</div></div>
+                <div class="stat"><div class="stat-num tot" id="statTotal">—</div><div class="stat-label">Total Flares</div></div>
+            </div>
+
+            <div class="chips" id="chips"></div>
+
+            <div id="wallBody">
                 <div class="wall-loading">🔥 Loading flares…</div>
             </div>
         </div>
@@ -211,12 +187,17 @@
         const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         const CATEGORIES = {
-            anxiety:    { icon: '😰', label: 'Anxiety / Panic' },
-            temptation: { icon: '🎯', label: 'Temptation' },
-            addiction:  { icon: '⛓️', label: 'Addiction Craving' },
-            depression: { icon: '🌑', label: 'Depression / Giving Up' },
-            other:      { icon: '🙏', label: 'Other / Just Need Prayer' }
+            anxiety:    { icon: '😰', label: 'Anxiety / Panic',          accent: '#5da9e0' },
+            temptation: { icon: '🎯', label: 'Temptation',              accent: '#ffd700' },
+            addiction:  { icon: '⛓️', label: 'Addiction Craving',       accent: '#ff6b35' },
+            depression: { icon: '🌑', label: 'Depression / Giving Up',   accent: '#9b8cce' },
+            other:      { icon: '🙏', label: 'Other / Just Need Prayer', accent: '#14b8a6' }
         };
+        const PRAYED_PREVIEW = 12;
+
+        let allFlares = [];
+        let activeFilter = 'all';
+        let showAllPrayed = false;
 
         const loginScreen = document.getElementById('loginScreen');
         const wallScreen  = document.getElementById('wallScreen');
@@ -226,8 +207,7 @@
         const passwordEl  = document.getElementById('password');
 
         function timeAgo(ts) {
-            const then = new Date(ts).getTime();
-            const mins = Math.floor((Date.now() - then) / 60000);
+            const mins = Math.floor((Date.now() - new Date(ts).getTime()) / 60000);
             if (isNaN(mins)) return '';
             if (mins < 1) return 'just now';
             if (mins < 60) return mins + ' min ago';
@@ -236,109 +216,157 @@
             const days = Math.floor(hrs / 24);
             return days + (days === 1 ? ' day ago' : ' days ago');
         }
-
         function escapeHtml(s) {
             return String(s == null ? '' : s).replace(/[&<>"']/g, c => (
-                { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]
-            ));
+                { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
         }
+        function isPrayed(f) { return f.status === 'prayed'; }
 
         async function showWall() {
             loginScreen.style.display = 'none';
             wallScreen.style.display = 'block';
             await loadFlares();
         }
-
-        function showLogin() {
-            wallScreen.style.display = 'none';
-            loginScreen.style.display = 'flex';
-        }
+        function showLogin() { wallScreen.style.display = 'none'; loginScreen.style.display = 'flex'; }
 
         async function loadFlares() {
-            const list = document.getElementById('flareList');
-            const count = document.getElementById('wallCount');
-            list.innerHTML = '<div class="wall-loading">🔥 Loading flares…</div>';
-
+            const body = document.getElementById('wallBody');
+            body.innerHTML = '<div class="wall-loading">🔥 Loading flares…</div>';
             const { data, error } = await db
                 .from('Prayer Flares')
                 .select('*')
                 .order('creatd_at', { ascending: false });
-
             if (error) {
-                list.innerHTML = '<div class="wall-empty"><div class="big">⚠️</div>Could not load the wall. ' + escapeHtml(error.message) + '</div>';
-                count.textContent = '';
+                body.innerHTML = '<div class="wall-empty"><div class="big">⚠️</div>Could not load the wall. ' + escapeHtml(error.message) + '</div>';
                 return;
             }
+            allFlares = data || [];
+            buildChips();
+            render();
+        }
 
-            if (!data || data.length === 0) {
-                count.textContent = 'No flares yet.';
-                list.innerHTML = '<div class="wall-empty"><div class="big">🕊️</div>The wall is quiet right now. When someone lights a flare, it will appear here.</div>';
-                return;
-            }
+        function buildChips() {
+            const present = {};
+            allFlares.forEach(f => { present[f.category] = (present[f.category] || 0) + 1; });
+            const chips = document.getElementById('chips');
+            let html = '<div class="chip ' + (activeFilter === 'all' ? 'active' : '') + '" data-f="all">All · ' + allFlares.length + '</div>';
+            Object.keys(CATEGORIES).forEach(key => {
+                if (present[key]) {
+                    const c = CATEGORIES[key];
+                    html += '<div class="chip ' + (activeFilter === key ? 'active' : '') + '" data-f="' + key + '">' + c.icon + ' ' + escapeHtml(c.label.split(' /')[0]) + ' · ' + present[key] + '</div>';
+                }
+            });
+            chips.innerHTML = html;
+            chips.querySelectorAll('.chip').forEach(chip => {
+                chip.addEventListener('click', () => { activeFilter = chip.dataset.f; showAllPrayed = false; buildChips(); render(); });
+            });
+        }
 
-            const waiting = data.filter(f => f.status !== 'prayed').length;
-            count.textContent = waiting + (waiting === 1 ? ' flare' : ' flares') + ' waiting for prayer';
-
-            list.innerHTML = data.map(f => {
-                const cat = CATEGORIES[f.category] || { icon: '🔥', label: f.category || 'Prayer Need' };
-                const prayed = f.status === 'prayed';
-                const badge = prayed
-                    ? '<span class="badge-prayed">✓ PRAYED</span>'
-                    : '<span class="badge-new">NEW</span>';
-                const zip = f.zip_code ? '📍 ' + escapeHtml(f.zip_code) + ' · ' : '';
-                return (
-                    '<div class="flare-card' + (prayed ? ' prayed' : '') + '">' +
-                        '<div class="flare-top">' +
-                            '<div class="flare-cat">' + cat.icon + ' ' + escapeHtml(cat.label) + '</div>' +
-                            '<div class="flare-time">' + timeAgo(f.creatd_at) + '</div>' +
+        function cardHtml(f) {
+            const cat = CATEGORIES[f.category] || { icon: '🔥', label: f.category || 'Prayer Need', accent: '#ff6b35' };
+            const prayed = isPrayed(f);
+            const zip = f.zip_code ? '📍 ' + escapeHtml(f.zip_code) + ' · ' : '';
+            const right = prayed
+                ? '<div class="prayed-mark">✓ Prayed</div>'
+                : '<button class="pray-btn" data-id="' + escapeHtml(f.id) + '">🙏 Mark Prayed</button>';
+            const badge = prayed ? '<span class="badge-prayed">covered</span>' : '<span class="badge-new">NEW</span>';
+            return (
+                '<div class="flare-card' + (prayed ? ' prayed' : '') + '" data-card="' + escapeHtml(f.id) + '" style="--accent:' + cat.accent + ';">' +
+                    '<div class="flare-row">' +
+                        '<div class="flare-left">' +
+                            '<div class="flare-emoji">' + cat.icon + '</div>' +
+                            '<div>' +
+                                '<div class="flare-cat">' + escapeHtml(cat.label) + '</div>' +
+                                '<div class="flare-meta">' + zip + badge + ' · ' + timeAgo(f.creatd_at) + '</div>' +
+                            '</div>' +
                         '</div>' +
-                        '<div class="flare-meta">' + zip + badge + '</div>' +
-                    '</div>'
-                );
-            }).join('');
+                        right +
+                    '</div>' +
+                '</div>'
+            );
+        }
+
+        function render() {
+            const body = document.getElementById('wallBody');
+            let list = allFlares;
+            if (activeFilter !== 'all') list = list.filter(f => f.category === activeFilter);
+
+            const waiting = list.filter(f => !isPrayed(f));
+            const prayed  = list.filter(isPrayed);
+
+            document.getElementById('statWait').textContent   = allFlares.filter(f => !isPrayed(f)).length;
+            document.getElementById('statPrayed').textContent = allFlares.filter(isPrayed).length;
+            document.getElementById('statTotal').textContent  = allFlares.length;
+
+            if (list.length === 0) {
+                body.innerHTML = '<div class="wall-empty"><div class="big">🕊️</div>The wall is quiet here. When someone lights a flare, it appears.</div>';
+                return;
+            }
+
+            let html = '';
+            if (waiting.length) {
+                html += '<div class="section-label">🔥 Waiting for prayer</div>';
+                html += waiting.map(cardHtml).join('');
+            }
+            if (prayed.length) {
+                html += '<div class="section-label">✓ Covered in prayer</div>';
+                const shown = showAllPrayed ? prayed : prayed.slice(0, PRAYED_PREVIEW);
+                html += shown.map(cardHtml).join('');
+                if (!showAllPrayed && prayed.length > PRAYED_PREVIEW) {
+                    html += '<button class="show-more" id="showMore">Show ' + (prayed.length - PRAYED_PREVIEW) + ' more covered</button>';
+                }
+            }
+            body.innerHTML = html;
+
+            body.querySelectorAll('.pray-btn').forEach(btn => {
+                btn.addEventListener('click', () => markPrayed(btn.dataset.id, btn));
+            });
+            const sm = document.getElementById('showMore');
+            if (sm) sm.addEventListener('click', () => { showAllPrayed = true; render(); });
+        }
+
+        async function markPrayed(id, btn) {
+            btn.disabled = true;
+            btn.textContent = 'Saving…';
+            const flare = allFlares.find(f => String(f.id) === String(id));
+            const newCount = (flare && flare.prayer_count ? flare.prayer_count : 0) + 1;
+            const { error } = await db
+                .from('Prayer Flares')
+                .update({ status: 'prayed', prayer_count: newCount })
+                .eq('id', id);
+            if (error) {
+                btn.disabled = false;
+                btn.textContent = '⚠️ Try again';
+                return;
+            }
+            if (flare) { flare.status = 'prayed'; flare.prayer_count = newCount; }
+            const card = document.querySelector('[data-card="' + CSS.escape(String(id)) + '"]');
+            if (card) { card.style.opacity = '0'; }
+            setTimeout(render, 300);
         }
 
         async function doLogin() {
             const email = emailEl.value.trim();
             const password = passwordEl.value;
             loginError.textContent = '';
-            if (!email || !password) {
-                loginError.textContent = 'Enter your email and password.';
-                return;
-            }
-            loginBtn.disabled = true;
-            loginBtn.textContent = 'CHECKING…';
-
+            if (!email || !password) { loginError.textContent = 'Enter your email and password.'; return; }
+            loginBtn.disabled = true; loginBtn.textContent = 'CHECKING…';
             const { error } = await db.auth.signInWithPassword({ email, password });
-
-            loginBtn.disabled = false;
-            loginBtn.textContent = 'ENTER THE WALL →';
-
-            if (error) {
-                loginError.textContent = 'That login didn\u2019t work. Check the email and password.';
-                return;
-            }
+            loginBtn.disabled = false; loginBtn.textContent = 'ENTER THE WALL →';
+            if (error) { loginError.textContent = 'That login didn\u2019t work. Check the email and password.'; return; }
             await showWall();
         }
 
         loginBtn.addEventListener('click', doLogin);
         passwordEl.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
         emailEl.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
-
         document.getElementById('logoutBtn').addEventListener('click', async () => {
-            await db.auth.signOut();
-            emailEl.value = '';
-            passwordEl.value = '';
-            showLogin();
+            await db.auth.signOut(); emailEl.value = ''; passwordEl.value = ''; showLogin();
         });
 
         (async function init() {
             const { data } = await db.auth.getSession();
-            if (data && data.session) {
-                await showWall();
-            } else {
-                showLogin();
-            }
+            if (data && data.session) { await showWall(); } else { showLogin(); }
         })();
     </script>
 </body>
