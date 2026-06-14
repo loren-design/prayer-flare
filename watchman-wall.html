@@ -262,7 +262,7 @@
             const { data, error } = await db
                 .from('Prayer Flares')
                 .select('*')
-                .order('created_at', { ascending: false });
+                .order('creatd_at', { ascending: false });
 
             if (error) {
                 list.innerHTML = '<div class="wall-empty"><div class="big">⚠️</div>Could not load the wall. ' + escapeHtml(error.message) + '</div>';
@@ -290,7 +290,7 @@
                     '<div class="flare-card' + (prayed ? ' prayed' : '') + '">' +
                         '<div class="flare-top">' +
                             '<div class="flare-cat">' + cat.icon + ' ' + escapeHtml(cat.label) + '</div>' +
-                            '<div class="flare-time">' + timeAgo(f.created_at) + '</div>' +
+                            '<div class="flare-time">' + timeAgo(f.creatd_at) + '</div>' +
                         '</div>' +
                         '<div class="flare-meta">' + zip + badge + '</div>' +
                     '</div>'
