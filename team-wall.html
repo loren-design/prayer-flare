@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>The Upper Room — Prayer Flare</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #14141d;
+            --bg-elevated: #1a1a26;
+            --text-primary: #ffffff;
+            --text-secondary: #d4c4b0;
+            --text-muted: #8a8090;
+            --flare-orange: #ff6b35;
+            --flare-red: #ff4444;
+            --flare-glow: rgba(255, 107, 53, 0.35);
+            --gold: #ffd700;
+            --teal: #14b8a6;
+            --border-subtle: rgba(255, 255, 255, 0.07);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: radial-gradient(1200px 500px at 50% -200px, rgba(20,184,166,0.10), transparent 70%), var(--bg-dark);
+            color: var(--text-primary); min-height: 100vh; line-height: 1.55;
+        }
+
+        /* LOGIN */
+        .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+        .login-card { background: var(--bg-dark); border: 1px solid var(--border-subtle); border-radius: 18px; padding: 40px 28px; width: 100%; max-width: 380px; text-align: center; }
+        .login-flame { font-size: 44px; margin-bottom: 8px; filter: drop-shadow(0 0 30px rgba(20,184,166,0.4)); }
+        .login-title { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 3px; }
+        .login-sub { color: var(--text-muted); font-size: 13px; margin: 6px 0 26px; }
+        .field { text-align: left; margin-bottom: 16px; }
+        .field-label { color: var(--text-secondary); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; display: block; }
+        .field-input { width: 100%; background: var(--bg-card); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 13px 14px; color: var(--text-primary); font-size: 15px; font-family: 'Inter', sans-serif; }
+        .field-input:focus { outline: none; border-color: var(--teal); }
+        .login-btn { width: 100%; background: linear-gradient(135deg, var(--teal), #0d9488); color: #fff; border: none; border-radius: 26px; padding: 15px; font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 2px; cursor: pointer; margin-top: 8px; transition: transform 0.2s; }
+        .login-btn:hover { transform: translateY(-2px); }
+        .login-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .login-error { color: var(--flare-red); font-size: 13px; margin-top: 16px; min-height: 18px; }
+        .login-back { display: inline-block; margin-top: 22px; color: var(--text-muted); font-size: 13px; text-decoration: none; }
+        .login-back:hover { color: var(--teal); }
+
+        /* COVENANT */
+        #covenantScreen { display: none; }
+        .covenant-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+        .covenant-card { background: var(--bg-card); border: 1px solid rgba(20,184,166,0.3); border-radius: 18px; padding: 34px 26px; max-width: 440px; width: 100%; }
+        .covenant-flame { font-size: 42px; text-align: center; margin-bottom: 10px; }
+        .covenant-title { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 2px; color: var(--teal); text-align: center; margin-bottom: 18px; }
+        .covenant-body p { font-size: 14.5px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px; }
+        .covenant-body strong { color: var(--text-primary); }
+        .covenant-safety { background: rgba(255,107,53,0.08); border: 1px solid rgba(255,107,53,0.25); border-radius: 12px; padding: 14px; }
+        .covenant-safety strong { color: var(--flare-orange); }
+        .covenant-btn { width: 100%; background: linear-gradient(135deg, var(--teal), #0d9488); color: #fff; border: none; border-radius: 26px; padding: 15px; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 1px; cursor: pointer; margin-top: 6px; }
+        .covenant-btn:hover { filter: brightness(1.08); }
+        .sacred-line { font-size: 12px; color: var(--teal); background: rgba(20,184,166,0.08); border: 1px solid rgba(20,184,166,0.2); border-radius: 10px; padding: 9px 12px; text-align: center; margin-bottom: 16px; }
+
+        /* ROOM */
+        #roomScreen { display: none; }
+        .room-wrap { max-width: 640px; margin: 0 auto; padding: 22px 16px 70px; }
+        .room-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+        .room-title { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 2px; color: var(--teal); }
+        .nav-links { display: flex; gap: 8px; }
+        .nav-link { background: transparent; border: 1px solid rgba(255,255,255,0.12); color: var(--text-muted); border-radius: 16px; padding: 7px 14px; font-size: 12px; cursor: pointer; font-family: 'Inter', sans-serif; text-decoration: none; }
+        .nav-link:hover { color: var(--text-primary); border-color: rgba(255,255,255,0.3); }
+        .room-sub { color: var(--text-muted); font-size: 13px; margin-bottom: 20px; }
+
+        .share-btn { width: 100%; background: linear-gradient(135deg, var(--teal), #0d9488); color: #fff; border: none; border-radius: 14px; padding: 16px; font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 2px; cursor: pointer; margin-bottom: 24px; }
+        .share-btn:hover { filter: brightness(1.08); }
+
+        /* FORM */
+        .form-panel { display: none; background: var(--bg-card); border: 1px solid rgba(20,184,166,0.3); border-radius: 16px; padding: 20px 18px; margin-bottom: 24px; }
+        .form-panel.open { display: block; }
+        .form-h { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 1px; color: var(--text-primary); margin-bottom: 14px; }
+        .toggle-row { display: flex; gap: 8px; margin-bottom: 14px; }
+        .toggle { flex: 1; text-align: center; padding: 11px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.15); background: var(--bg-dark); color: var(--text-secondary); font-size: 13px; cursor: pointer; transition: all 0.2s; }
+        .toggle.active { border-color: var(--teal); background: rgba(20,184,166,0.12); color: #fff; }
+        .name-field { margin-bottom: 14px; }
+        .name-field.hidden { display: none; }
+        .starters { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
+        .starter { background: var(--bg-dark); border: 1px solid var(--border-subtle); color: var(--text-secondary); border-radius: 14px; padding: 7px 12px; font-size: 12px; cursor: pointer; transition: all 0.2s; }
+        .starter:hover { border-color: var(--teal); color: #fff; }
+        .request-box { width: 100%; min-height: 90px; background: var(--bg-dark); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 13px; color: var(--text-primary); font-size: 15px; font-family: 'Inter', sans-serif; resize: vertical; line-height: 1.5; }
+        .request-box:focus { outline: none; border-color: var(--teal); }
+        .form-hint { font-size: 11.5px; color: var(--text-muted); margin: 8px 0 14px; }
+        .form-actions { display: flex; gap: 10px; }
+        .form-submit { flex: 1; background: linear-gradient(135deg, var(--teal), #0d9488); color: #fff; border: none; border-radius: 12px; padding: 14px; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 1px; cursor: pointer; }
+        .form-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+        .form-cancel { background: transparent; border: 1px solid rgba(255,255,255,0.15); color: var(--text-muted); border-radius: 12px; padding: 14px 20px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; }
+
+        .section-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin: 8px 0 12px; display: flex; align-items: center; gap: 10px; }
+        .section-label::after { content: ""; flex: 1; height: 1px; background: var(--border-subtle); }
+
+        .req-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-left: 3px solid var(--teal); border-radius: 14px; padding: 15px 16px; margin-bottom: 11px; transition: opacity 0.4s; }
+        .req-card.prayed { border-left-color: var(--gold); opacity: 0.62; }
+        .req-who { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+        .req-name { font-size: 14px; font-weight: 600; color: var(--text-primary); display: flex; align-items: center; gap: 7px; }
+        .req-name .anon { color: var(--text-muted); font-weight: 400; font-style: italic; }
+        .req-time { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+        .req-text { font-size: 14.5px; color: var(--text-secondary); line-height: 1.55; white-space: pre-wrap; }
+        .req-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; }
+        .req-count { font-size: 12px; color: var(--text-muted); }
+        .pray-btn { background: rgba(20,184,166,0.12); border: 1px solid rgba(20,184,166,0.5); color: var(--teal); border-radius: 18px; padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; }
+        .pray-btn:hover { background: var(--teal); color: #04231f; }
+        .pray-btn:disabled { opacity: 0.5; cursor: default; }
+        .prayed-mark { color: var(--gold); font-size: 13px; font-weight: 600; }
+
+        .empty, .loading { text-align: center; color: var(--text-muted); padding: 50px 20px; font-size: 15px; }
+        .empty .big { font-size: 38px; margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+
+    <div class="login-wrap" id="loginScreen">
+        <div class="login-card">
+            <div class="login-flame">🕊️</div>
+            <div class="login-title">THE UPPER ROOM</div>
+            <div class="login-sub">Where Watchmen carry each other</div>
+            <div class="field">
+                <label class="field-label" for="email">Email</label>
+                <input class="field-input" type="email" id="email" placeholder="you@email.com" autocomplete="username">
+            </div>
+            <div class="field">
+                <label class="field-label" for="password">Password</label>
+                <input class="field-input" type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+            </div>
+            <button class="login-btn" id="loginBtn">ENTER →</button>
+            <div class="login-error" id="loginError"></div>
+            <a class="login-back" href="index.html">← Back to Prayer Flare</a>
+        </div>
+    </div>
+
+    <div id="covenantScreen">
+        <div class="covenant-wrap">
+            <div class="covenant-card">
+                <div class="covenant-flame">🕊️</div>
+                <h1 class="covenant-title">This is sacred ground.</h1>
+                <div class="covenant-body">
+                    <p>What's shared in this room is held in confidence — between you, God, and the people standing with you. What you see here, what you hear here, when you leave here, <strong>let it stay here.</strong> This is not a place for gossip. We don't carry each other's burdens out the door — we carry them to the Father in prayer.</p>
+                    <p>There's no performance here, no résumé, no pretending we have it all together. We're all on the front lines, and we all need carrying. Come as you are.</p>
+                    <p class="covenant-safety"><strong>One thing we will not stay silent about:</strong> this trust is never a cover for harm. If someone is being abused or is in danger, that is not a secret to keep — please tell leadership right away. We protect people over reputations, every time.</p>
+                </div>
+                <button class="covenant-btn" id="covenantBtn">I understand — enter the room</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="roomScreen">
+        <div class="room-wrap">
+            <div class="room-header">
+                <div class="room-title">🕊️ The Upper Room</div>
+                <div class="nav-links">
+                    <a class="nav-link" href="watchman-wall.html">The Wall</a>
+                    <button class="nav-link" id="logoutBtn">Log out</button>
+                </div>
+            </div>
+            <div class="room-sub">We're all on the front lines. Lay your own need down here — the team will carry it.</div>
+
+            <div class="sacred-line">🕊️ Sacred ground — what's shared here, stays here.</div>
+
+            <button class="share-btn" id="openFormBtn">🙏 I Need Prayer Too</button>
+
+            <div class="form-panel" id="formPanel">
+                <div class="form-h">Share a need</div>
+                <div class="toggle-row">
+                    <div class="toggle active" id="toggleNamed">Share as me</div>
+                    <div class="toggle" id="toggleAnon">Stay anonymous</div>
+                </div>
+                <div class="name-field" id="nameField">
+                    <input class="field-input" type="text" id="nameInput" placeholder="Your name or first name" maxlength="60">
+                </div>
+                <div class="starters" id="starters"></div>
+                <textarea class="request-box" id="requestBox" placeholder="In your own words — what do you need prayer for?"></textarea>
+                <div class="form-hint">🔒 Only vetted Watchmen and leaders can see this. Share as much or as little as you want.</div>
+                <div class="form-actions">
+                    <button class="form-submit" id="submitBtn">🙏 Send to the Room</button>
+                    <button class="form-cancel" id="cancelBtn">Cancel</button>
+                </div>
+            </div>
+
+            <div id="roomBody">
+                <div class="loading">🕊️ Loading the room…</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://shesaxxugzfdozlmigrk.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNoZXNheHh1Z3pmZG96bG1pZ3JrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ4MzIxMTAsImV4cCI6MjA4MDQwODExMH0.CXQqq8EAQ50w7NxnVvKwOVf5LuRr-x8tnuDajQK_qds';
+        const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        const STARTERS = [
+            "I'm worn down and need to be refilled.",
+            "Please pray for my family this week.",
+            "I'm carrying something heavy and can't say much.",
+            "Pray for strength to keep showing up.",
+            "Something in my own walk needs God's touch.",
+            "I need wisdom for a hard decision."
+        ];
+
+        let isAnonymous = false;
+
+        const loginScreen = document.getElementById('loginScreen');
+        const covenantScreen = document.getElementById('covenantScreen');
+        const covenantBtn = document.getElementById('covenantBtn');
+        const roomScreen  = document.getElementById('roomScreen');
+        const loginBtn    = document.getElementById('loginBtn');
+        const loginError  = document.getElementById('loginError');
+        const emailEl     = document.getElementById('email');
+        const passwordEl  = document.getElementById('password');
+
+        const formPanel   = document.getElementById('formPanel');
+        const openFormBtn = document.getElementById('openFormBtn');
+        const cancelBtn   = document.getElementById('cancelBtn');
+        const submitBtn   = document.getElementById('submitBtn');
+        const toggleNamed = document.getElementById('toggleNamed');
+        const toggleAnon  = document.getElementById('toggleAnon');
+        const nameField   = document.getElementById('nameField');
+        const nameInput   = document.getElementById('nameInput');
+        const requestBox  = document.getElementById('requestBox');
+        const startersEl  = document.getElementById('starters');
+
+        function escapeHtml(s) {
+            return String(s == null ? '' : s).replace(/[&<>"']/g, c => (
+                { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+        }
+        function timeAgo(ts) {
+            const mins = Math.floor((Date.now() - new Date(ts).getTime()) / 60000);
+            if (isNaN(mins)) return '';
+            if (mins < 1) return 'just now';
+            if (mins < 60) return mins + ' min ago';
+            const hrs = Math.floor(mins / 60);
+            if (hrs < 24) return hrs + (hrs === 1 ? ' hr ago' : ' hrs ago');
+            const days = Math.floor(hrs / 24);
+            return days + (days === 1 ? ' day ago' : ' days ago');
+        }
+
+        STARTERS.forEach(text => {
+            const chip = document.createElement('button');
+            chip.className = 'starter';
+            chip.textContent = text;
+            chip.onclick = function() {
+                requestBox.value = requestBox.value.trim() ? requestBox.value.trim() + ' ' + text : text;
+                requestBox.focus();
+            };
+            startersEl.appendChild(chip);
+        });
+
+        toggleNamed.onclick = function() { isAnonymous = false; toggleNamed.classList.add('active'); toggleAnon.classList.remove('active'); nameField.classList.remove('hidden'); };
+        toggleAnon.onclick  = function() { isAnonymous = true;  toggleAnon.classList.add('active');  toggleNamed.classList.remove('active'); nameField.classList.add('hidden'); };
+
+        openFormBtn.onclick = function() { formPanel.classList.add('open'); requestBox.focus(); };
+        cancelBtn.onclick = function() { formPanel.classList.remove('open'); requestBox.value = ''; nameInput.value = ''; };
+
+        async function showRoom() {
+            loginScreen.style.display = 'none';
+            covenantScreen.style.display = 'none';
+            roomScreen.style.display = 'block';
+            await loadRoom();
+        }
+        function showLogin() { roomScreen.style.display = 'none'; covenantScreen.style.display = 'none'; loginScreen.style.display = 'flex'; }
+
+        function enterAfterLogin() {
+            var accepted = false;
+            try { accepted = localStorage.getItem('upperRoomCovenant') === '1'; } catch (e) {}
+            if (accepted) {
+                showRoom();
+            } else {
+                loginScreen.style.display = 'none';
+                roomScreen.style.display = 'none';
+                covenantScreen.style.display = 'block';
+            }
+        }
+
+        covenantBtn.addEventListener('click', function() {
+            try { localStorage.setItem('upperRoomCovenant', '1'); } catch (e) {}
+            showRoom();
+        });
+
+        async function loadRoom() {
+            const body = document.getElementById('roomBody');
+            body.innerHTML = '<div class="loading">🕊️ Loading the room…</div>';
+            const { data, error } = await db.from('team_prayers').select('*').order('created_at', { ascending: false });
+            if (error) {
+                body.innerHTML = '<div class="empty"><div class="big">⚠️</div>Could not load the room. ' + escapeHtml(error.message) + '</div>';
+                return;
+            }
+            const reqs = data || [];
+            if (reqs.length === 0) {
+                body.innerHTML = '<div class="empty"><div class="big">🕊️</div>The room is quiet. When someone on the team shares a need, it appears here — and we carry it together.</div>';
+                return;
+            }
+            const waiting = reqs.filter(r => r.status !== 'prayed');
+            const prayed  = reqs.filter(r => r.status === 'prayed');
+            let html = '';
+            if (waiting.length) { html += '<div class="section-label">🙏 Lift these up</div>' + waiting.map(cardHtml).join(''); }
+            if (prayed.length)  { html += '<div class="section-label">✓ Covered in prayer</div>' + prayed.map(cardHtml).join(''); }
+            body.innerHTML = html;
+            body.querySelectorAll('.pray-btn').forEach(btn => btn.addEventListener('click', () => markPrayed(btn.dataset.id, btn)));
+        }
+
+        function cardHtml(r) {
+            const prayed = r.status === 'prayed';
+            const who = r.display_name
+                ? '<span class="req-name">🙋 ' + escapeHtml(r.display_name) + '</span>'
+                : '<span class="req-name"><span class="anon">🕊️ A fellow Watchman</span></span>';
+            const foot = prayed
+                ? '<span class="prayed-mark">✓ Prayed</span>'
+                : '<button class="pray-btn" data-id="' + escapeHtml(r.id) + '">🙏 I Prayed</button>';
+            const count = r.prayer_count ? '<span class="req-count">' + r.prayer_count + ' lifted this up</span>' : '<span class="req-count"></span>';
+            return (
+                '<div class="req-card' + (prayed ? ' prayed' : '') + '" data-card="' + escapeHtml(r.id) + '">' +
+                    '<div class="req-who">' + who + '<span class="req-time">' + timeAgo(r.created_at) + '</span></div>' +
+                    '<div class="req-text">' + escapeHtml(r.request) + '</div>' +
+                    '<div class="req-foot">' + count + foot + '</div>' +
+                '</div>'
+            );
+        }
+
+        async function markPrayed(id, btn) {
+            btn.disabled = true; btn.textContent = 'Saving…';
+            const { data: rows } = await db.from('team_prayers').select('prayer_count').eq('id', id).limit(1);
+            const current = (rows && rows[0] && rows[0].prayer_count) ? Number(rows[0].prayer_count) : 0;
+            const { error } = await db.from('team_prayers').update({ status: 'prayed', prayer_count: current + 1 }).eq('id', id);
+            if (error) { btn.disabled = false; btn.textContent = '⚠️ Try again'; return; }
+            await loadRoom();
+        }
+
+        submitBtn.onclick = async function() {
+            const text = requestBox.value.trim();
+            if (!text) { requestBox.focus(); return; }
+            const name = (!isAnonymous && nameInput.value.trim()) ? nameInput.value.trim() : null;
+            submitBtn.disabled = true; submitBtn.textContent = 'Sending…';
+            const { error } = await db.from('team_prayers').insert([{ display_name: name, request: text }]);
+            submitBtn.disabled = false; submitBtn.textContent = '🙏 Send to the Room';
+            if (error) { alert('Could not send: ' + error.message); return; }
+            requestBox.value = ''; nameInput.value = '';
+            formPanel.classList.remove('open');
+            await loadRoom();
+        };
+
+        async function doLogin() {
+            const email = emailEl.value.trim();
+            const password = passwordEl.value;
+            loginError.textContent = '';
+            if (!email || !password) { loginError.textContent = 'Enter your email and password.'; return; }
+            loginBtn.disabled = true; loginBtn.textContent = 'CHECKING…';
+            const { error } = await db.auth.signInWithPassword({ email, password });
+            loginBtn.disabled = false; loginBtn.textContent = 'ENTER →';
+            if (error) { loginError.textContent = 'That login didn\u2019t work. Check the email and password.'; return; }
+            enterAfterLogin();
+        }
+
+        loginBtn.addEventListener('click', doLogin);
+        passwordEl.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+        emailEl.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await db.auth.signOut(); emailEl.value = ''; passwordEl.value = ''; showLogin();
+        });
+
+        (async function init() {
+            const { data } = await db.auth.getSession();
+            if (data && data.session) { enterAfterLogin(); } else { showLogin(); }
+        })();
+    </script>
+</body>
+</html>
