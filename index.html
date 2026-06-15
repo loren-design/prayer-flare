@@ -555,11 +555,9 @@
                 document.getElementById('scriptureRef').textContent = '— ' + s.ref;
                 
                 // Show local resources if Yuma County
-                if (isYumaCounty(userZip)) {
-                    localResources.style.display = 'block';
-                } else {
-                    localResources.style.display = 'none';
-                }
+                // Show Healing House resources for everyone during soft launch
+                // (was previously limited to Yuma County ZIPs)
+                localResources.style.display = 'block';
 
                 // Load video
                 loadVideo();
