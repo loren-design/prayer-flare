@@ -357,10 +357,17 @@
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
             border-radius: 24px;
-            padding: 8px;
+            padding: 22px 20px;
             min-height: 400px;
             width: 100%;
         }
+
+        .apply-field { text-align: left; margin-bottom: 16px; }
+        .apply-label { display: block; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px; }
+        .apply-input, .apply-textarea { width: 100%; background: var(--bg-dark); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 13px 14px; color: var(--text-primary); font-size: 15px; font-family: 'Inter', sans-serif; }
+        .apply-input:focus, .apply-textarea:focus { outline: none; border-color: var(--flare-orange); }
+        .apply-textarea { min-height: 80px; resize: vertical; line-height: 1.5; }
+        .apply-error { color: var(--flare-red); font-size: 13px; margin-bottom: 12px; min-height: 16px; }
 
         .ghl-embed-placeholder iframe {
             width: 100%;
@@ -631,11 +638,38 @@
                     <!-- PASTE YOUR GHL EMBED CODE HERE -->
                     
                     <!-- DELETE THIS PLACEHOLDER ONCE YOU ADD YOUR FORM -->
-                    <div class="embed-placeholder-message">
-                        <div class="placeholder-icon">📋</div>
-                        <h3>GHL Form Coming Soon</h3>
-                        <p>The application form will appear here once connected.</p>
-                        <p class="placeholder-note">Admin: Replace this with your GHL embed code</p>
+                    <div id="applyForm">
+                        <div class="apply-field">
+                            <label class="apply-label" for="appName">Full Name *</label>
+                            <input class="apply-input" type="text" id="appName" placeholder="Your name">
+                        </div>
+                        <div class="apply-field">
+                            <label class="apply-label" for="appPhone">Phone *</label>
+                            <input class="apply-input" type="tel" id="appPhone" placeholder="(928) 555-0000">
+                        </div>
+                        <div class="apply-field">
+                            <label class="apply-label" for="appEmail">Email *</label>
+                            <input class="apply-input" type="email" id="appEmail" placeholder="you@email.com">
+                        </div>
+                        <div class="apply-field">
+                            <label class="apply-label" for="appRef">Who recommended you?</label>
+                            <input class="apply-input" type="text" id="appRef" placeholder="Name of the person who referred you">
+                        </div>
+                        <div class="apply-field">
+                            <label class="apply-label" for="appChurch">Your church / faith community</label>
+                            <input class="apply-input" type="text" id="appChurch" placeholder="Where you worship">
+                        </div>
+                        <div class="apply-field">
+                            <label class="apply-label" for="appWhy">Why do you want to stand on the wall?</label>
+                            <textarea class="apply-textarea" id="appWhy" placeholder="A sentence or two (optional)"></textarea>
+                        </div>
+                        <div class="apply-error" id="appError"></div>
+                        <button class="nav-btn nav-btn-primary" id="appSubmit" style="width:100%;">🔥 SUBMIT APPLICATION</button>
+                    </div>
+                    <div id="applySuccess" style="display:none; text-align:center; padding:40px 20px;">
+                        <div style="font-size:48px; margin-bottom:16px;">🔥</div>
+                        <h3 style="font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:2px; color:var(--teal); margin-bottom:12px;">APPLICATION RECEIVED</h3>
+                        <p style="color:var(--text-secondary); font-size:15px; line-height:1.6;">Thank you for answering the call. Leadership will review your application and reach out within 48 hours.</p>
                     </div>
                 </div>
             </div>
@@ -651,6 +685,7 @@
         <a href="index.html" class="footer-link">← Back to Prayer Flare</a>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         let currentStep = 1;
 
@@ -682,6 +717,50 @@
             currentStep = step;
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+        // ============================================
+        // WATCHMAN APPLICATION → SUPABASE
+        // ============================================
+        var SUPABASE_URL = 'https://shesaxxugzfdozlmigrk.supabase.co';
+        var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNoZXNheHh1Z3pmZG96bG1pZ3JrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ4MzIxMTAsImV4cCI6MjA4MDQwODExMH0.CXQqq8EAQ50w7NxnVvKwOVf5LuRr-x8tnuDajQK_qds';
+        var appDb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        var appSubmit = document.getElementById('appSubmit');
+        var appError = document.getElementById('appError');
+
+        function appVal(id) { return document.getElementById(id).value.trim(); }
+
+        appSubmit.addEventListener('click', async function() {
+            appError.textContent = '';
+            var name = appVal('appName');
+            var phone = appVal('appPhone');
+            var email = appVal('appEmail');
+            if (!name || !phone || !email) {
+                appError.textContent = 'Please fill in your name, phone, and email.';
+                return;
+            }
+            appSubmit.disabled = true;
+            appSubmit.textContent = 'SENDING…';
+
+            var result = await appDb.from('watchman_applications').insert([{
+                full_name: name,
+                phone: phone,
+                email: email,
+                recommended_by: appVal('appRef') || null,
+                church: appVal('appChurch') || null,
+                why: appVal('appWhy') || null
+            }]);
+
+            if (result.error) {
+                appSubmit.disabled = false;
+                appSubmit.textContent = '🔥 SUBMIT APPLICATION';
+                appError.textContent = 'Something went wrong. Please try again.';
+                return;
+            }
+            document.getElementById('applyForm').style.display = 'none';
+            document.getElementById('applySuccess').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
     </script>
 
 </body>
