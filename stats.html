@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>Impact — Prayer Flare</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #14141d;
+            --bg-elevated: #1a1a26;
+            --text-primary: #ffffff;
+            --text-secondary: #d4c4b0;
+            --text-muted: #8a8090;
+            --flare-orange: #ff6b35;
+            --flare-red: #ff4444;
+            --flare-glow: rgba(255, 107, 53, 0.35);
+            --gold: #ffd700;
+            --teal: #14b8a6;
+            --border-subtle: rgba(255, 255, 255, 0.07);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background:
+                radial-gradient(1200px 500px at 50% -200px, rgba(255,107,53,0.10), transparent 70%),
+                var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.55;
+        }
+
+        /* LOGIN */
+        .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+        .login-card { background: var(--bg-dark); border: 1px solid var(--border-subtle); border-radius: 18px; padding: 40px 28px; width: 100%; max-width: 380px; text-align: center; }
+        .login-flame { font-size: 44px; margin-bottom: 8px; filter: drop-shadow(0 0 30px var(--flare-glow)); }
+        .login-title { font-family: 'Bebas Neue', sans-serif; font-size: 34px; letter-spacing: 3px; }
+        .login-sub { color: var(--text-muted); font-size: 13px; margin: 6px 0 26px; }
+        .field { text-align: left; margin-bottom: 16px; }
+        .field-label { color: var(--text-secondary); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; display: block; }
+        .field-input { width: 100%; background: var(--bg-card); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 13px 14px; color: var(--text-primary); font-size: 15px; font-family: 'Inter', sans-serif; }
+        .field-input:focus { outline: none; border-color: var(--flare-orange); }
+        .login-btn { width: 100%; background: linear-gradient(135deg, var(--flare-orange), var(--flare-red)); color: #fff; border: none; border-radius: 26px; padding: 15px; font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 2px; cursor: pointer; margin-top: 8px; transition: transform 0.2s, box-shadow 0.2s; }
+        .login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--flare-glow); }
+        .login-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .login-error { color: var(--flare-red); font-size: 13px; margin-top: 16px; min-height: 18px; }
+        .login-back { display: inline-block; margin-top: 22px; color: var(--text-muted); font-size: 13px; text-decoration: none; }
+        .login-back:hover { color: var(--flare-orange); }
+
+        /* DASHBOARD */
+        #dashScreen { display: none; }
+        .dash-wrap { max-width: 680px; margin: 0 auto; padding: 22px 16px 70px; }
+        .dash-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+        .dash-title { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 2px; color: var(--gold); }
+        .nav-links { display: flex; gap: 8px; }
+        .nav-link { background: transparent; border: 1px solid rgba(255,255,255,0.12); color: var(--text-muted); border-radius: 16px; padding: 7px 14px; font-size: 12px; cursor: pointer; font-family: 'Inter', sans-serif; text-decoration: none; }
+        .nav-link:hover { color: var(--text-primary); border-color: rgba(255,255,255,0.3); }
+        .dash-sub { color: var(--text-muted); font-size: 13px; margin-bottom: 22px; }
+
+        .hero-stat { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 18px; padding: 26px 20px; text-align: center; margin-bottom: 14px; }
+        .hero-num { font-family: 'Bebas Neue', sans-serif; font-size: 64px; line-height: 1; color: var(--flare-orange); letter-spacing: 2px; }
+        .hero-label { color: var(--text-secondary); font-size: 14px; margin-top: 6px; }
+
+        .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 28px; }
+        .tile { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 16px 10px; text-align: center; }
+        .tile-num { font-family: 'Bebas Neue', sans-serif; font-size: 30px; line-height: 1; letter-spacing: 1px; }
+        .tile-num.covered { color: var(--teal); }
+        .tile-num.waiting { color: var(--flare-orange); }
+        .tile-num.week    { color: var(--gold); }
+        .tile-label { color: var(--text-muted); font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 5px; }
+
+        .section { margin-bottom: 30px; }
+        .section-h { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 1.5px; color: var(--text-primary); margin-bottom: 4px; }
+        .section-note { color: var(--text-muted); font-size: 12.5px; margin-bottom: 16px; }
+
+        .bar-row { margin-bottom: 13px; }
+        .bar-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: 14px; }
+        .bar-label { color: var(--text-secondary); display: flex; align-items: center; gap: 8px; }
+        .bar-count { color: var(--text-primary); font-weight: 600; }
+        .bar-track { height: 12px; background: var(--bg-elevated); border-radius: 8px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 8px; transition: width 0.6s ease; }
+
+        .split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+        .split-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 18px 16px; text-align: center; }
+        .split-card.yuma { border-color: rgba(20,184,166,0.4); }
+        .split-num { font-family: 'Bebas Neue', sans-serif; font-size: 38px; line-height: 1; }
+        .split-card.yuma .split-num { color: var(--teal); }
+        .split-card.beyond .split-num { color: var(--text-secondary); }
+        .split-label { color: var(--text-muted); font-size: 12px; margin-top: 6px; }
+
+        .empty { text-align: center; color: var(--text-muted); padding: 50px 20px; }
+        .dash-loading { text-align: center; color: var(--text-muted); padding: 70px 20px; font-size: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="login-wrap" id="loginScreen">
+        <div class="login-card">
+            <div class="login-flame">🔥</div>
+            <div class="login-title">IMPACT</div>
+            <div class="login-sub">Prayer Flare · leadership view</div>
+            <div class="field">
+                <label class="field-label" for="email">Email</label>
+                <input class="field-input" type="email" id="email" placeholder="you@email.com" autocomplete="username">
+            </div>
+            <div class="field">
+                <label class="field-label" for="password">Password</label>
+                <input class="field-input" type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+            </div>
+            <button class="login-btn" id="loginBtn">VIEW IMPACT →</button>
+            <div class="login-error" id="loginError"></div>
+            <a class="login-back" href="index.html">← Back to Prayer Flare</a>
+        </div>
+    </div>
+
+    <div id="dashScreen">
+        <div class="dash-wrap">
+            <div class="dash-header">
+                <div class="dash-title">🔥 Impact</div>
+                <div class="nav-links">
+                    <a class="nav-link" href="watchman-wall.html">The Wall</a>
+                    <button class="nav-link" id="logoutBtn">Log out</button>
+                </div>
+            </div>
+            <div class="dash-sub">What God is doing through Prayer Flare</div>
+            <div id="dashBody">
+                <div class="dash-loading">🔥 Counting the flares…</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://shesaxxugzfdozlmigrk.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNoZXNheHh1Z3pmZG96bG1pZ3JrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ4MzIxMTAsImV4cCI6MjA4MDQwODExMH0.CXQqq8EAQ50w7NxnVvKwOVf5LuRr-x8tnuDajQK_qds';
+        const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        const CATEGORIES = {
+            anxiety:    { icon: '😰', label: 'Anxiety / Panic',          accent: '#5da9e0' },
+            temptation: { icon: '🎯', label: 'Temptation',              accent: '#ffd700' },
+            addiction:  { icon: '⛓️', label: 'Addiction Craving',       accent: '#ff6b35' },
+            depression: { icon: '🌑', label: 'Depression / Giving Up',   accent: '#9b8cce' },
+            other:      { icon: '🙏', label: 'Other / Just Need Prayer', accent: '#14b8a6' }
+        };
+        const YUMA_ZIPS = ['853', '854', '857'];
+
+        const loginScreen = document.getElementById('loginScreen');
+        const dashScreen  = document.getElementById('dashScreen');
+        const loginBtn    = document.getElementById('loginBtn');
+        const loginError  = document.getElementById('loginError');
+        const emailEl     = document.getElementById('email');
+        const passwordEl  = document.getElementById('password');
+
+        function escapeHtml(s) {
+            return String(s == null ? '' : s).replace(/[&<>"']/g, c => (
+                { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+        }
+        function isYuma(zip) { return zip && YUMA_ZIPS.indexOf(String(zip).substring(0,3)) !== -1; }
+
+        async function showDash() {
+            loginScreen.style.display = 'none';
+            dashScreen.style.display = 'block';
+            await loadStats();
+        }
+        function showLogin() { dashScreen.style.display = 'none'; loginScreen.style.display = 'flex'; }
+
+        async function loadStats() {
+            const body = document.getElementById('dashBody');
+            body.innerHTML = '<div class="dash-loading">🔥 Counting the flares…</div>';
+            const { data, error } = await db.from('Prayer Flares').select('*');
+            if (error) {
+                body.innerHTML = '<div class="empty">⚠️ Could not load stats. ' + escapeHtml(error.message) + '</div>';
+                return;
+            }
+            const flares = data || [];
+            if (flares.length === 0) {
+                body.innerHTML = '<div class="empty">No flares yet. When people start reaching out, this fills up.</div>';
+                return;
+            }
+
+            const total = flares.length;
+            const prayedFlares = flares.filter(f => f.status === 'prayed');
+            const covered = prayedFlares.length;
+            const waiting = total - covered;
+            const lifted = flares.reduce((sum, f) => sum + (f.prayer_count ? Number(f.prayer_count) : 0), 0);
+
+            const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+            const thisWeek = flares.filter(f => new Date(f.creatd_at).getTime() >= weekAgo).length;
+
+            const byCat = {};
+            flares.forEach(f => { byCat[f.category] = (byCat[f.category] || 0) + 1; });
+            const catMax = Math.max.apply(null, Object.values(byCat));
+
+            const byZip = {};
+            flares.forEach(f => { if (f.zip_code) byZip[f.zip_code] = (byZip[f.zip_code] || 0) + 1; });
+            const zipRanked = Object.keys(byZip).map(z => ({ zip: z, n: byZip[z] })).sort((a, b) => b.n - a.n).slice(0, 8);
+            const zipMax = zipRanked.length ? zipRanked[0].n : 1;
+
+            const yumaCount = flares.filter(f => isYuma(f.zip_code)).length;
+            const beyondCount = total - yumaCount;
+
+            let html = '';
+
+            html += '<div class="hero-stat"><div class="hero-num">' + lifted.toLocaleString() + '</div>' +
+                    '<div class="hero-label">prayers lifted by Watchmen 🙏</div></div>';
+
+            html += '<div class="tiles">' +
+                '<div class="tile"><div class="tile-num covered">' + covered.toLocaleString() + '</div><div class="tile-label">Covered</div></div>' +
+                '<div class="tile"><div class="tile-num waiting">' + waiting.toLocaleString() + '</div><div class="tile-label">Waiting</div></div>' +
+                '<div class="tile"><div class="tile-num week">' + thisWeek.toLocaleString() + '</div><div class="tile-label">This Week</div></div>' +
+                '</div>';
+
+            html += '<div class="section"><div class="section-h">Where the need is</div>' +
+                    '<div class="section-note">Every flare people have lit, by what they were facing.</div>';
+            Object.keys(CATEGORIES).forEach(key => {
+                const n = byCat[key] || 0;
+                if (n === 0) return;
+                const c = CATEGORIES[key];
+                const pct = Math.round((n / catMax) * 100);
+                html += '<div class="bar-row">' +
+                    '<div class="bar-top"><span class="bar-label">' + c.icon + ' ' + escapeHtml(c.label) + '</span>' +
+                    '<span class="bar-count">' + n + '</span></div>' +
+                    '<div class="bar-track"><div class="bar-fill" style="width:' + pct + '%;background:' + c.accent + ';"></div></div>' +
+                    '</div>';
+            });
+            html += '</div>';
+
+            html += '<div class="section"><div class="section-h">Across the map</div>' +
+                    '<div class="section-note">Yuma County is home base — but flares come from everywhere.</div>' +
+                    '<div class="split">' +
+                    '<div class="split-card yuma"><div class="split-num">' + yumaCount.toLocaleString() + '</div><div class="split-label">📍 Yuma County</div></div>' +
+                    '<div class="split-card beyond"><div class="split-num">' + beyondCount.toLocaleString() + '</div><div class="split-label">🌎 Beyond Yuma</div></div>' +
+                    '</div>';
+
+            if (zipRanked.length) {
+                html += '<div class="section-note" style="margin-bottom:14px;">Top areas lighting flares:</div>';
+                zipRanked.forEach(item => {
+                    const pct = Math.round((item.n / zipMax) * 100);
+                    const tag = isYuma(item.zip) ? ' #14b8a6' : ' #8a8090';
+                    html += '<div class="bar-row">' +
+                        '<div class="bar-top"><span class="bar-label">📍 ' + escapeHtml(item.zip) + (isYuma(item.zip) ? ' <span style="color:var(--teal);font-size:11px;">Yuma</span>' : '') + '</span>' +
+                        '<span class="bar-count">' + item.n + '</span></div>' +
+                        '<div class="bar-track"><div class="bar-fill" style="width:' + pct + '%;background:' + tag.trim() + ';"></div></div>' +
+                        '</div>';
+                });
+            }
+            html += '</div>';
+
+            html += '<div class="section"><div class="section-h">Altogether</div>' +
+                    '<div class="section-note">Since Prayer Flare began.</div>' +
+                    '<div class="hero-stat" style="padding:20px;"><div class="hero-num" style="font-size:48px;color:var(--gold);">' + total.toLocaleString() + '</div>' +
+                    '<div class="hero-label">flares received — ' + total.toLocaleString() + ' moments someone reached out instead of facing it alone</div></div></div>';
+
+            body.innerHTML = html;
+        }
+
+        async function doLogin() {
+            const email = emailEl.value.trim();
+            const password = passwordEl.value;
+            loginError.textContent = '';
+            if (!email || !password) { loginError.textContent = 'Enter your email and password.'; return; }
+            loginBtn.disabled = true; loginBtn.textContent = 'CHECKING…';
+            const { error } = await db.auth.signInWithPassword({ email, password });
+            loginBtn.disabled = false; loginBtn.textContent = 'VIEW IMPACT →';
+            if (error) { loginError.textContent = 'That login didn\u2019t work. Check the email and password.'; return; }
+            await showDash();
+        }
+
+        loginBtn.addEventListener('click', doLogin);
+        passwordEl.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+        emailEl.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await db.auth.signOut(); emailEl.value = ''; passwordEl.value = ''; showLogin();
+        });
+
+        (async function init() {
+            const { data } = await db.auth.getSession();
+            if (data && data.session) { await showDash(); } else { showLogin(); }
+        })();
+    </script>
+</body>
+</html>
