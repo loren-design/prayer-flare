@@ -79,6 +79,8 @@
         .phrasing-option:active { transform: scale(0.98); }
         .phrasing-skip { display: inline-block; margin-top: 8px; color: var(--text-secondary); font-size: 13px; background: none; border: none; cursor: pointer; text-decoration: underline; }
         .phrasing-skip:hover { color: var(--teal); }
+        .phrasing-more { display: block; width: 100%; margin: 2px 0 12px; padding: 12px; background: none; border: 1px dashed rgba(255, 215, 0, 0.3); border-radius: 12px; color: var(--gold); font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .phrasing-more:hover { background: rgba(255, 215, 0, 0.06); border-color: var(--gold); }
 
         /* ZIP Popup */
         .zip-popup { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10, 10, 15, 0.95); z-index: 500; justify-content: center; align-items: center; padding: 20px; }
@@ -367,45 +369,77 @@
             anxiety: [
                 "My mind won't slow down and I need peace.",
                 "Fear has a grip on me right now.",
-                "Pray God would steady me and quiet the noise."
+                "Pray God would steady me and quiet the noise.",
+                "My chest is tight and I can't catch my breath.",
+                "I'm scared and I don't know what's coming.",
+                "Pray I can rest in God instead of racing."
             ],
             temptation: [
                 "I'm being pulled toward something I don't want to do.",
                 "Temptation is loud right now — pray I stand.",
-                "I just want to do the next right thing."
+                "I just want to do the next right thing.",
+                "I'm right on the edge and I need to walk away.",
+                "Pray I make it through the next ten minutes.",
+                "I've been here before — pray it's different this time."
             ],
             addiction: [
                 "The craving is strong and I'm fighting it.",
                 "One hour at a time — pray I stay sober today.",
-                "Someone I love is struggling, and so am I."
+                "Someone I love is struggling, and so am I.",
+                "I don't want to use, but it's screaming at me.",
+                "Pray I pick up the phone instead of picking up.",
+                "I've got some clean time and I don't want to lose it."
             ],
             depression: [
                 "The dark feels heavy and I'm worn down.",
                 "I'm close to giving up and I need hope.",
-                "Pray I can hold on a little longer."
+                "Pray I can hold on a little longer.",
+                "I can't feel God right now and it scares me.",
+                "Getting out of bed is the whole battle today.",
+                "Pray the light comes back, even a little."
             ],
             other: [
                 "I'm carrying something heavy and just need prayer.",
                 "I don't have the words — just please pray for me.",
-                "Something's wrong and I need God to meet me."
+                "Something's wrong and I need God to meet me.",
+                "I'm tired in a way sleep doesn't fix.",
+                "Pray for my family — we're going through it.",
+                "I just need to know I'm not alone in this."
             ]
         };
+
+        var PHRASINGS_SHOWN = 3;
+
+        function makePhrasingButton(text) {
+            var btn = document.createElement('button');
+            btn.className = 'phrasing-option';
+            btn.textContent = '\u201C' + text + '\u201D';
+            btn.onclick = function() {
+                selectedPhrasing = text;
+                phrasingPopup.classList.remove('active');
+                openZipPopup();
+            };
+            return btn;
+        }
 
         function openPhrasingPicker() {
             var opts = PHRASINGS[selectedCategory] || PHRASINGS.other;
             phrasingOptions.innerHTML = '';
-            for (var k = 0; k < opts.length; k++) {
-                (function(text) {
-                    var btn = document.createElement('button');
-                    btn.className = 'phrasing-option';
-                    btn.textContent = '\u201C' + text + '\u201D';
-                    btn.onclick = function() {
-                        selectedPhrasing = text;
-                        phrasingPopup.classList.remove('active');
-                        openZipPopup();
-                    };
-                    phrasingOptions.appendChild(btn);
-                })(opts[k]);
+            var firstCount = Math.min(PHRASINGS_SHOWN, opts.length);
+            for (var k = 0; k < firstCount; k++) {
+                phrasingOptions.appendChild(makePhrasingButton(opts[k]));
+            }
+            if (opts.length > PHRASINGS_SHOWN) {
+                var more = document.createElement('button');
+                more.className = 'phrasing-more';
+                more.textContent = '+ More ways to say it';
+                more.onclick = function() {
+                    more.remove();
+                    for (var m = PHRASINGS_SHOWN; m < opts.length; m++) {
+                        phrasingOptions.appendChild(makePhrasingButton(opts[m]));
+                    }
+                };
+                phrasingOptions.appendChild(more);
             }
             phrasingPopup.classList.add('active');
         }
