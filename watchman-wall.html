@@ -124,6 +124,7 @@
         .pray-btn:hover { background: var(--teal); color: #04231f; }
         .pray-btn:disabled { opacity: 0.5; cursor: default; }
         .prayed-mark { flex-shrink: 0; color: var(--teal); font-size: 13px; font-weight: 600; white-space: nowrap; }
+        .flare-phrasing { margin-top: 11px; padding: 11px 13px; background: rgba(255,255,255,0.03); border-radius: 10px; font-size: 13.5px; font-style: italic; color: var(--text-secondary); line-height: 1.5; }
 
         .wall-empty, .wall-loading { text-align: center; color: var(--text-muted); padding: 60px 20px; font-size: 15px; }
         .wall-empty .big { font-size: 40px; margin-bottom: 12px; }
@@ -266,6 +267,9 @@
             const cat = CATEGORIES[f.category] || { icon: '🔥', label: f.category || 'Prayer Need', accent: '#ff6b35' };
             const prayed = isPrayed(f);
             const zip = f.zip_code ? '📍 ' + escapeHtml(f.zip_code) + ' · ' : '';
+            const phrasing = f.phrasing
+                ? '<div class="flare-phrasing">\u201C' + escapeHtml(f.phrasing) + '\u201D</div>'
+                : '';
             const right = prayed
                 ? '<div class="prayed-mark">✓ Prayed</div>'
                 : '<button class="pray-btn" data-id="' + escapeHtml(f.id) + '">🙏 Mark Prayed</button>';
@@ -282,6 +286,7 @@
                         '</div>' +
                         right +
                     '</div>' +
+                    phrasing +
                 '</div>'
             );
         }

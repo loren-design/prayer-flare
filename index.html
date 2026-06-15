@@ -68,6 +68,18 @@
         .category-icon { font-size: 28px; margin-bottom: 8px; }
         .category-label { font-size: 14px; font-weight: 600; color: var(--text-primary); }
 
+        /* Phrasing Popup */
+        .phrasing-popup { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10, 10, 15, 0.95); z-index: 500; justify-content: center; align-items: center; padding: 20px; }
+        .phrasing-popup.active { display: flex; }
+        .phrasing-content { background: var(--bg-card); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 20px; padding: 28px 22px; max-width: 360px; width: 100%; text-align: center; max-height: 90vh; overflow-y: auto; }
+        .phrasing-title { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--gold); margin-bottom: 8px; }
+        .phrasing-sub { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 20px; }
+        .phrasing-option { background: var(--bg-dark); border: 2px solid rgba(255, 255, 255, 0.15); border-radius: 14px; padding: 16px 18px; margin-bottom: 12px; font-size: 15px; color: var(--text-primary); cursor: pointer; transition: all 0.2s ease; line-height: 1.45; text-align: left; }
+        .phrasing-option:hover { border-color: var(--gold); background: rgba(255, 215, 0, 0.06); }
+        .phrasing-option:active { transform: scale(0.98); }
+        .phrasing-skip { display: inline-block; margin-top: 8px; color: var(--text-secondary); font-size: 13px; background: none; border: none; cursor: pointer; text-decoration: underline; }
+        .phrasing-skip:hover { color: var(--teal); }
+
         /* ZIP Popup */
         .zip-popup { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10, 10, 15, 0.95); z-index: 500; justify-content: center; align-items: center; padding: 20px; }
         .zip-popup.active { display: flex; }
@@ -265,6 +277,16 @@
             <p class="loading-text">Sending your flare...</p>
         </div>
 
+        <!-- Phrasing Popup -->
+        <div class="phrasing-popup" id="phrasingPopup">
+            <div class="phrasing-content">
+                <div class="phrasing-title">WANT TO ADD A FEW WORDS?</div>
+                <p class="phrasing-sub">Pick one if it fits — it helps people pray. No typing, totally optional, and never anything that identifies you.</p>
+                <div id="phrasingOptions"></div>
+                <button class="phrasing-skip" id="phrasingSkip">Skip — just send my flare</button>
+            </div>
+        </div>
+
         <!-- ZIP Code Popup -->
         <div class="zip-popup" id="zipPopup">
             <div class="zip-popup-content">
@@ -299,6 +321,7 @@
         // STATE
         // ============================================
         var selectedCategory = null;
+        var selectedPhrasing = null;
         var userZip = '';
 
         // ============================================
@@ -315,6 +338,9 @@
         var sendFlareBtn = document.getElementById('sendFlareBtn');
         var loadingOverlay = document.getElementById('loadingOverlay');
         var zipPopup = document.getElementById('zipPopup');
+        var phrasingPopup = document.getElementById('phrasingPopup');
+        var phrasingOptions = document.getElementById('phrasingOptions');
+        var phrasingSkip = document.getElementById('phrasingSkip');
         var localResources = document.getElementById('localResources');
         var videoFrame = document.getElementById('videoFrame');
         var videoPlaceholder = document.getElementById('videoPlaceholder');
@@ -335,6 +361,70 @@
         backToHomeFromPrayer.onclick = function(e) { e.preventDefault(); resetForm(); showScreen(homeScreen); };
 
         // ============================================
+        // PHRASINGS (pre-written, picked not typed)
+        // ============================================
+        var PHRASINGS = {
+            anxiety: [
+                "My mind won't slow down and I need peace.",
+                "Fear has a grip on me right now.",
+                "Pray God would steady me and quiet the noise."
+            ],
+            temptation: [
+                "I'm being pulled toward something I don't want to do.",
+                "Temptation is loud right now — pray I stand.",
+                "I just want to do the next right thing."
+            ],
+            addiction: [
+                "The craving is strong and I'm fighting it.",
+                "One hour at a time — pray I stay sober today.",
+                "Someone I love is struggling, and so am I."
+            ],
+            depression: [
+                "The dark feels heavy and I'm worn down.",
+                "I'm close to giving up and I need hope.",
+                "Pray I can hold on a little longer."
+            ],
+            other: [
+                "I'm carrying something heavy and just need prayer.",
+                "I don't have the words — just please pray for me.",
+                "Something's wrong and I need God to meet me."
+            ]
+        };
+
+        function openPhrasingPicker() {
+            var opts = PHRASINGS[selectedCategory] || PHRASINGS.other;
+            phrasingOptions.innerHTML = '';
+            for (var k = 0; k < opts.length; k++) {
+                (function(text) {
+                    var btn = document.createElement('button');
+                    btn.className = 'phrasing-option';
+                    btn.textContent = '\u201C' + text + '\u201D';
+                    btn.onclick = function() {
+                        selectedPhrasing = text;
+                        phrasingPopup.classList.remove('active');
+                        openZipPopup();
+                    };
+                    phrasingOptions.appendChild(btn);
+                })(opts[k]);
+            }
+            phrasingPopup.classList.add('active');
+        }
+
+        function openZipPopup() {
+            zipPopup.classList.add('active');
+            zipInput.value = '';
+            sendFlareBtn.disabled = true;
+            setTimeout(function() { zipInput.focus(); }, 100);
+        }
+
+        phrasingSkip.onclick = function() {
+            selectedPhrasing = null;
+            phrasingPopup.classList.remove('active');
+            openZipPopup();
+        };
+        phrasingPopup.onclick = function(e) { if (e.target === phrasingPopup) { phrasingPopup.classList.remove('active'); } };
+
+        // ============================================
         // CATEGORY SELECTION
         // ============================================
         for (var i = 0; i < categoryBtns.length; i++) {
@@ -342,10 +432,8 @@
                 for (var j = 0; j < categoryBtns.length; j++) { categoryBtns[j].classList.remove('selected'); }
                 this.classList.add('selected');
                 selectedCategory = this.dataset.category;
-                zipPopup.classList.add('active');
-                zipInput.value = '';
-                sendFlareBtn.disabled = true;
-                setTimeout(function() { zipInput.focus(); }, 100);
+                selectedPhrasing = null;
+                openPhrasingPicker();
             };
         }
 
@@ -354,12 +442,14 @@
 
         function resetForm() {
             selectedCategory = null;
+            selectedPhrasing = null;
             userZip = '';
             for (var i = 0; i < categoryBtns.length; i++) { categoryBtns[i].classList.remove('selected'); }
             zipInput.value = '';
             sendFlareBtn.disabled = true;
             zipPopup.classList.remove('active');
-            helpPopup.classList.remove('active');
+            phrasingPopup.classList.remove('active');
+            if (typeof helpPopup !== 'undefined' && helpPopup) { helpPopup.classList.remove('active'); }
         }
 
         // ============================================
@@ -418,7 +508,8 @@
 
             supabaseClient.from('Prayer Flares').insert([{ 
                 category: selectedCategory, 
-                zip_code: userZip
+                zip_code: userZip,
+                phrasing: selectedPhrasing
             }])
             .then(function(result) {
                 if (result.error) throw result.error;
