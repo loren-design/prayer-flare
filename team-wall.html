@@ -33,7 +33,13 @@
         /* LOGIN */
         .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
         .login-card { background: var(--bg-dark); border: 1px solid var(--border-subtle); border-radius: 18px; padding: 40px 28px; width: 100%; max-width: 380px; text-align: center; }
-        .login-flame { font-size: 44px; margin-bottom: 8px; filter: drop-shadow(0 0 30px rgba(20,184,166,0.4)); }
+        .login-flame { margin-bottom: 8px; }
+        .flame-mark { display:inline-block; line-height:0; filter: drop-shadow(0 0 14px rgba(255,107,53,0.55)); animation: flameBreathe 2.6s ease-in-out infinite; transform-origin: 50% 90%; }
+        .flame-mark svg { width: 46px; height: 58px; display:block; }
+        .flame-core { transform-origin: 50% 85%; animation: flameFlicker 1.5s ease-in-out infinite; }
+        @keyframes flameBreathe { 0%,100% { transform: scale(0.96); } 50% { transform: scale(1.05); } }
+        @keyframes flameFlicker { 0%,100% { opacity:.85; transform: scaleY(.9); } 50% { opacity:1; transform: scaleY(1.08); } }
+        @media (prefers-reduced-motion: reduce) { .flame-mark, .flame-core { animation: none; } }
         .login-title { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 3px; }
         .login-sub { color: var(--text-muted); font-size: 13px; margin: 6px 0 26px; }
         .field { text-align: left; margin-bottom: 16px; }
@@ -119,7 +125,7 @@
 
     <div class="login-wrap" id="loginScreen">
         <div class="login-card">
-            <div class="login-flame">🕊️</div>
+            <div class="login-flame"><span class="flame-mark" aria-hidden="true"><svg viewBox="0 0 48 60"><path d="M24 6 C 38 26 38 42 24 54 C 10 42 10 26 24 6 Z" fill="#ff6b35"/><path class="flame-core" d="M24 22 C 32 34 32 46 24 53 C 16 46 16 34 24 22 Z" fill="#ffd700"/></svg></span></div>
             <div class="login-title">THE UPPER ROOM</div>
             <div class="login-sub">Where Watchmen carry each other</div>
             <div class="field">
@@ -139,7 +145,7 @@
     <div id="covenantScreen">
         <div class="covenant-wrap">
             <div class="covenant-card">
-                <div class="covenant-flame">🕊️</div>
+                <div class="covenant-flame"><span class="flame-mark" aria-hidden="true"><svg viewBox="0 0 48 60"><path d="M24 6 C 38 26 38 42 24 54 C 10 42 10 26 24 6 Z" fill="#ff6b35"/><path class="flame-core" d="M24 22 C 32 34 32 46 24 53 C 16 46 16 34 24 22 Z" fill="#ffd700"/></svg></span></div>
                 <h1 class="covenant-title">This is sacred ground.</h1>
                 <div class="covenant-body">
                     <p>What's shared in this room is held in confidence — between you, God, and the people standing with you. What you see here, what you hear here, when you leave here, <strong>let it stay here.</strong> This is not a place for gossip. We don't carry each other's burdens out the door — we carry them to the Father in prayer.</p>
@@ -154,7 +160,7 @@
     <div id="roomScreen">
         <div class="room-wrap">
             <div class="room-header">
-                <div class="room-title">🕊️ The Upper Room</div>
+                <div class="room-title">🔥 The Upper Room</div>
                 <div class="nav-links">
                     <a class="nav-link" href="watchman-wall.html">The Wall</a>
                     <button class="nav-link" id="logoutBtn">Log out</button>
@@ -162,7 +168,7 @@
             </div>
             <div class="room-sub">We're all on the front lines. Lay your own need down here — the team will carry it.</div>
 
-            <div class="sacred-line">🕊️ Sacred ground — what's shared here, stays here.</div>
+            <div class="sacred-line">🔥 Sacred ground — what's shared here, stays here.</div>
 
             <button class="share-btn" id="openFormBtn">🙏 I Need Prayer Too</button>
 
@@ -185,7 +191,7 @@
             </div>
 
             <div id="roomBody">
-                <div class="loading">🕊️ Loading the room…</div>
+                <div class="loading">🔥 Loading the room…</div>
             </div>
         </div>
     </div>
@@ -286,7 +292,7 @@
 
         async function loadRoom() {
             const body = document.getElementById('roomBody');
-            body.innerHTML = '<div class="loading">🕊️ Loading the room…</div>';
+            body.innerHTML = '<div class="loading">🔥 Loading the room…</div>';
             const { data, error } = await db.from('team_prayers').select('*').order('created_at', { ascending: false });
             if (error) {
                 body.innerHTML = '<div class="empty"><div class="big">⚠️</div>Could not load the room. ' + escapeHtml(error.message) + '</div>';
@@ -294,7 +300,7 @@
             }
             const reqs = data || [];
             if (reqs.length === 0) {
-                body.innerHTML = '<div class="empty"><div class="big">🕊️</div>The room is quiet. When someone on the team shares a need, it appears here — and we carry it together.</div>';
+                body.innerHTML = '<div class="empty"><div class="big">🔥</div>The room is quiet. When someone on the team shares a need, it appears here — and we carry it together.</div>';
                 return;
             }
             const waiting = reqs.filter(r => r.status !== 'prayed');
@@ -310,7 +316,7 @@
             const prayed = r.status === 'prayed';
             const who = r.display_name
                 ? '<span class="req-name">🙋 ' + escapeHtml(r.display_name) + '</span>'
-                : '<span class="req-name"><span class="anon">🕊️ A fellow Watchman</span></span>';
+                : '<span class="req-name"><span class="anon">🔥 A fellow Watchman</span></span>';
             const foot = prayed
                 ? '<span class="prayed-mark">✓ Prayed</span>'
                 : '<button class="pray-btn" data-id="' + escapeHtml(r.id) + '">🙏 I Prayed</button>';
