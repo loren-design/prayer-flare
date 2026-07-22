@@ -136,10 +136,22 @@
 
         /* CTA Buttons */
         .cta-buttons { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
-        .cta-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 16px; border-radius: 12px; font-size: 14px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+        .cta-btn { display: flex; align-items: center; gap: 12px; padding: 15px 18px; border-radius: 14px; font-size: 15px; font-weight: 600; text-decoration: none; transition: transform .15s ease; }
+        .cta-btn:active { transform: scale(0.98); }
+        .cta-btn svg { flex: none; }
         .cta-btn.primary { background: linear-gradient(135deg, var(--flare-orange) 0%, var(--flare-red) 100%); color: white; }
         .cta-btn.secondary { background: var(--bg-card); color: var(--gold); border: 1px solid rgba(255, 215, 0, 0.3); }
-        .cta-btn.youtube { background: rgba(255, 0, 0, 0.1); color: #ff4444; border: 1px solid rgba(255, 0, 0, 0.3); }
+        .cta-btn.youtube { background: rgba(20, 184, 166, 0.12); color: #5eead4; border: 1px solid rgba(20, 184, 166, 0.55); }
+        .hh-pill { position: relative; display: flex; align-items: center; gap: 14px; padding: 15px 18px; border-radius: 14px; text-decoration: none; background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,107,53,0.10)); border: 1.5px solid var(--gold); margin-bottom: 20px; animation: hhGlow 2.4s ease-in-out infinite; }
+        .hh-pill:active { transform: scale(0.98); }
+        .hh-pin, .hh-arrow { color: var(--gold); flex: none; }
+        .hh-text { display: flex; flex-direction: column; line-height: 1.25; }
+        .hh-name { font-weight: 600; font-size: 15px; color: var(--text-primary); }
+        .hh-sub { font-size: 12.5px; color: var(--gold); }
+        .hh-arrow { margin-left: auto; }
+        .hh-tag { position: absolute; top: -9px; right: 14px; background: var(--gold); color: #2a1e00; font-size: 10px; font-weight: 700; padding: 2px 9px; border-radius: 8px; letter-spacing: .5px; }
+        @keyframes hhGlow { 0%,100% { box-shadow: 0 0 0 rgba(255,215,0,0); } 50% { box-shadow: 0 0 22px rgba(255,215,0,0.35); } }
+        @media (prefers-reduced-motion: reduce) { .hh-pill { animation: none; } }
 
         .home-link { color: var(--teal); text-decoration: none; font-size: 14px; display: inline-block; margin-top: 20px; }
 
@@ -224,8 +236,6 @@
             <div class="prayer-content">
                 <div class="prayer-header">
                     <div class="form-icon">🔥</div>
-                    <h2 class="prayer-title">YOUR FLARE WAS RECEIVED!</h2>
-                    <p class="prayer-subtitle" style="font-size: 18px; color: var(--gold); font-weight: 600;">Real People Are Lifting You Up In Prayer!</p>
                 </div>
 
                 <!-- Video Section -->
@@ -240,21 +250,21 @@
 
                 <!-- CTA Buttons - Right under video -->
                 <div class="cta-buttons">
-                    <a href="hotlines.html" class="cta-btn primary">📞 24/7 LIVE PRAYER HOTLINES</a>
-                    <a href="https://www.youtube.com/@KnowGodBetterMinistries/community" class="cta-btn youtube" target="_blank">📺 YOUTUBE PRAYER COMMUNITY</a>
+                    <a href="hotlines.html" class="cta-btn primary"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.4 21 3 13.6 3 4.5 3 3.9 3.4 3.5 4 3.5H7.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1z"/></svg>24/7 Live Prayer Hotlines</a>
+                    <a href="https://www.youtube.com/@KnowGodBetterMinistries/community" class="cta-btn youtube" target="_blank"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>YouTube Prayer Community</a>
                 </div>
 
-                <!-- Local Resources (Yuma County) -->
-                <div class="local-resources" id="localResources" style="display:none;">
-                    <div class="local-title">📍 YUMA COUNTY RESOURCES</div>
-                    <div class="local-item">
-                        <span class="local-icon">🏥</span>
-                        <div class="local-info">
-                            <div class="local-name">The Healing House of Yuma</div>
-                            <div class="local-desc">Real help — healing & deliverance</div>
-                        </div>
-                        <a href="https://www.healinghouseofyuma.org/deliverance-and-healing" class="local-link" target="_blank">Get Help →</a>
-                    </div>
+                <!-- Local Resource: The Healing House of Yuma -->
+                <div id="localResources" style="display:none;">
+                    <a href="https://www.healinghouseofyuma.org/deliverance-and-healing" class="hh-pill" target="_blank">
+                        <svg class="hh-pin" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                        <span class="hh-text">
+                            <span class="hh-name">The Healing House of Yuma</span>
+                            <span class="hh-sub">Healing &amp; Deliverance</span>
+                        </span>
+                        <svg class="hh-arrow" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                        <span class="hh-tag">Local</span>
+                    </a>
                 </div>
 
                 <!-- Scripture at bottom -->
@@ -317,7 +327,9 @@
         var YOUTUBE_VIDEO_ID = 'phghUms7soA';
 
         // Yuma County ZIP codes
-        var YUMA_ZIPS = ['853', '854', '857'];
+        // ZIPs that see the local Healing House resource — Yuma County AZ + Imperial Valley CA corridor.
+        // Add more regions here as you add local partners.
+        var LOCAL_ZIPS = ['85333','85336','85347','85349','85350','85352','85356','85364','85365','85366','85367','85369','92227','92231','92233','92243','92249','92250','92251','92257','92259','92266','92273','92281','92283'];
 
         // ============================================
         // STATE
@@ -510,8 +522,7 @@
         // CHECK IF YUMA COUNTY
         // ============================================
         function isYumaCounty(zip) {
-            var prefix = zip.substring(0, 3);
-            return YUMA_ZIPS.indexOf(prefix) !== -1;
+            return LOCAL_ZIPS.indexOf(zip) !== -1;
         }
 
         // ============================================
@@ -555,10 +566,8 @@
                 document.getElementById('scriptureText').textContent = s.text;
                 document.getElementById('scriptureRef').textContent = '— ' + s.ref;
                 
-                // Show local resources if Yuma County
-                // Show Healing House resources for everyone during soft launch
-                // (was previously limited to Yuma County ZIPs)
-                localResources.style.display = 'block';
+                // Show the local Healing House resource only for local ZIPs
+                localResources.style.display = isYumaCounty(userZip) ? 'block' : 'none';
 
                 // Load video
                 loadVideo();
