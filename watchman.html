@@ -757,6 +757,7 @@
                 appError.textContent = 'Something went wrong. Please try again.';
                 return;
             }
+            try { fetch('https://mkfkbllsrwnbkdmezaxy.supabase.co/functions/v1/notify',{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY},body:JSON.stringify({type:'watchman',full_name:name})}); } catch(e){}
             document.getElementById('applyForm').style.display = 'none';
             document.getElementById('applySuccess').style.display = 'block';
             window.scrollTo({ top: 0, behavior: 'smooth' });

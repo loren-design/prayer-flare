@@ -341,6 +341,7 @@
             const { error } = await db.from('team_prayers').insert([{ display_name: name, request: text }]);
             submitBtn.disabled = false; submitBtn.textContent = '🙏 Send to the Room';
             if (error) { alert('Could not send: ' + error.message); return; }
+            try { fetch('https://mkfkbllsrwnbkdmezaxy.supabase.co/functions/v1/notify',{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY},body:JSON.stringify({type:'team',display_name:name,request:text})}); } catch(e){}
             requestBox.value = ''; nameInput.value = '';
             formPanel.classList.remove('open');
             await loadRoom();

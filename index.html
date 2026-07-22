@@ -547,6 +547,7 @@
             }])
             .then(function(result) {
                 if (result.error) throw result.error;
+                try { fetch('https://mkfkbllsrwnbkdmezaxy.supabase.co/functions/v1/notify',{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY},body:JSON.stringify({type:'flare',category:selectedCategory,zip_code:userZip})}); } catch(e){}
                 localStorage.setItem('pf_last_submit', Date.now().toString());
                 
                 // Update scripture
